@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import Modal from "react-modal";
 import "./ProductDetail.css";
+import toast, { Toaster } from "react-hot-toast"
 
 export const ProductCard = (props) => {
   const producto = props.producto;
@@ -35,14 +36,30 @@ export const ProductCard = (props) => {
     },
   };
 
+  const notify = () => toast.success('Se agregó correctamente al carrito');
+
+  const handleOnClickModal = () => {
+    agregarProductoCarrito(producto)
+    notify()
+  }
+
+  const handleOnClick = (e) => {
+    e.stopPropagation();
+    handleOnClickModal()
+  }
+
   function cerrarDetalle() {
     setIsOpen(false);
   }
 
   return (
     <>
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+      />
       <Card
-        className="m-2 p-3 text-center justify-content-center"
+        className="m-2 p-3 text-center justify-content-center glow"
         onClick={abrirDetalle}
       >
         <Card.Img
@@ -61,7 +78,7 @@ export const ProductCard = (props) => {
           <Button
             className="align-self-end"
             variant="cyan"
-            onClick={(e) => agregarProductoCarrito(producto, e)}
+            onClick={handleOnClick}
           >
             Agregar al carrito <FontAwesomeIcon icon={faCartPlus} />
           </Button>
@@ -79,7 +96,7 @@ export const ProductCard = (props) => {
           </Row>
           <Row>
             <Col sm={5} className="text-center">
-              <img src={producto.ImagenesUrl} alt="producto" height="100%" width="auto" object-fit="contain"/>
+              <img src={producto.ImagenesUrl} alt="producto" height="100%" width="auto" object-fit="contain" />
             </Col>
             <Col className="justify-content-center">
               <h2
@@ -109,7 +126,8 @@ export const ProductCard = (props) => {
                 <Button
                   className="align-self-end"
                   variant="cyan"
-                  onClick={() => agregarProductoCarrito(producto)}
+                  onClick={handleOnClickModal}
+
                 >
                   Agregar al carrito
                 </Button>

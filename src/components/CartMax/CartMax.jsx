@@ -39,7 +39,9 @@ export const CartMax = () => {
             {productoCarrito && carritoAbierto && (
                 <Container fluid="md">
                     {productoCarrito.length === 0 ? (
-                        <p>Tu carrito esta vacio</p>
+                        <div style={{ color: "white", position: "relative", fontWeight: "bold", fontSize: "2em", textAlign:"center", top: "15rem"}}>
+                            <span>El carrito está vacío.</span>
+                        </div>
                     ) : (
                         <div class="row no-gutters">
                             <Row>

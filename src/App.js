@@ -10,7 +10,6 @@ import { ContextoProvider } from './components/context2.0/Contexto';
 
 function App() {
 
-
   return (
     <ContextoProvider>
       <ContextoCarritoProvider>

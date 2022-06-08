@@ -9,7 +9,7 @@ import valores from "../../images/valores.png";
 export const AboutUs = () => {
   return (
     <>
-      <div className="slider">
+      <div style={{position: 'relative', textAlign: 'center'}}>
         <img className="d-block w-100" src={aboutUs} alt="about-us" />
         <div className="centered">¿Quiénes somos?</div>
       </div>
@@ -27,7 +27,7 @@ export const AboutUs = () => {
                 <Card.Img
                   variant="top"
                   src={mision}
-                  className="glow rounded-0 mx-2"
+                  className="rounded-0 mx-2"
                 />
               </Card.Body>
             </Card>
@@ -44,7 +44,7 @@ export const AboutUs = () => {
                 <Card.Img
                   variant="top"
                   src={vision}
-                  className="glow-orange rounded-0 mx-2"
+                  className="rounded-0 mx-2"
                 />
               </Card.Body>
             </Card>
@@ -61,7 +61,7 @@ export const AboutUs = () => {
                 <Card.Img
                   variant="top"
                   src={valores}
-                  className="glow rounded-0 mx-2"
+                  className="rounded-0 mx-2"
                 />
               </Card.Body>
             </Card>

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC');
 
-.hover-effect {
+.gradual-effect {
   border: none;
   border-radius: 0;
   display: block;
@@ -19,12 +19,12 @@
   box-shadow: 0 5px 15px rgba(0,0,0,0.20);
 }
 
-.hover-effect span {
+.gradual-effect span {
   position: relative; 
   z-index: 1;
 }
 
-.hover-effect:after {
+.gradual-effect:after {
   content: "";
   position: absolute;
   left: 0;
@@ -38,11 +38,11 @@
   transform: translateX(-98%) translateY(-25%) rotate(45deg);
 }
 
-.hover-effect:hover:after {
+.gradual-effect:hover:after {
   -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
   transform: translateX(-9%) translateY(-25%) rotate(45deg);
 }
 
-.hover-effect:focus{
+.gradual-effect:focus{
     border-color: black !important;
 }

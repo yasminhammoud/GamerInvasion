@@ -1,19 +1,19 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./NavBar.css";
 import {
   Container,
   Navbar,
   Nav,
   NavDropdown,
-  Form,
   Offcanvas,
-  FormControl,
   Button,
 } from "react-bootstrap";
-import { Search } from '../Search/Search';
+import { Search } from "../Search/Search";
 
 import logo from "../../images/logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 
 export const NavBar = () => {
   return (
@@ -50,15 +50,32 @@ export const NavBar = () => {
                   className="nav-dropdown-title"
                   id={`offcanvasNavbarDropdown-expand-xl`}
                 >
-                  <NavDropdown.Item as={Link} to="/store/c/pc desktop">PC DESKTOP</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/consolas">CONSOLAS</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/laptops">LAPTOPS</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/videojuegos">VIDEOJUEGOS</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/perifericos">PERIFÉRICOS</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/store/c/pc desktop">
+                    PC DESKTOP
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/store/c/consolas">
+                    CONSOLAS
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/store/c/laptops">
+                    LAPTOPS
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/store/c/videojuegos">
+                    VIDEOJUEGOS
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/store/c/perifericos">
+                    PERIFÉRICOS
+                  </NavDropdown.Item>
                 </NavDropdown>
                 <Search />
               </Nav>
               <Nav className="align-items-center">
+                <Button
+                  onClick={() => window.open("https://discord.gg/zgvnMzyB", "_blank")}
+                  className="nav-btn"
+                  variant="cyan"
+                >
+                  <FontAwesomeIcon icon={faDiscord} />
+                </Button>
                 <Nav.Link
                   as={Link}
                   to="/quienes-somos"
@@ -67,7 +84,6 @@ export const NavBar = () => {
                   ¿Quiénes somos?
                 </Nav.Link>
               </Nav>
-              
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

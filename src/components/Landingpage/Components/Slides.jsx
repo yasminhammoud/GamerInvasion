@@ -4,12 +4,12 @@ import darkKnight from "../../../images/slider-dark-knight.jpg";
 import leagueOfLegends from "../../../images/slider-league-of-legends.jpg";
 import sonyGames from "../../../images/slider-sony-games.jpg";
 import deadCells from "../../../images/slider-dead-cells.jpg";
-import "./Slides.css";
+
 
 const Slides = () => {
   return (
     <>
-      <div className="slider">
+      <div style={{position: 'relative', textAlign: 'center'}}>
         <Carousel fade>
           <Carousel.Item>
             <img className="d-block w-100" src={darkKnight} alt="First slide" />

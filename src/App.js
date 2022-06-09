@@ -6,6 +6,7 @@ import { Cart } from "./components/Cart/Cart";
 import { Rutas } from "./Rutas/Rutas";
 import { ContextoCarritoProvider } from "./Context/ContextoCarrito";
 import { ContextoProvider } from './components/context2.0/Contexto';
+import NewsGrid from "./News/NewsGrid";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Cart />
             <Rutas />
             <Footer />
+            <NewsGrid />
           </div>
         </>
       </ContextoCarritoProvider>

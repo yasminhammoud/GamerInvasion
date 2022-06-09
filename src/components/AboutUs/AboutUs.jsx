@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Col, Row, Card } from "react-bootstrap";
-
 import aboutUs from "../../images/about-us.jpg";
 import mision from "../../images/mision.png";
 import vision from "../../images/vision.png";
@@ -9,7 +8,7 @@ import valores from "../../images/valores.png";
 export const AboutUs = () => {
   return (
     <>
-      <div style={{position: 'relative', textAlign: 'center'}}>
+      <div style={{ position: 'relative', textAlign: 'center' }}>
         <img className="d-block w-100" src={aboutUs} alt="about-us" />
         <div className="centered">¿Quiénes somos?</div>
       </div>

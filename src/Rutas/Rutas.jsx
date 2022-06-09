@@ -1,14 +1,14 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
-
 import { Store } from "../components/Store/Store";
 import { Landingpage } from "../components/Landingpage/Landingpage";
 import { AboutUs } from "../components/AboutUs/AboutUs";
 import { CartMax } from "../components/CartMax/CartMax";
 import { ProductosFilter } from "../components/Productos/ProductosFilter";
 import { LogIn } from "../components/Users/LogIn/LogIn";
-import { Register } from "../components/Users/Register/Register";
+import Register from "../components/Users/Register/Register";
+
 
 export const Rutas = () => {
   return (

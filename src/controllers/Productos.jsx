@@ -6,11 +6,14 @@ import{
     getDoc,
     updateDoc,
     getDocs,
+    where,
+    query
   } from "firebase/firestore";
 import {getStorage, ref, uploadBytes, getDownloadURL}from "firebase/storage";
 import {db} from "../firebase/firebaseconfig";
 const coleccion = "Productos";
 const rutaFoto = "productos-imagenes";
+const collectionProductos = "Productos"
 
 /* CREAR UN PRODUCTO SIN IMAGEN */
 export const productoCrearSF = async(
@@ -105,3 +108,108 @@ export const productoEditarSF = async(
             ImagenesUrl: fotosAntiguas,
         });
 };
+
+export const getAllProducts = async () => {
+
+    let products = [];
+
+    const q = collection(db, collectionProductos);
+
+    await getDocs(q).then((data) => {
+        data.docs.forEach((element) => {
+            products.push({ id: element.id, ...element.data() });
+        });
+    })
+        .catch((error) => {
+            console.log(error);
+        });
+    return products
+}
+
+export const getNamesAllProducts = async () => {
+
+    let products = [];
+
+    const q = collection(db, collectionProductos);
+
+    await getDocs(q).then((data) => {
+        data.docs.forEach((element) => {
+            products.push({ nombre: element.data().Nombre });
+        });
+    })
+        .catch((error) => {
+            console.log(error);
+        });
+    return products
+}
+
+export const getProductsByName = async (product) => {
+
+    const q = query(collection(db, collectionProductos), where("Nombre", "==", product));
+    let products = [];
+
+    await getDocs(q)
+        .then((data) => {
+
+            data.docs.forEach((element) => {
+                products.push({ id: element.id, ...element.data(), });
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });;
+    return products;
+}
+
+export const getProductsByCategory = async (category) => {
+    const q = query(collection(db, collectionProductos), where("Categoria", "==", category));
+    const products = [];
+
+    await getDocs(q)
+        .then((data) => {
+            data.docs.forEach((element) => {
+                products.push({ id: element.id, ...element.data(), });
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });;
+
+    return products;
+}
+
+export const getProductsByEtiqueta = async (searchInput) => {
+    const q = query(collection(db, collectionProductos), where("Etiqueta", "array-contains-any", searchInput));
+    let products = [];
+
+    await getDocs(q)
+        .then((data) => {
+
+            data.docs.forEach((element) => {
+                products.push({ id: element.id, ...element.data(), });
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });;
+
+    return products
+}
+
+export const getProductsByKeywords = async (searchInput) => {
+    const q = query(collection(db, collectionProductos), where("Keywords", "array-contains-any", searchInput));
+    let products = [];
+
+    await getDocs(q)
+        .then((data) => {
+
+            data.docs.forEach((element) => {
+                products.push({ id: element.id, ...element.data(), });
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });;
+        
+    return products
+}

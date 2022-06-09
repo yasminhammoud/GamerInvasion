@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { ContextoCarrito } from '../../Context/ContextoCarrito'
+import { ContextoCarrito } from '../../contexts/ContextoCarrito'
 import { ProductCard } from "./ProductCard"
 import { Row, Col, Container } from "react-bootstrap";
-import { Filters } from "../Filters"
-import { Contexto } from "../context2.0/Contexto"
+import { Filters } from "../Filter/Filters"
+import { Contexto } from "../../contexts/Contexto"
 
 export const Productos = (props) => {
 

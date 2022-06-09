@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ContextoCarrito } from "../../Context/ContextoCarrito";
+import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import { ProductCard } from "./ProductCard";
 import { Button, Card, Row, Col, Container } from "react-bootstrap";
-import { Filters } from "../Filters";
-import { Contexto } from "../context2.0/Contexto";
+import { Contexto } from "../../contexts/Contexto"
 import { useSearchParams, useParams, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

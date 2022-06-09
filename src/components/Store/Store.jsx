@@ -5,10 +5,9 @@ import {
   getAllProducts,
   getProductsByCategory,
   getProductsByKeywords,
-} from "../../services/products";
+} from "../../controllers/Productos";
 import { Productos } from "../Productos/Productos";
-
-//import { Contexto } from "../context2.0/Contexto"
+import { orderProducts } from "../../utilities/OrderProducts"
 
 export const Store = () => {
 
@@ -19,26 +18,10 @@ export const Store = () => {
   const [loading, setLoading] = useState(true);
   const { category } = useParams();
 
-  const orderProducts = (response) => {
-    const productsCoincidences = [];
-    const inputArray = search.toLowerCase().split(" ");
-    response.map((prod) =>
-      productsCoincidences.push({
-        coincidencias: prod.Keywords.filter((element) =>
-          inputArray.includes(element)
-        ).length,
-        ...prod,
-      })
-    );
-    return productsCoincidences.sort(function (a, b) {
-      return parseFloat(b.coincidencias) - parseFloat(a.coincidencias);
-    });
-  };
-
   useEffect(() => {
     if (search) {
       getProductsByKeywords(search.toLowerCase().split(" ")).then((response) => {
-        setProducts(orderProducts(response))
+        setProducts(orderProducts(response, search))
         setLoading(false)
       })
     } else if (category) {
@@ -68,7 +51,7 @@ export const Store = () => {
       ) : products.length !== 0 ? (
         <Productos data={products} />
       ) : (
-        <div style={{ color: "white", position:"absolute", top: "50%", fontWeight:"bold", fontSize: "2em"}}>
+        <div style={{ color: "white", position: "absolute", top: "50%", fontWeight: "bold", fontSize: "2em" }}>
           <span>No se encontraron resultados</span>
         </div>
       )}

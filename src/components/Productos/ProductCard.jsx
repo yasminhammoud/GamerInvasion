@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { ContextoCarrito } from "../../Context/ContextoCarrito";
+import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import {
   Button,
   Row,
@@ -8,7 +8,6 @@ import {
   CloseButton,
   Card,
 } from "react-bootstrap";
-import { ProductDetail } from "./ProductDetail";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import Modal from "react-modal";

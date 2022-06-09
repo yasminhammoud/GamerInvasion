@@ -23,6 +23,7 @@ export const Rutas = () => {
           <Route path="/carrito" element={<CartMax />} />
 
           <Route path="/quienes-somos" element={<AboutUs />} />
+          
         </Routes>
       </ScrollToTop>
     </>

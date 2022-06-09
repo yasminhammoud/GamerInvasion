@@ -7,6 +7,8 @@ import { Landingpage } from "../components/Landingpage/Landingpage";
 import { AboutUs } from "../components/AboutUs/AboutUs";
 import { CartMax } from "../components/CartMax/CartMax";
 import { ProductosFilter } from "../components/Productos/ProductosFilter";
+import { LogIn } from "../components/Users/LogIn/LogIn";
+import { Register } from "../components/Users/Register/Register";
 
 export const Rutas = () => {
   return (
@@ -20,9 +22,13 @@ export const Rutas = () => {
 
           <Route path="/store/c/:category" element={<Store />} />
 
-          <Route path="/carrito" element={<CartMax />} />
+          <Route path="/cart" element={<CartMax />} />
 
-          <Route path="/quienes-somos" element={<AboutUs />} />
+          <Route path="/about-us" element={<AboutUs />} />
+
+          <Route path="/log-in" element={<LogIn />} />
+
+          <Route path="/register" element={<Register />} />
         </Routes>
       </ScrollToTop>
     </>

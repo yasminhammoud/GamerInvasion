@@ -30,7 +30,9 @@ export const NavBar = () => {
           <Navbar.Brand as={Link} to="/" className="nav-text">
             <img alt="logo" src={logo} />
           </Navbar.Brand>
+
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-xl`} />
+
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-xl`}
             aria-labelledby={`offcanvasNavbarLabel-expand-xl`}
@@ -40,11 +42,23 @@ export const NavBar = () => {
               closeButton
               className="btn-close-white align-items-center justify-content-end"
             ></Offcanvas.Header>
+
             <Offcanvas.Body>
+
               <Nav className="align-items-center justify-content-center flex-grow-1 pe-3">
+                
+                <Nav.Link
+                  as={Link}
+                  to="/store"
+                  className="nav-text justify-content-end "
+                >
+                  💥Promociones💥
+                </Nav.Link>
+                
                 <Nav.Link as={Link} to="/store" className="nav-text">
                   Tienda
                 </Nav.Link>
+                
                 <NavDropdown
                   title="Categorías"
                   className="nav-dropdown-title"
@@ -66,26 +80,49 @@ export const NavBar = () => {
                     PERIFÉRICOS
                   </NavDropdown.Item>
                 </NavDropdown>
-                <Search />
-              </Nav>
-              <Nav className="align-items-center">
-                <Button
-                  onClick={() => window.open("https://discord.gg/zgvnMzyB", "_blank")}
-                  className="nav-btn"
-                  variant="cyan"
-                >
-                  <FontAwesomeIcon icon={faDiscord} />
-                </Button>
+                
                 <Nav.Link
                   as={Link}
-                  to="/quienes-somos"
+                  to="/about-us"
                   className="nav-text justify-content-end"
                 >
                   ¿Quiénes somos?
                 </Nav.Link>
+                <Search />
+              
+              </Nav>
+              <Nav className="align-items-center">
+                
+                <Nav.Link
+                  as={Link}
+                  to="/log-in"
+                  className="nav-text justify-content-end"
+                >
+                  Acceder
+                </Nav.Link>
+                
+                <Nav.Link
+                  as={Link}
+                  to="/register"
+                  className="nav-text justify-content-end"
+                >
+                  Registrarse
+                </Nav.Link>
+                
+                <Button
+                  onClick={() =>
+                    window.open("https://discord.gg/zgvnMzyB", "_blank")
+                  }
+                  className="btn p-0 mx-3"
+                  variant="dark-purple"
+                >
+                  <FontAwesomeIcon icon={faDiscord} />
+                </Button>
+
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
+          
         </Container>
       </Navbar>
     </>

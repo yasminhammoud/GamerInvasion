@@ -11,23 +11,25 @@ const Slides = () => {
     <>
       <div style={{position: 'relative', textAlign: 'center'}}>
         <Carousel fade>
+          
           <Carousel.Item>
             <img className="d-block w-100" src={darkKnight} alt="First slide" />
           </Carousel.Item>
+          
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={leagueOfLegends}
-              alt="Second slide"
+            <img className="d-block w-100" src={leagueOfLegends} alt="Second slide"
             />
           </Carousel.Item>
+          
           <Carousel.Item>
             <img className="d-block w-100" src={sonyGames} alt="Third slide" />
           </Carousel.Item>
+          
           <Carousel.Item>
             <img className="d-block w-100" src={deadCells} alt="Fourth slide" />
           </Carousel.Item>
         </Carousel>
+        
         <div className="centered">Gamer Invasion</div>
       </div>
     </>

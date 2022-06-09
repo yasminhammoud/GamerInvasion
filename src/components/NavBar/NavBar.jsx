@@ -44,9 +44,7 @@ export const NavBar = () => {
             ></Offcanvas.Header>
 
             <Offcanvas.Body>
-
               <Nav className="align-items-center justify-content-center flex-grow-1 pe-3">
-                
                 <Nav.Link
                   as={Link}
                   to="/store"
@@ -54,11 +52,11 @@ export const NavBar = () => {
                 >
                   💥Promociones💥
                 </Nav.Link>
-                
+
                 <Nav.Link as={Link} to="/store" className="nav-text">
                   Tienda
                 </Nav.Link>
-                
+
                 <NavDropdown
                   title="Categorías"
                   className="nav-dropdown-title"
@@ -80,7 +78,7 @@ export const NavBar = () => {
                     PERIFÉRICOS
                   </NavDropdown.Item>
                 </NavDropdown>
-                
+
                 <Nav.Link
                   as={Link}
                   to="/about-us"
@@ -89,10 +87,8 @@ export const NavBar = () => {
                   ¿Quiénes somos?
                 </Nav.Link>
                 <Search />
-              
               </Nav>
               <Nav className="align-items-center">
-                
                 <Nav.Link
                   as={Link}
                   to="/log-in"
@@ -100,7 +96,7 @@ export const NavBar = () => {
                 >
                   Acceder
                 </Nav.Link>
-                
+
                 <Nav.Link
                   as={Link}
                   to="/register"
@@ -108,7 +104,7 @@ export const NavBar = () => {
                 >
                   Registrarse
                 </Nav.Link>
-                
+
                 <Button
                   onClick={() =>
                     window.open("https://discord.gg/zgvnMzyB", "_blank")
@@ -118,11 +114,9 @@ export const NavBar = () => {
                 >
                   <FontAwesomeIcon icon={faDiscord} />
                 </Button>
-
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
-          
         </Container>
       </Navbar>
     </>

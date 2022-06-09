@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { ContextoCarrito } from "../../Context/ContextoCarrito";
 import {
   Button,
@@ -59,6 +60,7 @@ export const ProductCard = (props) => {
         reverseOrder={false}
       />
       <Card
+        as={Link} to="/producto_detalle"
         className="m-2 p-3 text-center justify-content-center glow"
         onClick={abrirDetalle}
       >
@@ -66,7 +68,7 @@ export const ProductCard = (props) => {
           variant="top"
           src={producto.ImagenesUrl}
           alt={producto.Nombre}
-          style={{ width: "15rem", height: "12rem" }}
+          style={{ width: "15rem", height: "12rem" }} 
         />
         <Card.Body>
           <Card.Title

@@ -37,7 +37,7 @@ function Register() {
     } = values;
 
     const findFormErrors = () => {
-        const { email, nombre, password, fecha_de_nacimiento, telefono } = form;
+        const { email, nombre, password, fecha_de_nacimiento } = form;
         const newErrors = {};
         console.debug();
 

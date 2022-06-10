@@ -20,6 +20,41 @@ const initFormCategoria={
   descripcion:"",
 };
 
+//ESTADO INICIAL FORMULARIO Especificacion de Pc 
+const initFormPc = {
+    peso: "",
+    dimensiones: "",
+    procesador: "",
+};
+
+//ESTADO INICIAL FORMULARIO Especificacion de Laptop 
+const initFormLaptop = {
+    peso: "",
+    dimensiones: "",
+    procesador: "",
+};
+
+//ESTADO INICIAL FORMULARIO Especificacion de Videojuegos
+const initFormVideojuego = {
+    peso: "",
+    dimensiones: "",
+    procesador: "",
+};
+
+//ESTADO INICIAL FORMULARIO Especificacion de Perifericos 
+const initFormPeriferico = {
+    peso: "",
+    dimensiones: "",
+    procesador: "",
+};
+
+//ESTADO INICIAL FORMULARIO Especificacion de Consolas
+const initFormConsola = {
+    peso: "",
+    dimensiones: "",
+    procesador: "",
+};
+
 const EditarProductos = () => {
     //const history=useHistory();
     const {idProductoUrl} = useParams();
@@ -29,6 +64,11 @@ const EditarProductos = () => {
     const [etiquetas,setEtiquetas] = useState([]);
     const [formEtiqueta,setFormEtiqueta] = useState({});
     const [formProducto,setFormProducto] = useState(initFormCategoria);
+    const [formPc, setFormPc] = useState(initFormPc);
+    const [formLaptop, setFormLaptop] = useState(initFormLaptop);
+    const [formVideojuego, setFormVideojuego] = useState(initFormVideojuego);
+    const [formPeriferico, setFormPeriferico] = useState(initFormPeriferico);
+    const [formConsola, setFormConsola] = useState(initFormConsola);
     const [fotos,setFotos] = useState([]);
     const [fotosVista,setFotosVista] = useState([]);
     const imagenRef = useRef();
@@ -45,6 +85,21 @@ const EditarProductos = () => {
                 cantidad: productoDB.Cantidad,
                 descripcion: productoDB.Descripcion,
             });
+            if (productoDB.EspecificacionesConsola.dimensiones !== "") {
+                setFormConsola({
+                    dimensiones: productoDB.EspecificacionesConsola.dimensiones,
+                    peso: productoDB.EspecificacionesConsola.peso,
+                    procesador: productoDB.EspecificacionesConsola.procesador,
+                })
+            }
+            if (productoDB.EspecificacionesVideojuego.dimensiones !== "") {
+                setFormVideojuego({
+                    dimensiones: productoDB.EspecificacionesVideojuego.dimensiones,
+                    peso: productoDB.EspecificacionesVideojuego.peso,
+                    procesador: productoDB.EspecificacionesVideojuego.procesador,
+                })
+            } 
+            //Validacion para traer solo el json lleno de especificaciones correspondiente
             setCategoriaSelect (productoDB.Categoria);
             var etiquetaGuardar = productoDB.Etiqueta.reduce((json, value, key) => {
                 json[value] = true;
@@ -64,6 +119,46 @@ const EditarProductos = () => {
         const {name,value} = e.target;
         setFormProducto({
           ...formProducto,
+          [name]: value,
+        });
+    };
+
+    const cambiarDatosPc = (e) => {
+        const{name, value}=e.target;
+        setFormPc({
+          ...formPc,
+          [name]: value,
+        });
+    };
+
+    const cambiarDatosLaptop = (e) => {
+        const{name, value}=e.target;
+        setFormLaptop({
+          ...formLaptop,
+          [name]: value,
+        });
+    };
+
+    const cambiarDatosVideojuego = (e) => {
+        const{name, value}=e.target;
+        setFormVideojuego({
+          ...formVideojuego,
+          [name]: value,
+        });
+    };
+
+    const cambiarDatosPeriferico = (e) => {
+        const{name, value}=e.target;
+        setFormPeriferico({
+          ...formPeriferico,
+          [name]: value,
+        });
+    };
+
+    const cambiarDatosConsola = (e) => {
+        const{name, value}=e.target;
+        setFormConsola({
+          ...formConsola,
           [name]: value,
         });
     };
@@ -154,6 +249,11 @@ const EditarProductos = () => {
 
         //if(buscarImgBlob.length === 0) {
             productoEditarSF(
+                formPc,
+                formLaptop,
+                formVideojuego,
+                formPeriferico,
+                formConsola,
                 formProducto,
                 categoriaSelect,
                 etiquetaFinal,
@@ -202,7 +302,7 @@ const EditarProductos = () => {
                         placeholder = "URL del producto"
                     />
                     <h4>Categoria:</h4>
-                    <select onChange = {cambiarCategoria} value={categoriaSelect}>
+                    <select disabled onChange = {cambiarCategoria} value={categoriaSelect}>
                         {categorias?.length === 0 ? (
                             <option defaultValue = {false}>No tiene categorias</option>
                         ):(
@@ -213,6 +313,205 @@ const EditarProductos = () => {
                             ))
                         )}
                     </select>
+
+                    <div
+					className={`App ${
+						categoriaSelect !== "pc desktop"
+							? "invisible"
+							: "visible"
+						}`}
+					>
+						<h3>Peso:</h3>
+							<input
+								type="text"
+                                name = "peso"
+                                placeholder = "Peso del Pc"
+                                value = {formPc.peso}
+                                onChange = {cambiarDatosPc}
+							/>
+                        <h3>Dimensiones:</h3>
+							<input
+								type="text"
+                                name = "dimensiones"
+                                placeholder = "Dimensiones del Pc"
+                                value = {formPc.dimensiones}
+                                onChange = {cambiarDatosPc}
+							/>
+                        <h3>Procesador:</h3>
+							<input
+								type="text"
+                                name = "procesador"
+                                placeholder = "Procesador del Pc"
+                                value = {formPc.procesador}
+                                onChange = {cambiarDatosPc}
+							/>
+                </div>
+
+                <div
+					className={`App ${
+						categoriaSelect !== "laptops"
+							? "invisible"
+							: "visible"
+						}`}
+					>
+						<h3>Peso:</h3>
+							<input
+								type="text"
+                                name = "peso"
+                                placeholder = "Peso de la laptop"
+                                value = {formLaptop.peso}
+                                onChange = {cambiarDatosLaptop}
+							/>
+                        <h3>Dimensiones:</h3>
+							<input
+								type="text"
+                                name = "dimensiones"
+                                placeholder = "Dimensiones de la laptop"
+                                value = {formLaptop.dimensiones}
+                                onChange = {cambiarDatosLaptop}
+							/>
+                        <h3>Procesador:</h3>
+							<input
+								type="text"
+                                name = "procesador"
+                                placeholder = "Procesador de la laptop"
+                                value = {formLaptop.procesador}
+                                onChange = {cambiarDatosLaptop}
+							/>
+                </div>
+
+                <div
+					className={`App ${
+						categoriaSelect !== "videojuegos"
+							? "invisible"
+							: "visible"
+						}`}
+					>
+						<h3>Peso:</h3>
+							<input
+								type="text"
+                                name = "peso"
+                                placeholder = "Peso del videojuego"
+                                value = {formVideojuego.peso}
+                                onChange = {cambiarDatosVideojuego}
+							/>
+                        <h3>Dimensiones:</h3>
+							<input
+								type="text"
+                                name = "dimensiones"
+                                placeholder = "Dimensiones del videojuego"
+                                value = {formVideojuego.dimensiones}
+                                onChange = {cambiarDatosVideojuego}
+							/>
+                        <h3>Procesador:</h3>
+							<input
+								type="text"
+                                name = "procesador"
+                                placeholder = "Procesador del videojuego"
+                                value = {formVideojuego.procesador}
+                                onChange = {cambiarDatosVideojuego}
+							/>
+                </div>
+
+                <div
+					className={`App ${
+						categoriaSelect !== "perifericos"
+							? "invisible"
+							: "visible"
+						}`}
+					>
+						<h3>Peso:</h3>
+							<input
+								type="text"
+                                name = "peso"
+                                placeholder = "Peso del periferico"
+                                value = {formPeriferico.peso}
+                                onChange = {cambiarDatosPeriferico}
+							/>
+                        <h3>Dimensiones:</h3>
+							<input
+								type="text"
+                                name = "dimensiones"
+                                placeholder = "Dimensiones del periferico"
+                                value = {formPeriferico.dimensiones}
+                                onChange = {cambiarDatosPeriferico}
+							/>
+                        <h3>Procesador:</h3>
+							<input
+								type="text"
+                                name = "procesador"
+                                placeholder = "Procesador del periferico"
+                                value = {formPeriferico.procesador}
+                                onChange = {cambiarDatosPeriferico}
+							/>
+                </div>
+
+                <div
+					className={`App ${
+						categoriaSelect !== "consolas"
+							? "invisible"
+							: "visible"
+						}`}
+					>
+						<h3>Peso:</h3>
+							<input
+								type="text"
+                                name = "peso"
+                                placeholder = "Peso de la consola"
+                                value = {formConsola.peso}
+                                onChange = {cambiarDatosConsola}
+							/>
+                        <h3>Dimensiones:</h3>
+							<input
+								type="text"
+                                name = "dimensiones"
+                                placeholder = "Dimensiones de la consola"
+                                value = {formConsola.dimensiones}
+                                onChange = {cambiarDatosConsola}
+							/>
+                        <h3>Procesador:</h3>
+							<input
+								type="text"
+                                name = "procesador"
+                                placeholder = "Procesador de la consola"
+                                value = {formConsola.procesador}
+                                onChange = {cambiarDatosConsola}
+							/>
+                </div>
+                
+                <h4>Etiqueta:</h4>
+                <div>
+                    <div className="contenedor-select" onClick={abrirEtiqueta}>
+                        <select>
+                        {etiquetas?.length === 0 ? (
+                            <option defaultValue={false}>No tiene etiquetas</option>
+                        ) : (
+                            <option>Selecciona una etiqueta</option>
+                        )}
+                        </select>
+                        <div className="ocultar-select"> </div>
+                    </div>
+                    <div
+                        className="contenedor-check"
+                        style= {{
+                            display:
+                                estadoEtiqueta && etiquetas.length !== 0 ? "block" : "none",
+                        }}
+                    >
+                        {etiquetas.map((etiqueta) => (
+                            <label key={etiqueta.IdEtiqueta}>
+                                {etiqueta.Nombre}
+                                <input
+                                    type="checkbox"
+                                    name={etiqueta.Nombre}
+                                    checked={formEtiqueta[etiqueta.IdEtiqueta]}
+                                    onChange={cambiarEtiqueta}
+                                />  
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
                     <h4>Etiqueta:</h4>
                     <div>
                         <div className= "contenedor-select" onClick={abrirEtiqueta}>

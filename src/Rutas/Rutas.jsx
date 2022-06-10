@@ -7,6 +7,9 @@ import { Landingpage } from "../components/Landingpage/Landingpage";
 import { AboutUs } from "../components/AboutUs/AboutUs";
 import { CartMax } from "../components/CartMax/CartMax";
 import { ProductosFilter } from "../components/Productos/ProductosFilter";
+import Productos from "../components/Admin/Productos/Productos";
+import CrearProductos from "../components/Admin/Productos/CrearProductos";
+import EditarProductos from "../components/Admin/Productos/EditarProductos";
 
 export const Rutas = () => {
   return (
@@ -23,6 +26,12 @@ export const Rutas = () => {
           <Route path="/carrito" element={<CartMax />} />
 
           <Route path="/quienes-somos" element={<AboutUs />} />
+
+          <Route path="/administrador/productos" element={<Productos />} />
+
+        <Route path="/administrador/productos-crear" element={<CrearProductos />} />
+
+        <Route path="/administrador/productos-editar/:idProductoUrl" element={<EditarProductos />} /> 
         </Routes>
       </ScrollToTop>
     </>

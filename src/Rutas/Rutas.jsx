@@ -10,6 +10,7 @@ import { ProductosFilter } from "../components/Productos/ProductosFilter";
 import Productos from "../components/Admin/Productos/Productos";
 import CrearProductos from "../components/Admin/Productos/CrearProductos";
 import EditarProductos from "../components/Admin/Productos/EditarProductos";
+import { ProductDetail } from "../components/Productos/ProductDetail";
 
 export const Rutas = () => {
   return (
@@ -32,6 +33,8 @@ export const Rutas = () => {
         <Route path="/administrador/productos-crear" element={<CrearProductos />} />
 
         <Route path="/administrador/productos-editar/:idProductoUrl" element={<EditarProductos />} /> 
+
+        <Route path="/productos_detalle/:id" element={<ProductDetail />} />
         </Routes>
       </ScrollToTop>
     </>

@@ -61,13 +61,13 @@ export const NavBar = () => {
               <Nav className="align-items-center">
                 <Nav.Link
                   as={Link}
-                  to="/quienes-somos"
+                  to="/noticias"
                   className="nav-text justify-content-end"
                 >
-                  ¿Quiénes somos?
+                  Noticias
                 </Nav.Link>
               </Nav>
-              
+
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

@@ -7,6 +7,7 @@ import { Landingpage } from "../components/Landingpage/Landingpage";
 import { AboutUs } from "../components/AboutUs/AboutUs";
 import { CartMax } from "../components/CartMax/CartMax";
 import { ProductosFilter } from "../components/Productos/ProductosFilter";
+import { NewsPage } from "../components/News/NewsPage"
 
 export const Rutas = () => {
   return (
@@ -21,6 +22,8 @@ export const Rutas = () => {
           <Route path="/store/c/:category" element={<Store />} />
 
           <Route path="/carrito" element={<CartMax />} />
+
+          <Route path="/noticias" element={<NewsPage/>}/>
 
           <Route path="/quienes-somos" element={<AboutUs />} />
           

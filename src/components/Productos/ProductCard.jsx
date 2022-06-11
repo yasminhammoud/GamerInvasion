@@ -19,6 +19,7 @@ export const ProductCard = (props) => {
   const { agregarProductoCarrito } = useContext(ContextoCarrito);
 
   const [modalIsOpen, setIsOpen] = useState(false);
+  console.log(producto)
 
   function abrirDetalle() {
     setIsOpen(true);
@@ -51,6 +52,10 @@ export const ProductCard = (props) => {
     setIsOpen(false);
   }
 
+  const priceDescount = () => {
+    return (producto.Precio - producto.Precio * producto.Descuento / 100)
+  }
+
   return (
     <>
       <Toaster
@@ -73,7 +78,21 @@ export const ProductCard = (props) => {
           >
             {producto.Nombre}
           </Card.Title>
-          <Card.Text>${producto.Precio}</Card.Text>
+
+          {producto.Descuento !== 0 ?
+            <Card.Text>
+
+              <div style={{color: "green"}}>
+                {producto.Descuento}% OFF
+              </div>
+              <div>
+                <del> ${producto.Precio}</del>
+                <p>${priceDescount()}</p>
+              </div>
+            </Card.Text>
+            :
+            <Card.Text> ${producto.Precio}</Card.Text>
+          }
           <Button
             className="align-self-end"
             variant="cyan"

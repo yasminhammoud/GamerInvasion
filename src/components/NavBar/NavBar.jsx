@@ -109,7 +109,7 @@ export const NavBar = () => {
                 <Nav.Link
                   eventKey="8"
                   as={Link}
-                  to="/about-us"
+                  to="/quienes-somos"
                   className="nav-text justify-content-end"
                 >
                   ¿Quiénes somos?

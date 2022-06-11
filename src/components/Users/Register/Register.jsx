@@ -4,7 +4,8 @@ import { auth } from "../../../firebase/firebaseconfig";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
-import registro2 from "../../../images/registro2.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserShield } from "@fortawesome/free-solid-svg-icons";
 
 function Register() {
   const navigate = useNavigate();
@@ -108,7 +109,7 @@ function Register() {
                 fontSize: "2rem",
               }}
             >
-              Registro
+              Registro <FontAwesomeIcon icon={faUserShield} />
             </Card.Title>
             <Card.Text>
               <Form className="form" onSubmit={handleSubmit}>

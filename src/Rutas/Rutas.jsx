@@ -22,9 +22,9 @@ export const Rutas = () => {
 
           <Route path="/store/c/:category" element={<Store />} />
 
-          <Route path="/cart" element={<CartMax />} />
+          <Route path="/carrito" element={<CartMax />} />
 
-          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/quienes-somos" element={<AboutUs />} />
 
           <Route path="/log-in" element={<LogIn />} />
 

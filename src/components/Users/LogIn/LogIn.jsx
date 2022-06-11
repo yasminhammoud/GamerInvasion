@@ -2,14 +2,13 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { db, auth, googleProvider } from "../../../firebase/firebaseconfig";
 import { useState } from "react";
-import { Form, Button, Container, Col, Row, Card } from "react-bootstrap";
+import { Form, Button, Card } from "react-bootstrap";
 import { UserContext } from "../../../Context/UserContext";
-import registro2 from "../../../images/registro2.jpg";
-import aboutUs from "../../../images/log-in-pic.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 import "./LogIn.css"
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function LogIn() {
   const setUser = useContext(UserContext);
@@ -101,7 +100,7 @@ function LogIn() {
                   fontSize: "2rem",
                 }}
               >
-                Inicio de Sesión
+                Inicio de Sesión <FontAwesomeIcon icon={faUser} />
               </Card.Title>
 
               <Card.Text>

@@ -1,3 +1,7 @@
+/**
+ * It fetches data from an API News and returns an array of objects of articles found..
+ * @returns An array of objects.
+ */
 export const fetchAPINews = async () => {
     const fetch = require('node-fetch');
     let yourDate = new Date()

@@ -213,6 +213,11 @@ export const getProductsByKeywords = async (searchInput) => {
     return products
 }
 
+/**
+ * It gets all the products that have a discount and returns them in an array.
+ * 
+ * @return An array of objects.
+ */
 export const getProductsPromotions = async () => {
     const q = query(collection(db, collectionProductos), where("Descuento", "!=", 0));
     let products = [];

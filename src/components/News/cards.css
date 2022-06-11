@@ -1,19 +1,21 @@
-#card-cointainer{ 
+#card-cointainer {
     margin-top: 100px;
 }
-.card{
+
+.card {
     margin-bottom: 2rem;
     min-height: 50vw;
 }
-.card-body{
+
+.card-body {
     padding: 2rem 1.5rem;
 }
 
-.overflow{
+.overflow {
     overflow: hidden;
 }
 
-#image{
+#image {
     transition: all 0.6s ease-in-out;
     height: 25vw;
 }
@@ -22,6 +24,12 @@
     transform: scale(1.2);
 }
 
-#card-body{
+#card-body {
     margin-top: 0.25rem;
+}
+
+@media (min-width: 1200px) {
+    #image {
+        height: 20vw;
+    }
 }

@@ -34,7 +34,7 @@ export const NewsPage = () => {
                     <Row>
                         {
                             news.map((new1, index) => (
-                                <Col md={4} sm={6} key={index}>
+                                <Col md={6} xl={4} key={index}>
                                     <NewsCard data={new1} />
                                 </Col>
                             ))

@@ -1,16 +1,16 @@
 import { initializeApp } from "firebase/app";
-import { getAuth , GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { getFirestore } from "@firebase/firestore";
 import firebase from 'firebase/compat/app';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCbT8LEBufMJy5E4UcoTE1d0TOZvIjemjI",
-  authDomain: "gamer-prueba2.firebaseapp.com",
-  projectId: "gamer-prueba2",
-  storageBucket: "gamer-prueba2.appspot.com",
-  messagingSenderId: "768154140398",
-  appId: "1:768154140398:web:1b4075b2575bcb2df27dff"
+  apiKey: `${process.env.REACT_APP_APIKEY}`,
+  authDomain: `${process.env.REACT_APP_AUTHDOMAIN}`,
+  projectId: `${process.env.REACT_APP_PROJECTID}`,
+  storageBucket: `${process.env.REACT_APP_STORAGEBUCKET}`,
+  messagingSenderId: `${process.env.REACT_APP_MESSAGINGSENDERID}`,
+  appId: `${process.env.REACT_APP_APPID}`
 };
 
 // Initialize Firebase

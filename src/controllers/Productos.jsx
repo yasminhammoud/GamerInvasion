@@ -127,7 +127,6 @@ export const getAllProducts = async () => {
 }
 
 export const getNamesAllProducts = async () => {
-
     let products = [];
 
     const q = collection(db, collectionProductos);
@@ -229,8 +228,6 @@ export const getProductsPromotions = async () => {
         .catch((error) => {
             console.log(error);
         });;
-
-    console.log(products)
 
     return products
 }

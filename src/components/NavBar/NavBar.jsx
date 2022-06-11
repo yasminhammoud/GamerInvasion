@@ -26,7 +26,7 @@ export const NavBar = () => {
         fixed="top"
         className="py-0"
       >
-        <Container className="navbar-container align-items-center" fluid>
+        <Container className="navbar-container align-items-center" fluid id='mierda'>
           <Navbar.Brand as={Link} to="/" className="nav-text">
             <img alt="logo" src={logo} />
           </Navbar.Brand>

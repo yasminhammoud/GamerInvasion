@@ -19,8 +19,6 @@ export const ProductCard = (props) => {
   const { agregarProductoCarrito } = useContext(ContextoCarrito);
 
   const [modalIsOpen, setIsOpen] = useState(false);
-  console.log("producto")
-  console.log(producto)
 
   function abrirDetalle() {
     setIsOpen(true);

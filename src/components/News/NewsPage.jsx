@@ -35,7 +35,7 @@ export const NewsPage = () => {
                 </Row>
             </> :
                 <Container
-                    className='d-flex justify-content-center border-0' id="card-cointainer">
+                    className='d-flex justify-content-center border-0' id="news-card-cointainer">
                     <Row>
                         {
                             news.map((new1, index) => (

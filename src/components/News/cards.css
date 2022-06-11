@@ -1,0 +1,27 @@
+#card-cointainer{ 
+    margin-top: 100px;
+}
+.card{
+    margin-bottom: 2rem;
+    min-height: 50vw;
+}
+.card-body{
+    padding: 2rem 1.5rem;
+}
+
+.overflow{
+    overflow: hidden;
+}
+
+#image{
+    transition: all 0.6s ease-in-out;
+    height: 25vw;
+}
+
+#image:hover {
+    transform: scale(1.2);
+}
+
+#card-body{
+    margin-top: 0.25rem;
+}

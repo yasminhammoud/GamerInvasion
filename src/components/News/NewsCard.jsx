@@ -1,16 +1,20 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
+import { Card } from "react-bootstrap";
+import './cards.css';
 
-export const NewsCard = ({data}) => {
-    
-    function GFG_Fun(str2) {
-        var regex = /(<([^>]+)>)/ig;
-        return str2.replace(regex, "");
-    }
-    return (
-        <div style={{ color: "white" , width:"500px", backgroundColor:"red", margin:"15px" }}>
-            <h3>{data.title}</h3>
-            <p>{GFG_Fun(data.description)}</p>
-            <img src={data.urlToImage} width="200px"></img>
-        </div>
-    );
-};
+export const NewsCard = ({ data }) => {
+
+  return (
+    <Card className='text-center bg-dark '>
+      <div className='overflow'>
+        <Card.Img src={data.urlToImage} alt={data.title} variant='top' id='image' />
+      </div>
+      <Card.Body className='text-light' id='card-body'>
+        <a href={data.url} style={{ "text-decoration": "none", color: "#e7e727" }}><Card.Title target='blank'><h4>{data.title}</h4></Card.Title></a>
+        <Card.Text style={{ color: "white" }}>{data.description}</Card.Text>
+        <Card.Text id='source'>Fuente: {data.source.name}</Card.Text>
+      </Card.Body>
+
+    </Card>
+  )
+}

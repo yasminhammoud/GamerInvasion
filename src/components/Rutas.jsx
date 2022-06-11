@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Cart } from "./Cart";
-import { Store } from "./Store";
+import { Store } from ".Store/Store";
 import { Checkout } from "./Checkout";
 import { Landingpage } from "./Landingpage";
 import { Product_detail as ProductoDetail } from "./Product_detail";
@@ -28,8 +28,6 @@ export const Rutas = () => {
         <Route path="/producto_detalle" element={<ProductoDetail />} />
 
         <Route path="/quienes-somos" element={<AboutUs />} />
-
-        <Route path="OptionSelected" element={<Store />} />
         
         <Route path="/administrador" element={<AdminHome />} />
 

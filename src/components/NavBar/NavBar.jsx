@@ -26,7 +26,7 @@ export const NavBar = () => {
         fixed="top"
         className="py-0"
       >
-        <Container className="navbar-container align-items-center" fluid>
+        <Container className="navbar-container align-items-center" fluid id='mierda'>
           <Navbar.Brand as={Link} to="/" className="nav-text">
             <img alt="logo" src={logo} />
           </Navbar.Brand>
@@ -41,8 +41,8 @@ export const NavBar = () => {
               className="btn-close-white align-items-center justify-content-end"
             ></Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="align-items-center justify-content-center flex-grow-1 pe-3">
-                <Nav.Link as={Link} to="/store" className="nav-text">
+              <Nav className="align-items-center justify-content-center flex-grow-1 pe-3 ">
+                <Nav.Link as={Link} to="/store" className="nav-text" collapseOnSelect>
                   Tienda
                 </Nav.Link>
                 <NavDropdown

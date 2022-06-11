@@ -8,8 +8,6 @@ import {
 } from "../../services/products";
 import { Productos } from "../Productos/Productos";
 
-//import { Contexto } from "../context2.0/Contexto"
-
 export const Store = () => {
 
   const [query, setQuery] = useSearchParams();

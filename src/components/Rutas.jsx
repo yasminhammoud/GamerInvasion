@@ -25,7 +25,7 @@ export const Rutas = () => {
 
         <Route path="/pedido" element={<Checkout />} />
 
-        <Route path="/producto_detalle" element={<ProductoDetail />} />
+        <Route path="/productos_detalle/:id" element={<ProductoDetail />} />
 
         <Route path="/quienes-somos" element={<AboutUs />} />
         

@@ -14,6 +14,11 @@ const rutaFoto = "productos-imagenes";
 
 /* CREAR UN PRODUCTO SIN IMAGEN */
 export const productoCrearSF = async(
+    formPc,
+    formLaptop,
+    formVideojuego,
+    formPeriferico,
+    formConsola,
     formProducto,
     categoriaSelect,
     etiquetaFinal,
@@ -25,6 +30,11 @@ export const productoCrearSF = async(
             Marca: formProducto.marca,
             UrlProducto: formProducto.urlProducto,
             Descripcion: formProducto.descripcion,
+            EspecificacionesPc: formPc,
+            EspecificacionesLaptop: formLaptop,
+            EspecificacionesVideojuego: formVideojuego,
+            EspecificacionesPeriferico: formPeriferico,
+            EspecificacionesConsola: formConsola,
             Precio: formProducto.precio,
             Cantidad: formProducto.cantidad,
             Categoria: categoriaSelect,
@@ -38,6 +48,11 @@ export const productoCrearSF = async(
 
 /*SUBIR UNA IMAGEN*/
 export const productoCrearCF = (
+    formPc,
+    formLaptop,
+    formVideojuego,
+    formPeriferico,
+    formConsola,
     formProducto,
     categoriaSelect,
     etiquetaFinal,
@@ -59,6 +74,11 @@ export const productoCrearCF = (
     Promise.all(promises)
         .then((linkImagenes) => {
             productoCrearSF(
+                formPc,
+                formLaptop,
+                formVideojuego,
+                formPeriferico,
+                formConsola,
                 formProducto,
                 categoriaSelect,
                 etiquetaFinal,
@@ -87,6 +107,11 @@ export const productoUno = async (idProducto) =>{
 
 /* EDITAR UN PRODUCTO SIN IMAGEN */
 export const productoEditarSF = async(
+    formPc,
+    formLaptop,
+    formVideojuego,
+    formPeriferico,
+    formConsola,
     formProducto,
     categoriaSelect,
     etiquetaFinal,
@@ -98,6 +123,11 @@ export const productoEditarSF = async(
             Marca: formProducto.marca,
             UrlProducto: formProducto.urlProducto,
             Descripcion: formProducto.descripcion,
+            EspecificacionesPc: formPc,
+            EspecificacionesLaptop: formLaptop,
+            EspecificacionesVideojuego: formVideojuego,
+            EspecificacionesPeriferico: formPeriferico,
+            EspecificacionesConsola: formConsola,
             Precio: formProducto.precio,
             Cantidad: formProducto.cantidad,
             Categoria: categoriaSelect,

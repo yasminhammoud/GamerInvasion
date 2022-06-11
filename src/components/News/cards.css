@@ -1,33 +1,32 @@
-#card-cointainer {
+#news-card-cointainer{ 
     margin-top: 100px;
+    
 }
-
-.card {
+#news-card{
     margin-bottom: 2rem;
     min-height: 35vw;
 }
-
-.card-body {
+#news-card-body{
     padding: 2rem 1.5rem;
 }
 
-.overflow {
+#news-overflow{
     overflow: hidden;
     object-fit: contain;
     height: 15vw;
 }
 
-#image {
+#news-image{
     transition: all 0.6s ease-in-out;
     height: 100%;
     
 }
 
-#image:hover {
+#news-image:hover {
     transform: scale(1.2);
 }
 
-#card-body {
+#news-card-body{
     margin-top: 0.25rem;
 }
 

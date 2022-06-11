@@ -1,4 +1,4 @@
-import{
+import {
     collection,
     addDoc,
     doc,
@@ -8,22 +8,22 @@ import{
     getDocs,
     where,
     query
-  } from "firebase/firestore";
-import {getStorage, ref, uploadBytes, getDownloadURL}from "firebase/storage";
-import {db} from "../firebase/firebaseconfig";
+} from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db } from "../firebase/firebaseconfig";
 const coleccion = "Productos";
 const rutaFoto = "productos-imagenes";
 const collectionProductos = "Productos"
 
 /* CREAR UN PRODUCTO SIN IMAGEN */
-export const productoCrearSF = async(
+export const productoCrearSF = async (
     formProducto,
     categoriaSelect,
     etiquetaFinal,
     fotosSubir
 ) => {
-    try{
-        await addDoc (collection(db, coleccion),{
+    try {
+        await addDoc(collection(db, coleccion), {
             Nombre: formProducto.nombre,
             Marca: formProducto.marca,
             UrlProducto: formProducto.urlProducto,
@@ -34,8 +34,8 @@ export const productoCrearSF = async(
             Etiqueta: etiquetaFinal,
             ImagenesUrl: fotosSubir,
         });
-    }catch (e) {
-        console.error ("Error al agregar producto ", e);
+    } catch (e) {
+        console.error("Error al agregar producto ", e);
     }
 };
 
@@ -48,15 +48,15 @@ export const productoCrearCF = (
 ) => {
     const promises = fotosVista.map((file) => {
         const fechaAhora = Date.now();
-        const rutaCompleta =  file.name + fechaAhora + file.lastModified + file.size;
-        const storage = getStorage();   
+        const rutaCompleta = file.name + fechaAhora + file.lastModified + file.size;
+        const storage = getStorage();
         const imageRef = ref(storage, `${rutaFoto}/${rutaCompleta}`);
-        return uploadBytes(imageRef,file)
+        return uploadBytes(imageRef, file)
             .then((snapshot) => {
                 return getDownloadURL(snapshot.ref);
             })
-            .catch((error)=>{
-                console.error("Error al subir imagenes",error);
+            .catch((error) => {
+                console.error("Error al subir imagenes", error);
             });
     });
     Promise.all(promises)
@@ -69,27 +69,27 @@ export const productoCrearCF = (
             );
         })
         .catch(() => {
-            return"Hubo un error";
+            return "Hubo un error";
         });
 };
 
 /* ELIMINAR UNA PRODUCTO */
-export const productoEliminar = async (idProducto) =>{
-    await deleteDoc (doc (db, coleccion, idProducto));
+export const productoEliminar = async (idProducto) => {
+    await deleteDoc(doc(db, coleccion, idProducto));
 };
-                    
-export const productoUno = async (idProducto) =>{
+
+export const productoUno = async (idProducto) => {
     const productoRef = doc(db, coleccion, idProducto);
     const docProducto = await getDoc(productoRef);
-    if (docProducto.exists()){
+    if (docProducto.exists()) {
         return docProducto.data();
-    }else{
-      console.log("No existe el documento");
+    } else {
+        console.log("No existe el documento");
     }
 };
 
 /* EDITAR UN PRODUCTO SIN IMAGEN */
-export const productoEditarSF = async(
+export const productoEditarSF = async (
     formProducto,
     categoriaSelect,
     etiquetaFinal,
@@ -97,16 +97,16 @@ export const productoEditarSF = async(
 ) => {
     const productoRef = doc(db, coleccion, formProducto.idProducto)
     await updateDoc(productoRef, {
-            Nombre: formProducto.nombre,
-            Marca: formProducto.marca,
-            UrlProducto: formProducto.urlProducto,
-            Descripcion: formProducto.descripcion,
-            Precio: formProducto.precio,
-            Cantidad: formProducto.cantidad,
-            Categoria: categoriaSelect,
-            Etiqueta: etiquetaFinal,
-            ImagenesUrl: fotosAntiguas,
-        });
+        Nombre: formProducto.nombre,
+        Marca: formProducto.marca,
+        UrlProducto: formProducto.urlProducto,
+        Descripcion: formProducto.descripcion,
+        Precio: formProducto.precio,
+        Cantidad: formProducto.cantidad,
+        Categoria: categoriaSelect,
+        Etiqueta: etiquetaFinal,
+        ImagenesUrl: fotosAntiguas,
+    });
 };
 
 export const getAllProducts = async () => {
@@ -210,6 +210,27 @@ export const getProductsByKeywords = async (searchInput) => {
         .catch((error) => {
             console.log(error);
         });;
-        
+
+    return products
+}
+
+export const getProductsPromotions = async () => {
+    const q = query(collection(db, collectionProductos), where("Descuento", "!=", 0));
+    let products = [];
+
+
+    await getDocs(q)
+        .then((data) => {
+
+            data.docs.forEach((element) => {
+                products.push({ id: element.id, ...element.data(), });
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        });;
+
+    console.log(products)
+
     return products
 }

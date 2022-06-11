@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NewsCard } from './NewsCard';
 import { fetchAPINews } from '../../controllers/FetchAPINews';
-import { ProductCarousel } from '../Productos/ProductCarousel';
 import { Row, Col, Container, Spinner } from "react-bootstrap";
 import './cards.css';
 import aboutUs from "../../images/about-us.jpg"

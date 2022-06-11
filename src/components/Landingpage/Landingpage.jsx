@@ -1,8 +1,8 @@
 import React from "react";
-import { Category } from "./Category";
-import { Feature } from "./Feature/Feature";
-import { SiteInfo } from "./SiteInfo/SiteInfo";
-import Slides from "./Slides/Slides";
+import { Category } from "./Components/Category";
+import { Feature } from "./Components/Feature";
+import { SiteInfo } from "./Components/SiteInfo";
+import Slides from "./Components/Slides";
 
 export const Landingpage = () => {
   return (

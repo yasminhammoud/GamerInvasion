@@ -1,4 +1,4 @@
-import "./styles.scss";
+import "./ProductCarousel.css";
 import { useState, useEffect, useRef } from 'react';
 import { ProductCard } from './ProductCard';
 import { getAllProducts } from '../../controllers/Productos';
@@ -56,15 +56,15 @@ export const ProductCarousel = () => {
                     <FontAwesomeIcon icon={faArrowCircleLeft} color={"white"} />
                 </button>
             )}
-            <ul ref={scrl} onScroll={scrollCheck}>
+            <ul className='corousel-list' ref={scrl} onScroll={scrollCheck}>
                 {products.map((item) =>
-                    <li><ProductCard producto={item} /></li>
+                    <li className='coruousel-item'><ProductCard producto={item} /></li>
 
                 )}
             </ul>
             {!scrolEnd && (
                 <button
-                    className="button-carousel"
+                    className="carousel-button"
                     onClick={() => slide(+310)}
                 >
                     <FontAwesomeIcon icon={faArrowCircleRight} color={"white"} />

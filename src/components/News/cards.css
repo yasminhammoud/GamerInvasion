@@ -4,7 +4,7 @@
 
 .card {
     margin-bottom: 2rem;
-    min-height: 50vw;
+    min-height: 35vw;
 }
 
 .card-body {
@@ -13,11 +13,14 @@
 
 .overflow {
     overflow: hidden;
+    object-fit: contain;
+    height: 15vw;
 }
 
 #image {
     transition: all 0.6s ease-in-out;
-    height: 25vw;
+    height: 100%;
+    
 }
 
 #image:hover {
@@ -28,8 +31,6 @@
     margin-top: 0.25rem;
 }
 
-@media (min-width: 1200px) {
-    #image {
-        height: 20vw;
-    }
+#source{
+    text-align: right;
 }

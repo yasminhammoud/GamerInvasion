@@ -94,22 +94,9 @@ function Register() {
 
   return (
     <>
-      <div style={{ position: "relative", textAlign: "center" }}>
-        <img className="d-block w-100" src={registro2} alt="about-us" />
-      </div>
+      <div className="container-log-in">
 
-      <Toaster position="bottom-right" reverseOrder={false} />
-
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "40%",
-        }}
-      >
-        <Card className="card" bg="gray">
+        <Card className="card-log-in" bg="gray">
           <Card.Body className="cardbodyre">
             <Card.Title
               className="registrotitle"

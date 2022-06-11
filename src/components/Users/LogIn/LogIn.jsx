@@ -88,9 +88,9 @@ function LogIn() {
       <div className="container-log-in"
         
       >
-          <Card className="card-log-in"
+          <Card className="card-log-in" bg="gray"
           >
-            <Card.Body className="cardback">
+            <Card.Body className="cardback" >
               <Card.Title
                 className="cardtitle"
                 style={{

@@ -19,6 +19,7 @@ export const NavBar = () => {
   return (
     <>
       <Navbar
+        collapseOnSelect
         key="xl"
         bg="dark-purple"
         variant="dark"
@@ -46,6 +47,7 @@ export const NavBar = () => {
             <Offcanvas.Body>
               <Nav className="align-items-center justify-content-center flex-grow-1 pe-3">
                 <Nav.Link
+                  eventKey="1"
                   as={Link}
                   to="/store"
                   className="nav-text justify-content-end "
@@ -53,7 +55,12 @@ export const NavBar = () => {
                   💥Promociones💥
                 </Nav.Link>
 
-                <Nav.Link as={Link} to="/store" className="nav-text">
+                <Nav.Link
+                  eventKey="2"
+                  as={Link}
+                  to="/store"
+                  className="nav-text"
+                >
                   Tienda
                 </Nav.Link>
 
@@ -62,24 +69,45 @@ export const NavBar = () => {
                   className="nav-dropdown-title"
                   id={`offcanvasNavbarDropdown-expand-xl`}
                 >
-                  <NavDropdown.Item as={Link} to="/store/c/pc desktop">
+                  <NavDropdown.Item
+                    eventKey="3"
+                    as={Link}
+                    to="/store/c/pc desktop"
+                  >
                     PC DESKTOP
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/consolas">
+                  <NavDropdown.Item
+                    eventKey="4"
+                    as={Link}
+                    to="/store/c/consolas"
+                  >
                     CONSOLAS
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/laptops">
+                  <NavDropdown.Item
+                    eventKey="5"
+                    as={Link}
+                    to="/store/c/laptops"
+                  >
                     LAPTOPS
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/videojuegos">
+                  <NavDropdown.Item
+                    eventKey="6"
+                    as={Link}
+                    to="/store/c/videojuegos"
+                  >
                     VIDEOJUEGOS
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/perifericos">
+                  <NavDropdown.Item
+                    eventKey="7"
+                    as={Link}
+                    to="/store/c/perifericos"
+                  >
                     PERIFÉRICOS
                   </NavDropdown.Item>
                 </NavDropdown>
 
                 <Nav.Link
+                  eventKey="8"
                   as={Link}
                   to="/about-us"
                   className="nav-text justify-content-end"
@@ -90,6 +118,7 @@ export const NavBar = () => {
               </Nav>
               <Nav className="align-items-center">
                 <Nav.Link
+                  eventKey="9"
                   as={Link}
                   to="/log-in"
                   className="nav-text justify-content-end"
@@ -98,6 +127,7 @@ export const NavBar = () => {
                 </Nav.Link>
 
                 <Nav.Link
+                  eventKey="10"
                   as={Link}
                   to="/register"
                   className="nav-text justify-content-end"
@@ -106,6 +136,7 @@ export const NavBar = () => {
                 </Nav.Link>
 
                 <Button
+                  eventKey="11"
                   onClick={() =>
                     window.open("https://discord.gg/zgvnMzyB", "_blank")
                   }

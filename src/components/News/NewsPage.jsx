@@ -4,6 +4,7 @@ import { fetchAPINews } from '../../controllers/FetchAPINews';
 import { ProductCarousel } from '../Productos/ProductCarousel';
 import { Row, Col, Container, Spinner } from "react-bootstrap";
 import './cards.css';
+import aboutUs from "../../images/about-us.jpg"
 
 
 export const NewsPage = () => {
@@ -21,6 +22,11 @@ export const NewsPage = () => {
 
     return (
         <div>
+
+            <div className="slider">
+                <img className="d-block w-100" src={aboutUs} alt="about-us" />
+                <div className="centered">Noticias</div>
+            </div>
             {loading ? <>
                 {" "}
                 <Row style={{ position: "absolute", top: "50%" }}>
@@ -34,7 +40,7 @@ export const NewsPage = () => {
                     <Row>
                         {
                             news.map((new1, index) => (
-                                <Col md={4} sm={6} key={index}>
+                                <Col  md={4} sm={6} key={index}>
                                     <NewsCard data={new1} />
                                 </Col>
                             ))

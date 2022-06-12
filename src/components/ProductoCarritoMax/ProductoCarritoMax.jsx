@@ -38,7 +38,7 @@ export const ProductoCarritoMax = ({ item }) => {
                     <Card.Text>
                         <span> Cantidad: {item.amount}</span>
                         <br></br>
-                        <span> <b>{item.amount * item.Precio}$</b></span>
+                        <span> <b>{item.amount * item.Precio * (1-(item.Descuento/100))}$</b></span>
                     </Card.Text>
                 </div>
             </Card.Body>

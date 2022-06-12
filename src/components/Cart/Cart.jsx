@@ -22,6 +22,12 @@ export const Cart = () => {
     0
   );
 
+  const discount = productoCarrito.reduce(
+    (anterior, actual) =>
+      anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
+    0
+  );
+
   return (
     <div className={styles.contenedor_carrito}>
       <div
@@ -67,7 +73,7 @@ export const Cart = () => {
 
       {productoCarrito && carritoAbierto && (
         <div className={styles.carrito}>
-          <h2>Tu carrito</h2>
+          <h3>Tu carrito</h3>
 
           {productoCarrito.length === 0 ? (
             <p className={styles.carritoVacio}>Tu carrito esta vacio</p>
@@ -79,7 +85,7 @@ export const Cart = () => {
             </div>
           )}
 
-          <h2 className={styles.total}>Total : ${total}</h2>
+          <h3 className={styles.total}>Total: <span style={{fontWeight: "normal"}}>${total - discount}</span></h3>
           <Button
             className={styles.irCarrito}
             as={Link}

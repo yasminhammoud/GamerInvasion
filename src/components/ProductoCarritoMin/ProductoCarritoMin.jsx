@@ -30,7 +30,7 @@ export const ProductoCarritoMin = ({ item }) => {
           <div className={styles.derecha}>
             <div className={styles.numerito}>{item.amount}</div>
             <p style={{fontWeight:"bold"}}>Total</p>
-            <p>{item.amount * item.Precio}$</p>
+            <p>{item.amount * item.Precio * (1-(item.Descuento/100))}$</p>
           </div>
       </div>
     </div>

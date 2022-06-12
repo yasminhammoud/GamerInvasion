@@ -13,7 +13,7 @@ export const Productos = (props) => {
 
     return (
         <Container className=" mt-7">
-            <Row className=" justify-content-center">
+            <Row className="justify-content-center">
 
                 <Col xs={8} md={8} lg={3} className="mb-4">
                     <div style={{ color: "white", border: "1px", "border-color": "white", "background": "linear-gradient(180deg, rgb(43, 0, 56) 20%, rgb(24, 0, 71) 100%)", "border-radius": "0.5rem", "padding": "2rem", "margin-top": "0.5rem"}}>

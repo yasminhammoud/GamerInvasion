@@ -1,6 +1,6 @@
 /**
- * It fetches data from an API News and returns an array of objects of articles found..
- * @returns An array of objects.
+ * It fetches data from an API News and returns an array of objects of articles found.
+ * @returns An array of objects with the articles.
  */
 export const fetchAPINews = async () => {
     const fetch = require('node-fetch');
@@ -8,7 +8,7 @@ export const fetchAPINews = async () => {
     const from = yourDate.toISOString().split('T')[0]
 
     let news = []
-    const url = `https://newsapi.org/v2/everything?q=gaming&from=2022-06-08&sortBy=popularity&language=es&pageSize=10&page=1&apiKey=00bf0b5597474aebae0b4decc2a80886`;
+    const url = `https://newsapi.org/v2/everything?q=gaming&from=2022-06-09&sortBy=popularity&language=es&pageSize=10&page=1&apiKey=00bf0b5597474aebae0b4decc2a80886`;
 
     await fetch(url)
         .then((result) => result.json())

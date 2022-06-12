@@ -1,10 +1,20 @@
 #news-card-cointainer{ 
     margin-top: 100px;
-    
 }
+
+#line{
+    border-width: 0.5px;
+    border-style: solid;
+    border-color: rgb(68, 66, 66);
+    width: 70%;
+    margin: auto;
+}
+
 #news-card{
     margin-bottom: 2rem;
-    min-height: 35vw;
+    min-height: 39vw;
+    margin: 1rem;
+
 }
 #news-card-body{
     padding: 2rem 1.5rem;
@@ -13,7 +23,7 @@
 #news-overflow{
     overflow: hidden;
     object-fit: contain;
-    height: 15vw;
+    height: 18rem;
 }
 
 #news-image{
@@ -23,13 +33,22 @@
 }
 
 #news-image:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 #news-card-body{
-    margin-top: 0.25rem;
+    margin-top: 0rem;
 }
 
 #source{
     text-align: right;
+}
+
+#card-body-text{
+    margin-top: 2rem;
+}
+#card-title-container{
+    min-height: 8vw;
+    display: flex;
+    align-items: center;
 }

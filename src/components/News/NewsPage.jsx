@@ -6,6 +6,7 @@ import './cards.css';
 import aboutUs from "../../images/about-us.jpg"
 
 
+/* Fetching data from an API and then displaying it in cards. */
 export const NewsPage = () => {
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -39,7 +40,7 @@ export const NewsPage = () => {
                     <Row>
                         {
                             news.map((new1, index) => (
-                                <Col  md={4} sm={6} key={index}>
+                                <Col  md={4} sm="auto" key={index}>
                                     <NewsCard data={new1} />
                                 </Col>
                             ))

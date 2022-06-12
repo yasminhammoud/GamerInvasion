@@ -7,6 +7,11 @@ import Autosuggest from "react-autosuggest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
+/**
+ * It's a search bar that uses the Autosuggest component from react-autosuggest.
+ * 
+ * @returns The value of the input is being returned.
+ */
 export const Search = () => {
   const navigate = useNavigate();
   const [options, setOptions] = useState([]);

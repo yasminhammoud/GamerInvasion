@@ -11,6 +11,20 @@ export const Rutas = () => {
   return (
     <>
       <Routes>
+<<<<<<< HEAD:src/components/AdminRoutes.jsx
+=======
+        <Route path="/store" element={<Store />} />
+
+        <Route path="/pagina_principal" element={<Landingpage />} />
+
+        <Route path="/carrito" element={<Cart />} />
+
+        <Route path="/pedido" element={<Checkout />} />
+
+        <Route path="/productos_detalle/:id" element={<ProductoDetail />} />
+
+        <Route path="/quienes-somos" element={<AboutUs />} />
+>>>>>>> 2fcdac9726d55e5649e7e2f336eeab24bccd5bcb:src/components/Rutas.jsx
         
         <Route path="/administrador" element={<AdminHome />} />
 

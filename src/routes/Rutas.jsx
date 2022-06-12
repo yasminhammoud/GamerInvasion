@@ -11,6 +11,10 @@ import Register from "../components/Users/Register/Register";
 import LogIn from "../components/Users/LogIn/LogIn";
 import { PromotionPage } from "../components/Promotions/PromotionPage";
 
+import Productos from "../components/Admin/Productos/Productos";
+import CrearProductos from "../components/Admin/Productos/CrearProductos";
+import EditarProductos from "../components/Admin/Productos/EditarProductos";
+import { ProductDetail } from "../components/Productos/ProductDetail";
 
 export const Rutas = () => {
   return (
@@ -35,6 +39,13 @@ export const Rutas = () => {
           <Route path="/quienes-somos" element={<AboutUs />} />
 
           <Route path="/register" element={<Register />} />
+          <Route path="/administrador/productos" element={<Productos />} />
+
+        <Route path="/administrador/productos-crear" element={<CrearProductos />} />
+
+        <Route path="/administrador/productos-editar/:idProductoUrl" element={<EditarProductos />} /> 
+
+        <Route path="/pd/:id" element={<ProductDetail />} />
         </Routes>
       </ScrollToTop>
     </>

@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import {
   Button,
@@ -10,45 +11,26 @@ import {
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import Modal from "react-modal";
 import "./ProductDetail.css";
 import toast, { Toaster } from "react-hot-toast"
 
+/**
+ * It's a function that returns a card with a picture, a title, a price, and a button to add the
+ * product to the cart.
+ */
 export const ProductCard = (props) => {
   const producto = props.producto;
   const { agregarProductoCarrito } = useContext(ContextoCarrito);
 
-  const [modalIsOpen, setIsOpen] = useState(false);
-
-  function abrirDetalle() {
-    setIsOpen(true);
-  }
-
-  const customStyles = {
-    content: {
-      top: "20%",
-      left: "15%",
-      right: "auto",
-      bottom: "auto",
-      width: "70%",
-      height: "auto",
-    },
-  };
-
   const notify = () => toast.success('Se agregó correctamente al carrito');
 
-  const handleOnClickModal = () => {
+  const handleAddCar = () => {
     agregarProductoCarrito(producto)
     notify()
   }
 
   const handleOnClick = (e) => {
     e.stopPropagation();
-    handleOnClickModal()
-  }
-
-  function cerrarDetalle() {
-    setIsOpen(false);
   }
 
   const priceDescount = () => {
@@ -63,16 +45,20 @@ export const ProductCard = (props) => {
       />
       <Card
         className="m-2 p-3 text-center justify-content-center glow"
-        onClick={abrirDetalle}
+      //onClick={abrirDetalle}
       >
-        <Card.Img
-          variant="top"
-          src={producto.ImagenesUrl}
-          alt={producto.Nombre}
-          style={{ width: "15rem", height: "12rem" }}
-        />
+        <Link to={`/pd/${producto.id}`} >
+          <Card.Img
+            variant="top"
+            src={producto.ImagenesUrl}
+            alt={producto.Nombre}
+            style={{ width: "15rem", height: "12rem" }}
+          />
+        </Link>
         <Card.Body>
           <Card.Title
+            as={Link}
+            to={`/pd/${producto.id}`}
             style={{ textTransform: "capitalize", fontWeight: "bold" }}
           >
             {producto.Nombre}
@@ -81,7 +67,7 @@ export const ProductCard = (props) => {
           {producto.Descuento !== 0 ?
             <Card.Text>
 
-              <div style={{color: "green"}}>
+              <div style={{ color: "green" }}>
                 {producto.Descuento}% OFF
               </div>
               <div>
@@ -95,64 +81,12 @@ export const ProductCard = (props) => {
           <Button
             className="align-self-end"
             variant="cyan"
-            onClick={handleOnClick}
+            onClick={handleAddCar}
           >
             Agregar al carrito <FontAwesomeIcon icon={faCartPlus} />
           </Button>
         </Card.Body>
       </Card>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={cerrarDetalle}
-        style={customStyles}
-        contentLabel="Detalle del producto"
-      >
-        <Container md={9}>
-          <Row>
-            <CloseButton className="closeButton" onClick={cerrarDetalle} />
-          </Row>
-          <Row>
-            <Col sm={5} className="text-center">
-              <img src={producto.ImagenesUrl} alt="producto" height="100%" width="auto" object-fit="contain" />
-            </Col>
-            <Col className="justify-content-center">
-              <h2
-                style={{
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  textTransform: "capitalize",
-                  marginBottom: "20px",
-                }}
-              >
-                {producto.Nombre}
-              </h2>
-              <h3 style={{ textTransform: "capitalize" }}>
-                Marca: {producto.Marca}
-              </h3>
-              <h4 style={{ textAlign: "justify" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Vestibulum in tellus nisl. Vestibulum congue dignissim urna quis
-                blandit. Curabitur ultricies metus sollicitudin nibh auctor, non
-                congue massa scelerisque. Mauris quis efficitur ligula. Quisque
-                id risus et ex vehicula commodo.
-              </h4>
-              <div className="text-center">
-                <h3>
-                  <b>${producto.Precio}</b>
-                </h3>
-                <Button
-                  className="align-self-end"
-                  variant="cyan"
-                  onClick={handleOnClickModal}
-
-                >
-                  Agregar al carrito
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </Modal>
     </>
   );
 };

@@ -1,12 +1,12 @@
 import "./ProductCarousel.css";
 import { useState, useEffect, useRef } from 'react';
 import { ProductCard } from './ProductCard';
-import { getAllProducts } from '../../controllers/Productos';
+import { getProductsByCategory } from '../../controllers/Productos';
+import { orderProducts } from "../../utilities/OrderProducts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleLeft, faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 
-export const ProductCarousel = () => {
-
+export const ProductCarousel = ({ productName, productCategory }) => {
     let scrl = useRef(null);
     const [scrollX, setscrollX] = useState(0);
     const [scrolEnd, setscrolEnd] = useState(false);
@@ -14,10 +14,11 @@ export const ProductCarousel = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getAllProducts().then((response) => {
-            setProducts(response)
+        getProductsByCategory(productCategory).then((response) => {
+            setProducts(orderProducts(response, productName).filter((prod) => prod.Nombre != productName))
             setLoading(false)
         })
+        console.log("Renderizando")
     }, []);
 
     //Slide click
@@ -50,7 +51,7 @@ export const ProductCarousel = () => {
         <div className="carousel-container">
             {scrollX !== 0 && (
                 <button
-                    className="button-carousel"
+                    className="carousel-button"
                     onClick={() => slide(-310)}
                 >
                     <FontAwesomeIcon icon={faArrowCircleLeft} color={"white"} />

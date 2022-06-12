@@ -1,5 +1,6 @@
-import React from "react";
-
+/**
+ * Component that takes a value as a prop and returns a radio button with that value as the label.
+ */
 const RadioButton = (props) => {
 
   return (

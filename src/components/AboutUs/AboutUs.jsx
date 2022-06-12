@@ -5,6 +5,9 @@ import mision from "../../images/mision.png";
 import vision from "../../images/vision.png";
 import valores from "../../images/valores.png";
 
+/**
+ * Component that display About Us Page.
+ */
 export const AboutUs = () => {
   return (
     <>

@@ -1,14 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
-import {
-  Button,
-  Row,
-  Col,
-  Container,
-  CloseButton,
-  Card,
-} from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import "./ProductDetail.css";
@@ -18,8 +11,8 @@ import toast, { Toaster } from "react-hot-toast"
  * It's a function that returns a card with a picture, a title, a price, and a button to add the
  * product to the cart.
  */
-export const ProductCard = (props) => {
-  const producto = props.producto;
+export const ProductCard = ({ producto }) => {
+
   const { agregarProductoCarrito } = useContext(ContextoCarrito);
 
   const notify = () => toast.success('Se agregó correctamente al carrito');
@@ -29,11 +22,8 @@ export const ProductCard = (props) => {
     notify()
   }
 
-  const handleOnClick = (e) => {
-    e.stopPropagation();
-  }
 
-  const priceDescount = () => {
+  const priceDiscount = () => {
     return (producto.Precio - producto.Precio * producto.Descuento / 100)
   }
 
@@ -45,7 +35,6 @@ export const ProductCard = (props) => {
       />
       <Card
         className="m-2 p-3 text-center justify-content-center glow"
-      //onClick={abrirDetalle}
       >
         <Link to={`/pd/${producto.id}`} >
           <Card.Img
@@ -72,7 +61,7 @@ export const ProductCard = (props) => {
               </div>
               <div>
                 <del> ${producto.Precio}</del>
-                <p>${priceDescount()}</p>
+                <p>${priceDiscount()}</p>
               </div>
             </Card.Text>
             :

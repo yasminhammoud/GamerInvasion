@@ -1,12 +1,11 @@
 import React from "react";
-import { Button, Row, Col, Container, CloseButton, Spinner } from "react-bootstrap";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
-import {
-  productoUno,
-} from "../../controllers/Productos";
+import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner"
+import { productoUno } from "../../controllers/Productos";
 import { ProductCarousel } from "./ProductCarousel";
 
+/*It's a component that shows the product detail. */
 export const ProductDetail = () => {
 
   const { id } = useParams();
@@ -14,7 +13,6 @@ export const ProductDetail = () => {
   const [fotos, setFotos] = useState([]);
   const [fotosVista, setFotosVista] = useState([])
   const [loading, setLoading] = useState(true);
-  console.log(formProducto)
 
   useEffect(() => {
     (async () => {
@@ -39,17 +37,8 @@ export const ProductDetail = () => {
   return (
 
     <div>
-      {loading ? (
-        <>
-          {" "}
-          <Row style={{ position: "absolute", top: "50%" }}>
-            <Spinner variant="yellow" animation="grow" />
-            <Spinner className="mx-5" variant="yellow" animation="grow" />
-            <Spinner variant="yellow" animation="grow" />
-          </Row>
-        </>
-      ) : (<>
-        <div style={{color: "white"}}>
+      {loading ? <LoadingSpinner /> : (<>
+        <div style={{ color: "white" }}>
           <h1>{formProducto.nombre}</h1>
           <h3>{formProducto.marca}</h3>
           <h3>{formProducto.precio}</h3>

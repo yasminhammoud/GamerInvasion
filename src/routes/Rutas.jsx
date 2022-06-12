@@ -10,12 +10,12 @@ import { NewsPage } from "../components/News/NewsPage"
 import Register from "../components/Users/Register/Register";
 import LogIn from "../components/Users/LogIn/LogIn";
 import { PromotionPage } from "../components/Promotions/PromotionPage";
-
 import Productos from "../components/Admin/Productos/Productos";
 import CrearProductos from "../components/Admin/Productos/CrearProductos";
 import EditarProductos from "../components/Admin/Productos/EditarProductos";
 import { ProductDetail } from "../components/Productos/ProductDetail";
 
+/*Component that returns routes used in whole app */
 export const Rutas = () => {
   return (
     <>

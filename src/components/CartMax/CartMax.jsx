@@ -9,7 +9,7 @@ export const CartMax = () => {
   const [cantidadProductos, setCantidadProductos] = useState(0);
   const { productoCarrito } = useContext(ContextoCarrito);
   const total = productoCarrito.reduce(
-    (anterior, actual) => anterior + actual.amount * actual.Precio,
+    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio*actual.Descuento/100),
     0
   );
 

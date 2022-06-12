@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { NewsCard } from './NewsCard';
 import { fetchAPINews } from '../../controllers/FetchAPINews';
-import { Row, Col, Container, Spinner } from "react-bootstrap";
-import './cards.css';
+import { Row, Col, Container } from "react-bootstrap";
+import './News.css';
 import aboutUs from "../../images/about-us.jpg"
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 
 
-/* Fetching data from an API and then displaying it in cards. */
+/* Component that fetches data from an API and then displaying it in cards. */
 export const NewsPage = () => {
+
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
 

@@ -34,7 +34,7 @@ export const Category = () => {
             >
               <Card.Body>
                 <Card.Img variant="top" src={computer} className="rounded-0" />
-                <Button className="gradual-effect w-100">
+                <Button as={Link} to="/store/c/pc desktop"className="gradual-effect w-100">
                   <span>PC desktop</span>
                 </Button>
               </Card.Body>

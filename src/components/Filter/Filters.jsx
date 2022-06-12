@@ -1,15 +1,13 @@
 import RadioButton from './RadioButton';
-import React, { Component, useState, useEffect, useContext } from 'react'
-import { Contexto } from "../components/context2.0/Contexto"
-import { Productos } from "../components/Productos/Productos"
-import { useNavigate, useSearchParams, } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react'
+import { Contexto } from "../../contexts/Contexto"
+import { useNavigate } from 'react-router-dom';
 
 export const Filters = (props) => {
 
-  const { products, setProducts, filterByMarca, emptyFilterData } = useContext(Contexto);
+  const { products } = useContext(Contexto);
   const navigate = useNavigate();
   const [data, setData] = useState(props.productos);
-  const [value, setValue] = useState("")
 
   const getBrands = () => {
     const brandArray = [];
@@ -18,20 +16,19 @@ export const Filters = (props) => {
     return auxArray
   }
 
-
   useEffect(() => {
     setData(props.productos)
   }, [props.productos]);
 
 
-  const filtradoMarca = (marca) => {
-    return products.filter(producto => producto.Marca === marca)
+  const filterByBrand = (brand) => {
+    return products.filter(producto => producto.Marca === brand)
   }
 
-  const filtradoPrecio = (opcion) => {
-    if (opcion === 1) {
+  const filterByPrice = (option) => {
+    if (option === 1) {
       return products.filter(producto => parseInt(producto.Precio) <= 500)
-    } else if (opcion === 2) {
+    } else if (option === 2) {
       return products.filter(producto => parseInt(producto.Precio) > 500 && parseInt(producto.Precio) <= 1000)
     } else {
       return products.filter(producto => parseInt(producto.Precio) > 1000)
@@ -39,22 +36,22 @@ export const Filters = (props) => {
   }
 
 
-  const onChangeValueMarca = (event) => {
-    const marca = event.target.value
-    const productosFiltrados = filtradoMarca(marca)
-    navigate("/store/filters?brand=" + marca, {
+  const onChangeValueBrand = (event) => {
+    const brand = event.target.value
+    const filteredProducts = filterByBrand(brand)
+    navigate("/store/filters?brand=" + brand, {
       state: {
-        datos: productosFiltrados
+        datos: filteredProducts
       }
     })
   }
 
-  const onChangeValuePrecio = (event) => {
-    const precio = event.target.value
-    const productosFiltrados = filtradoPrecio(parseInt(precio))
-    navigate("/store/filters?price=" + precio, {
+  const onChangeValuePrice = (event) => {
+    const price = event.target.value
+    const filteredProducts = filterByPrice(parseInt(price))
+    navigate("/store/filters?price=" + price, {
       state: {
-        datos: productosFiltrados
+        datos: filteredProducts
       }
     })
   }
@@ -64,13 +61,13 @@ export const Filters = (props) => {
       <div>
         <h4> <b> Marcas </b>
         </h4>
-        <form onChange={onChangeValueMarca}>
+        <form onChange={onChangeValueBrand}>
           {getBrands().map(marca => <RadioButton value={marca} />)}
         </form>
         <br></br>
         <h4> <b> Precios </b>
         </h4>
-        <form onChange={onChangeValuePrecio}>
+        <form onChange={onChangeValuePrice}>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={1} />
             <label class="form-check-label" for="flexRadioDefault1">
@@ -96,18 +93,3 @@ export const Filters = (props) => {
     </>
   );
 };
-
-
-
-
-
-// const renderRadio = (marca) => {
-//   return (
-//     <div>
-//       <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={marca} />
-//       <label class="form-check-label" for="flexRadioDefault1">
-//         {marca}
-//       </label>
-//     </div>
-//   )
-// }

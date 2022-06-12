@@ -3,8 +3,8 @@ import React,{useState, useEffect}from "react";
 import {categoriasTodas} from "../../../controllers/Categorias";
 import {productoCrearCF} from "../../../controllers/Productos";
 import {etiquetasTodas} from "../../../controllers/Etiquetas";
-import GenerarUrl from "../../../Utilidades/GenerarUrl"
-//import "./Productos.css";
+import GenerarUrl from "../../../utilities/GenerarUrl";
+import "./CrearProducto.css";
 
 
 //ESTADO INICIAL FORMULARIO PRODUCTO 
@@ -17,6 +17,41 @@ const initFormCategoria = {
     descripcion: "",
 };
 
+//ESTADO INICIAL FORMULARIO Especificacion de Pc 
+const initFormPc = {
+    peso: "",
+    dimensiones: "",
+    procesador: "",
+};
+
+//ESTADO INICIAL FORMULARIO Especificacion de Laptop 
+const initFormLaptop = {
+    peso: "",
+    dimensiones: "",
+    procesador: "",
+};
+
+//ESTADO INICIAL FORMULARIO Especificacion de Videojuegos
+const initFormVideojuego = {
+    peso: "",
+    dimensiones: "",
+    procesador: "",
+};
+
+//ESTADO INICIAL FORMULARIO Especificacion de Perifericos 
+const initFormPeriferico = {
+    peso: "",
+    dimensiones: "",
+    procesador: "",
+};
+
+//ESTADO INICIAL FORMULARIO Especificacion de Consolas
+const initFormConsola = {
+    peso: "",
+    dimensiones: "",
+    procesador: "",
+};
+
 const CrearProductos = () => {
   //const history = useHistory();
   const [categorias, setCategorias] = useState([]);
@@ -27,6 +62,11 @@ const CrearProductos = () => {
   const [etiquetas, setEtiquetas] = useState( []);
   const [formEtiqueta, setFormEtiqueta]=useState({});
   const [formProducto, setFormProducto]=useState(initFormCategoria);
+  const [formPc, setFormPc] = useState(initFormPc);
+  const [formLaptop, setFormLaptop] = useState(initFormLaptop);
+  const [formVideojuego, setFormVideojuego] = useState(initFormVideojuego);
+  const [formPeriferico, setFormPeriferico] = useState(initFormPeriferico);
+  const [formConsola, setFormConsola] = useState(initFormConsola);
   const [fotos, setFotos] = useState([]);
   const [fotosVista, setFotosVista] = useState([]);
 
@@ -43,6 +83,46 @@ const CrearProductos = () => {
         const{name, value}=e.target;
         setFormProducto({
           ...formProducto,
+          [name]: value,
+        });
+    };
+
+    const cambiarDatosPc = (e) => {
+        const{name, value}=e.target;
+        setFormPc({
+          ...formPc,
+          [name]: value,
+        });
+    };
+
+    const cambiarDatosLaptop = (e) => {
+        const{name, value}=e.target;
+        setFormLaptop({
+          ...formLaptop,
+          [name]: value,
+        });
+    };
+
+    const cambiarDatosVideojuego = (e) => {
+        const{name, value}=e.target;
+        setFormVideojuego({
+          ...formVideojuego,
+          [name]: value,
+        });
+    };
+
+    const cambiarDatosPeriferico = (e) => {
+        const{name, value}=e.target;
+        setFormPeriferico({
+          ...formPeriferico,
+          [name]: value,
+        });
+    };
+
+    const cambiarDatosConsola = (e) => {
+        const{name, value}=e.target;
+        setFormConsola({
+          ...formConsola,
           [name]: value,
         });
     };
@@ -113,7 +193,7 @@ const CrearProductos = () => {
     const crearProducto = (e) => {
         e.preventDefault();
     const etiquetaFinal = escogerEtiqueta(formEtiqueta);
-    productoCrearCF(formProducto, categoriaSelect, etiquetaFinal, fotosVista);
+    productoCrearCF(formPc,formLaptop,formVideojuego,formPeriferico,formConsola, formProducto, categoriaSelect, etiquetaFinal, fotosVista);
     // history.push(`/administrador/productos`);
     };
                           
@@ -150,6 +230,172 @@ const CrearProductos = () => {
                         </option>
                     ))}
                 </select>
+
+                <div
+					className={`App ${
+						categoriaSelect !== "pc desktop"
+							? "invisible"
+							: "visible"
+						}`}
+					>
+						<h3>Peso:</h3>
+							<input
+								type="text"
+                                name = "peso"
+                                placeholder = "Peso del Pc"
+                                value = {formPc.peso}
+                                onChange = {cambiarDatosPc}
+							/>
+                        <h3>Dimensiones:</h3>
+							<input
+								type="text"
+                                name = "dimensiones"
+                                placeholder = "Dimensiones del Pc"
+                                value = {formPc.dimensiones}
+                                onChange = {cambiarDatosPc}
+							/>
+                        <h3>Procesador:</h3>
+							<input
+								type="text"
+                                name = "procesador"
+                                placeholder = "Procesador del Pc"
+                                value = {formPc.procesador}
+                                onChange = {cambiarDatosPc}
+							/>
+                </div>
+
+                <div
+					className={`App ${
+						categoriaSelect !== "laptops"
+							? "invisible"
+							: "visible"
+						}`}
+					>
+						<h3>Peso:</h3>
+							<input
+								type="text"
+                                name = "peso"
+                                placeholder = "Peso de la laptop"
+                                value = {formLaptop.peso}
+                                onChange = {cambiarDatosLaptop}
+							/>
+                        <h3>Dimensiones:</h3>
+							<input
+								type="text"
+                                name = "dimensiones"
+                                placeholder = "Dimensiones de la laptop"
+                                value = {formLaptop.dimensiones}
+                                onChange = {cambiarDatosLaptop}
+							/>
+                        <h3>Procesador:</h3>
+							<input
+								type="text"
+                                name = "procesador"
+                                placeholder = "Procesador de la laptop"
+                                value = {formLaptop.procesador}
+                                onChange = {cambiarDatosLaptop}
+							/>
+                </div>
+
+                <div
+					className={`App ${
+						categoriaSelect !== "videojuegos"
+							? "invisible"
+							: "visible"
+						}`}
+					>
+						<h3>Peso:</h3>
+							<input
+								type="text"
+                                name = "peso"
+                                placeholder = "Peso del videojuego"
+                                value = {formVideojuego.peso}
+                                onChange = {cambiarDatosVideojuego}
+							/>
+                        <h3>Dimensiones:</h3>
+							<input
+								type="text"
+                                name = "dimensiones"
+                                placeholder = "Dimensiones del videojuego"
+                                value = {formVideojuego.dimensiones}
+                                onChange = {cambiarDatosVideojuego}
+							/>
+                        <h3>Procesador:</h3>
+							<input
+								type="text"
+                                name = "procesador"
+                                placeholder = "Procesador del videojuego"
+                                value = {formVideojuego.procesador}
+                                onChange = {cambiarDatosVideojuego}
+							/>
+                </div>
+
+                <div
+					className={`App ${
+						categoriaSelect !== "perifericos"
+							? "invisible"
+							: "visible"
+						}`}
+					>
+						<h3>Peso:</h3>
+							<input
+								type="text"
+                                name = "peso"
+                                placeholder = "Peso del periferico"
+                                value = {formPeriferico.peso}
+                                onChange = {cambiarDatosPeriferico}
+							/>
+                        <h3>Dimensiones:</h3>
+							<input
+								type="text"
+                                name = "dimensiones"
+                                placeholder = "Dimensiones del periferico"
+                                value = {formPeriferico.dimensiones}
+                                onChange = {cambiarDatosPeriferico}
+							/>
+                        <h3>Procesador:</h3>
+							<input
+								type="text"
+                                name = "procesador"
+                                placeholder = "Procesador del periferico"
+                                value = {formPeriferico.procesador}
+                                onChange = {cambiarDatosPeriferico}
+							/>
+                </div>
+
+                <div
+					className={`App ${
+						categoriaSelect !== "consolas"
+							? "invisible"
+							: "visible"
+						}`}
+					>
+						<h3>Peso:</h3>
+							<input
+								type="text"
+                                name = "peso"
+                                placeholder = "Peso de la consola"
+                                value = {formConsola.peso}
+                                onChange = {cambiarDatosConsola}
+							/>
+                        <h3>Dimensiones:</h3>
+							<input
+								type="text"
+                                name = "dimensiones"
+                                placeholder = "Dimensiones de la consola"
+                                value = {formConsola.dimensiones}
+                                onChange = {cambiarDatosConsola}
+							/>
+                        <h3>Procesador:</h3>
+							<input
+								type="text"
+                                name = "procesador"
+                                placeholder = "Procesador de la consola"
+                                value = {formConsola.procesador}
+                                onChange = {cambiarDatosConsola}
+							/>
+                </div>
+                
                 <h4>Etiqueta:</h4>
                 <div>
                     <div className="contenedor-select" onClick={abrirEtiqueta}>

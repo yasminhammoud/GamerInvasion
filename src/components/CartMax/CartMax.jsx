@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ContextoCarrito } from "../../Context/ContextoCarrito";
+import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import { ProductoCarritoMax } from "../ProductoCarritoMax/ProductoCarritoMax";
 import ReactWhatsapp from "react-whatsapp";
 import { Card, Row, Col, Container } from "react-bootstrap";

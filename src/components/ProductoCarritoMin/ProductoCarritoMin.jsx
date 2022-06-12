@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import React, { useContext } from "react";
-import { ContextoCarrito } from "../../Context/ContextoCarrito";
+import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import styles from "./styles.module.scss";
 
 export const ProductoCarritoMin = ({ item }) => {

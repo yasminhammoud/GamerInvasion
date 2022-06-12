@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { db, auth, googleProvider } from "../../../firebase/firebaseconfig";
 import { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
-import { UserContext } from "../../../Context/UserContext";
+import { UserContext } from "../../../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 

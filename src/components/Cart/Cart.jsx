@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ContextoCarrito } from "../../Context/ContextoCarrito";
+import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import styles from "./styles.module.scss";
 import { ProductoCarritoMin } from "../ProductoCarritoMin/ProductoCarritoMin";
 import { Link } from "react-router-dom";

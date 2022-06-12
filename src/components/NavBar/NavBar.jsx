@@ -27,7 +27,7 @@ export const NavBar = () => {
         fixed="top"
         className="py-0"
       >
-        <Container className="navbar-container align-items-center" fluid>
+        <Container className="navbar-container align-items-center" fluid id='mierda'>
           <Navbar.Brand as={Link} to="/" className="nav-text">
             <img alt="logo" src={logo} />
           </Navbar.Brand>
@@ -49,7 +49,7 @@ export const NavBar = () => {
                 <Nav.Link
                   eventKey="1"
                   as={Link}
-                  to="/store"
+                  to="/promociones"
                   className="nav-text justify-content-end "
                 >
                   💥Promociones💥
@@ -109,10 +109,10 @@ export const NavBar = () => {
                 <Nav.Link
                   eventKey="8"
                   as={Link}
-                  to="/quienes-somos"
+                  to="/noticias"
                   className="nav-text justify-content-end"
                 >
-                  ¿Quiénes somos?
+                  Noticias
                 </Nav.Link>
                 <Search />
               </Nav>

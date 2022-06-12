@@ -3,9 +3,9 @@ import './App.scss';
 import { NavBar } from "./components/NavBar/NavBar";
 import { Footer } from "./components/Footer/Footer";
 import { Cart } from "./components/Cart/Cart";
-import { Rutas } from "./Rutas/Rutas";
-import { ContextoCarritoProvider } from "./Context/ContextoCarrito";
-import { ContextoProvider } from './components/context2.0/Contexto';
+import { Rutas } from "./routes/Rutas";
+import { ContextoCarritoProvider } from "./contexts/ContextoCarrito";
+import { ContextoProvider } from './contexts/Contexto';
 
 
 function App() {

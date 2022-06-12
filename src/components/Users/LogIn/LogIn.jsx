@@ -7,10 +7,25 @@ import { UserContext } from "../../../contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
+
+import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'; 
+
+
+
 import "./LogIn.css"
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function LogIn() {
+
+
+
+  
+  
+
+
+  const auth1 = getAuth();
+
+
   const setUser = useContext(UserContext);
   const navigate = useNavigate();
   const [values, setValues] = useState({
@@ -22,11 +37,13 @@ function LogIn() {
     const { value, name: inputName } = event.target;
     console.log({ inputName, value });
     setValues({ ...values, [inputName]: value });
+    console.log(values.email.value);
+    console.log(values.password.value);
   };
 
   const handleGoogleLogin = async () => {
     await auth.signInWithPopup(googleProvider);
-    const docRef = db.collection("usuarios").doc(auth.currentUser.uid);
+    const docRef = db.collection("Usuarios").doc(auth.currentUser.uid);
 
     docRef
       .get()
@@ -59,16 +76,55 @@ function LogIn() {
     console.log("Google Login");
   };
 
+
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await auth.signInWithEmailAndPassword(values.email, values.password);
-      console.log("Inicio de sesión exitoso.");
-      navigate.push("/");
-    } catch {
-      console.log("Datos inválidos.");
-    }
+    //console.log(values.email);
+    //console.log(values.password);
+
+
+
+
+
+
+
+
+
+
+    signInWithEmailAndPassword(auth1,values.email,values.password).then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user.email,user.uid)
+      navigate.push("/")
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+
+
+    
+    
+
+
+    //e.preventDefault();
+    //try {
+    //  await auth.signInWithEmailAndPassword(values.email, values.password);
+    //  console.log("Inicio de sesión exitoso.");
+    //  navigate.push("/");
+    //} catch {
+    //  console.log("Datos inválidos.*********************************************");
+    //}
   };
+
+  const handleLogOut = async (e) => {
+    signOut(auth1).then(()=>{
+      console.log("SEsion cerrada");
+     
+    }).catch((error) => {
+      console.log(error)
+      console.log("ERROR")
+    })
+};
 
   /* const findFormErrors = () => {
         const { email, nombre } = form;
@@ -87,6 +143,8 @@ function LogIn() {
       <div className="container-log-in"
         
       >
+
+        
           <Card className="card-log-in" bg="gray"
           >
             <Card.Body className="cardback" >
@@ -154,6 +212,14 @@ function LogIn() {
                       Ingresar con Google <FontAwesomeIcon icon={faGoogle} />
                     </Button>
                   </div>
+                  <Button
+                    className="loginWithGoogle mt-2 fw-bold"
+                    variant="cyan"
+                    type = "button"
+                    onClick={handleLogOut}
+                  >
+                    cerras sesionn
+                  </Button>
                 </Form>
               </Card.Text>
             </Card.Body>

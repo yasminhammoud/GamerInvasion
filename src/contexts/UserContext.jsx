@@ -1,11 +1,29 @@
 import { useState, useEffect, createContext } from 'react';
-import { auth, db } from '../firebase/firebaseconfig';
+import { auth, db, app } from '../firebase/firebaseconfig';
 import { getFirstElementArrayCollection } from '../parsers';
+
+
+
+import { signInWithEmailAndPassword } from 'firebase/auth';
+
+
+
+
 
 export const UserContext = createContext(null);
 
 export default function UserContextProvider({ children }) {
     const [user, setUser] = useState(null);
+
+    //const  loginprueba = (email, password) => auth.signInWithEmailAndPassword(email, password);
+
+    //const login2 = (email,password) => signInWithEmailAndPassword(auth, email, password)
+
+
+    useEffect(()=>{
+        app.auth().onAuthStateChanged(setCurrentUser);
+    }, []);
+
 
     const createUser = async (user, uid) => {
         await db.collection('users').doc(uid).set(user);
@@ -99,6 +117,7 @@ export default function UserContextProvider({ children }) {
                 setUser,
                 createUser,
                 getUserByEmail,
+                
             }}
         >
             {children}

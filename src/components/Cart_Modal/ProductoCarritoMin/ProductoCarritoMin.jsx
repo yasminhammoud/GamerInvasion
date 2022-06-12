@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import React, { useContext } from "react";
-import { ContextoCarrito } from "../../contexts/ContextoCarrito";
+import { ContextoCarrito } from "../../../contexts/ContextoCarrito";
 import styles from "./styles.module.scss";
 
 export const ProductoCarritoMin = ({ item }) => {
@@ -27,11 +27,11 @@ export const ProductoCarritoMin = ({ item }) => {
             </Button>
           </div>
         </div>
-          <div className={styles.derecha}>
-            <div className={styles.numerito}>{item.amount}</div>
-            <p style={{fontWeight:"bold"}}>Total</p>
-            <p>{item.amount * item.Precio}$</p>
-          </div>
+        <div className={styles.derecha}>
+          <div className={styles.numerito}>{item.amount}</div>
+          <p style={{ fontWeight: "bold" }}>Total</p>
+          <p>{item.amount * item.Precio * (1 - (item.Descuento / 100))}$</p>
+        </div>
       </div>
     </div>
   );

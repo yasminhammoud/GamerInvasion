@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import styles from "./styles.module.scss";
-import { ProductoCarritoMin } from "../ProductoCarritoMin/ProductoCarritoMin";
+import { ProductoCarritoMin } from "./ProductoCarritoMin/ProductoCarritoMin";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
@@ -18,7 +18,13 @@ export const Cart = () => {
   }, [productoCarrito]);
 
   const total = productoCarrito.reduce(
-    (anterior, actual) => anterior + actual.amount * actual.Precio,
+    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio*actual.Descuento/100),
+    0
+  );
+
+  const discount = productoCarrito.reduce(
+    (anterior, actual) =>
+      anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
     0
   );
 
@@ -67,7 +73,7 @@ export const Cart = () => {
 
       {productoCarrito && carritoAbierto && (
         <div className={styles.carrito}>
-          <h2>Tu carrito</h2>
+          <h3>Tu carrito</h3>
 
           {productoCarrito.length === 0 ? (
             <p className={styles.carritoVacio}>Tu carrito esta vacio</p>
@@ -79,7 +85,7 @@ export const Cart = () => {
             </div>
           )}
 
-          <h2 className={styles.total}>Total : ${total}</h2>
+          <h3 className={styles.total}>Total: <span style={{ fontWeight: "normal" }}>${total - discount}</span></h3>
           <Button
             className={styles.irCarrito}
             as={Link}

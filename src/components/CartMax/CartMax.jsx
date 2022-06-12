@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
-import { ProductoCarritoMax } from "../ProductoCarritoMax/ProductoCarritoMax";
+import { ProductoCarritoMax } from "./ProductoCarritoMax/ProductoCarritoMax";
 import ReactWhatsapp from "react-whatsapp";
 import { Card, Row, Col, Container } from "react-bootstrap";
 
@@ -8,8 +8,15 @@ export const CartMax = () => {
   const [carritoAbierto, setCarritoAbierto] = useState(true);
   const [cantidadProductos, setCantidadProductos] = useState(0);
   const { productoCarrito } = useContext(ContextoCarrito);
+
   const total = productoCarrito.reduce(
     (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio*actual.Descuento/100),
+    0
+  );
+
+  const discount = productoCarrito.reduce(
+    (anterior, actual) =>
+      anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
     0
   );
 
@@ -40,11 +47,12 @@ export const CartMax = () => {
             <div
               style={{
                 color: "white",
-                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 fontWeight: "bold",
                 fontSize: "2em",
                 textAlign: "center",
-                top: "15rem",
               }}
             >
               <span>El carrito está vacío.</span>
@@ -52,7 +60,7 @@ export const CartMax = () => {
           ) : (
             <div class="row no-gutters">
               <Row>
-                <Col xs={9}>
+                <Col xs={12} md={12} lg={9}>
                   <Row>
                     {productoCarrito.map((item, i) => (
                       <Col key={i} className="d-flex justify-content-center">
@@ -61,7 +69,7 @@ export const CartMax = () => {
                     ))}
                   </Row>
                 </Col>
-                <Col xs={3} style={{ "margin-top": "0.3rem" }}>
+                <Col xs={{ order: "first" }} md={{ order: "first" }} lg={{ order: "last" }} className="m-4">
                   <Card
                     style={{
                       color: "white",
@@ -71,57 +79,79 @@ export const CartMax = () => {
                         "linear-gradient(180deg, rgb(43, 0, 56) 20%, rgb(24, 0, 71) 100%)",
                       "border-radius": "0.5rem",
                       padding: "2rem",
-                      position: "fixed",
-                      display: "block",
-                      "text-align": "center",
                     }}
                   >
-                    <tr>
-                      <td>
-                        <div className="text-start">
-                          <span className="text-muted"> Subtotal </span>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="text-end">
-                          {" "}
-                          <span> {total * 0.84}$ </span>
-                        </div>
-                      </td>
-                    </tr>
+                    <div className="row d-flex justify-content-center">
+                      <table className="table table-borderless">
+                        <tbody className="totals" style={{ color: "white" }}>
+                          <tr>
+                            <td>
+                              <div className="text-start fw-bold">
+                                <span> Subtotal </span>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="text-end">
+                                {" "}
+                                <span>{total * 0.84}$</span>
+                              </div>
+                            </td>
+                          </tr>
 
-                    <tr>
-                      <td>
-                        <div className="text-start">
-                          <span className="text-muted"> Iva </span>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="text-end">
-                          {" "}
-                          <span>{total * 0.16}$ </span>
-                        </div>
-                      </td>
-                    </tr>
+                          <tr>
+                            <td>
+                              <div className="text-start fw-bold">
+                                <span> Iva </span>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="text-end">
+                                {" "}
+                                <span>{total * 0.16}$</span>
+                              </div>
+                            </td>
+                          </tr>
+                          {discount === 0 ? (
+                            ""
+                          ) : (
+                            <tr style={{ color: "rgb(131, 249, 255)" }}>
+                              <td>
+                                <div className="text-start fw-bold">
+                                  <span> Descuento </span>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="text-end">
+                                  {" "}
+                                  <span>- {discount}$</span>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
 
-                    <tr>
-                      <td>
-                        <div className="text-start">
-                          <span> Total </span>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="text-end">
-                          {" "}
-                          <span>{total}$ </span>
-                        </div>
-                      </td>
-                    </tr>
-
+                          <tr className="border-top border-bottom">
+                            <td>
+                              <div className="text-start fw-bold">
+                                <span> Total </span>
+                              </div>
+                            </td>
+                            <td>
+                              <div className="text-end">
+                                {" "}
+                                <span>{total - discount}$ </span>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                     <ReactWhatsapp
-                      style={{ fontWeight: "bold" }}
+                      style={{
+                        fontWeight: "bold",
+                        background: "rgb(239, 211, 0)", border: "rgb(239, 211, 0)",
+                      }}
                       className="btn btn-cyan"
-                      number="58-412-725-3667"
+                      number="58-412-194-4161"
                       message={`${mensaje} \n Con un *monto total* de ${total} $`}
                     >
                       Pagar

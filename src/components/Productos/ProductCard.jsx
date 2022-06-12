@@ -5,7 +5,7 @@ import { Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import "./ProductDetail.css";
-import toast, { Toaster } from "react-hot-toast"
+import toast, { Toaster } from "react-hot-toast";
 
 /**
  * It's a function that returns a card with a picture, a title, a price, and a button to add the
@@ -15,7 +15,7 @@ export const ProductCard = ({ producto }) => {
 
   const { agregarProductoCarrito } = useContext(ContextoCarrito);
 
-  const notify = () => toast.success('Se agregó correctamente al carrito');
+  const notify = () => toast.success("Se agregó correctamente al carrito");
 
   const handleAddCar = () => {
     agregarProductoCarrito(producto)
@@ -46,32 +46,53 @@ export const ProductCard = ({ producto }) => {
         </Link>
         <Card.Body>
           <Card.Title
+            className="mb-5"
             as={Link}
             to={`/pd/${producto.id}`}
-            style={{ textTransform: "capitalize", fontWeight: "bold" }}
+            style={{
+              textTransform: "capitalize",
+              fontWeight: "bold",
+              textDecoration: "none",
+              color: "purple",
+            }}
           >
             {producto.Nombre}
           </Card.Title>
 
-          {producto.Descuento !== 0 ?
-            <Card.Text>
-
-              <div style={{ color: "green" }}>
+          {producto.Descuento !== 0 ? (
+            <Card.Text
+              style={{
+                textAlign: "center",
+                fontWeight: "bold",
+                justifyContent: "center",
+                display: "flex",
+              }}
+            >
+              <div className="me-3">
+                <del> ${producto.Precio}</del>
+                <span> ${priceDiscount()}</span>
+              </div>
+              <div
+                style={{
+                  background: "yellow",
+                  width: "70px",
+                  borderRadius: "10px",
+                }}
+              >
                 {producto.Descuento}% OFF
               </div>
-              <div>
-                <del> ${producto.Precio}</del>
-                <p>${priceDiscount()}</p>
-              </div>
             </Card.Text>
-            :
-            <Card.Text> ${producto.Precio}</Card.Text>
-          }
-          <Button
-            className="align-self-end"
-            variant="cyan"
-            onClick={handleAddCar}
-          >
+          ) : (
+            <Card.Text
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              {" "}
+              ${producto.Precio}
+            </Card.Text>
+          )}
+          <Button className="fw-bold" variant="cyan" onClick={handleAddCar}>
             Agregar al carrito <FontAwesomeIcon icon={faCartPlus} />
           </Button>
         </Card.Body>

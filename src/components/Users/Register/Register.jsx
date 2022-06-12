@@ -9,7 +9,6 @@ import { faUserShield } from "@fortawesome/free-solid-svg-icons";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 
-
 function Register() {
   const navigate = useNavigate();
 
@@ -20,7 +19,6 @@ function Register() {
   const [errors, setErrors] = useState("");
   const [form, setForm] = useState("");
   const colRef = collection(db,"Usuarios");
-
 
   const findFormErrors = () => {
     const { email, name, password } = form;
@@ -90,8 +88,8 @@ function Register() {
         await createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
 
-            
             console.log("registo exitoso");
+            toast.success("Se ha registrado exitósamente");
 
              addDoc(colRef, {
               Nombre: name,
@@ -99,10 +97,7 @@ function Register() {
               Email: email,
               
             })
-
-       
-
-            navigate("/");
+            navigate("/store");
           })
           .catch((error) => {
             let message;
@@ -116,7 +111,7 @@ function Register() {
                 console.log(error);
                 break;
             }
-
+            toast.error("Ya existe una cuenta con el correo electrónico proporcionado.");
             console.log(message);
           });
       }
@@ -128,6 +123,7 @@ function Register() {
   return (
     <>
       <div className="container-log-in">
+      <Toaster position="bottom-right" reverseOrder={false} />
         <Card className="card-log-in" bg="gray">
           <Card.Body className="cardbodyre">
             <Card.Title

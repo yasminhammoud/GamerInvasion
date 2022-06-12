@@ -1,12 +1,14 @@
 import React from "react";
 import { useState } from "react";
-import { auth } from "../../../firebase/firebaseconfig";
+import { auth, db, app } from "../../../firebase/firebaseconfig";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserShield } from "@fortawesome/free-solid-svg-icons";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
 
 function Register() {
   const navigate = useNavigate();
@@ -17,11 +19,13 @@ function Register() {
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState("");
   const [form, setForm] = useState("");
+  const colRef = collection(db,"Usuarios");
+
 
   const findFormErrors = () => {
     const { email, name, password } = form;
     const newErrors = {};
-
+    
     if (
       !email ||
       email === "" ||
@@ -73,6 +77,7 @@ function Register() {
     setField(e.target.name, e.target.value);
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -84,7 +89,19 @@ function Register() {
       } else {
         await createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
+
+            
             console.log("registo exitoso");
+
+             addDoc(colRef, {
+              Nombre: name,
+              Password: password,
+              Email: email,
+              
+            })
+
+       
+
             navigate("/");
           })
           .catch((error) => {

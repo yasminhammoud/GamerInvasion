@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ContextoCarrito } from '../../contexts/ContextoCarrito'
+import { ContextoCarrito } from '../../../contexts/ContextoCarrito'
 import styles from './styles.module.scss'
 import { Button, Card } from "react-bootstrap";
 
@@ -27,7 +27,7 @@ export const ProductoCarritoMax = ({ item }) => {
                             variant="cyan"
                             onClick={() => agregarProductoCarrito(item)}>Agregar</Button>
                         <Button
-                            style={{"margin": "10px"}}
+                            style={{ "margin": "10px" }}
                             size="sm"
                             className="align-self-end"
                             variant="cyan"
@@ -38,7 +38,7 @@ export const ProductoCarritoMax = ({ item }) => {
                     <Card.Text>
                         <span> Cantidad: {item.amount}</span>
                         <br></br>
-                        <span> <b>{item.amount * item.Precio * (1-(item.Descuento/100))}$</b></span>
+                        <span> <b>{item.amount * item.Precio * (1 - (item.Descuento / 100))}$</b></span>
                     </Card.Text>
                 </div>
             </Card.Body>

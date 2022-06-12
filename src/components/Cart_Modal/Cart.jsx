@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import styles from "./styles.module.scss";
-import { ProductoCarritoMin } from "../ProductoCarritoMin/ProductoCarritoMin";
+import { ProductoCarritoMin } from "./ProductoCarritoMin/ProductoCarritoMin";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
@@ -85,7 +85,7 @@ export const Cart = () => {
             </div>
           )}
 
-          <h3 className={styles.total}>Total: <span style={{fontWeight: "normal"}}>${total - discount}</span></h3>
+          <h3 className={styles.total}>Total: <span style={{ fontWeight: "normal" }}>${total - discount}</span></h3>
           <Button
             className={styles.irCarrito}
             as={Link}

@@ -4,6 +4,7 @@ import { fetchAPINews } from '../../controllers/FetchAPINews';
 import { Row, Col, Container, Spinner } from "react-bootstrap";
 import './cards.css';
 import aboutUs from "../../images/about-us.jpg"
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 
 
 /* Fetching data from an API and then displaying it in cards. */
@@ -22,31 +23,22 @@ export const NewsPage = () => {
 
     return (
         <div>
-
-            <div className="slider">
-                <img className="d-block w-100" src={aboutUs} alt="about-us" />
+            <div className="slider" style={{ position: "relative", "textAlign": "center" }}>
+                <img className="d-block w-100" src={aboutUs} alt="news" />
                 <div className="centered">Noticias</div>
             </div>
-            {loading ? <>
-                {" "}
-                <Row style={{ position: "absolute", top: "50%" }}>
-                    <Spinner variant="yellow" animation="grow" />
-                    <Spinner className="mx-5" variant="yellow" animation="grow" />
-                    <Spinner variant="yellow" animation="grow" />
-                </Row>
-            </> :
+            {loading ? <LoadingSpinner /> :
                 <Container
                     className='d-flex justify-content-center border-0' id="news-card-cointainer">
                     <Row>
                         {
                             news.map((new1, index) => (
-                                <Col  md={4} sm="auto" key={index}>
+                                <Col lg={6} xl={4} md={6} sm="auto" key={index}>
                                     <NewsCard data={new1} />
                                 </Col>
                             ))
                         }
                     </Row>
-
                 </Container>
             }
         </div>

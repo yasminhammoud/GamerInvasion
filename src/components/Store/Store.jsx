@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Spinner } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import { useSearchParams, useParams } from "react-router-dom";
 import {
   getAllProducts,
@@ -8,6 +8,7 @@ import {
 } from "../../controllers/Productos";
 import { Productos } from "../Productos/Productos";
 import { orderProducts } from "../../utilities/OrderProducts"
+import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 
 export const Store = () => {
 
@@ -39,16 +40,7 @@ export const Store = () => {
 
   return (
     <div className="d-flex align-items-center justify-content-center">
-      {loading ? (
-        <>
-          {" "}
-          <Row style={{ position: "absolute", top: "50%" }}>
-            <Spinner variant="yellow" animation="grow" />
-            <Spinner className="mx-5" variant="yellow" animation="grow" />
-            <Spinner variant="yellow" animation="grow" />
-          </Row>
-        </>
-      ) : products.length !== 0 ? (
+      {loading ? <LoadingSpinner /> : products.length !== 0 ? (
         <Productos data={products} />
       ) : (
         <div style={{ color: "white", position: "absolute", top: "50%", fontWeight: "bold", fontSize: "2em" }}>

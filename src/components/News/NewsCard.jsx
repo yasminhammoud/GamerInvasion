@@ -16,7 +16,7 @@ export const NewsCard = ({ data }) => {
       </div>
       <Card.Body className='text-light' id='news-card-body'>
         <div id='card-title-container'>
-          <a href={data.url} style={{ "text-decoration": "none", color: "#e7e727" }}><Card.Title target='blank'><h4>{data.title}</h4></Card.Title></a>
+          <a href={data.url} target='_blank' style={{ "text-decoration": "none", color: "#e7e727" }}><Card.Title ><h4>{data.title}</h4></Card.Title></a>
         </div>
         
  

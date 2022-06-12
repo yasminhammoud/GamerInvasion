@@ -30,10 +30,7 @@ export const ProductCard = (props) => {
   return (
     <>
       <Toaster position="bottom-right" reverseOrder={false} />
-      <Card
-        className="m-2 p-3 text-center justify-content-center glow"
-        //onClick={abrirDetalle}
-      >
+      <Card className="m-2 p-3 text-center justify-content-center glow">
         <Link to={`/pd/${producto.id}`}>
           <Card.Img
             variant="top"
@@ -51,7 +48,7 @@ export const ProductCard = (props) => {
               textTransform: "capitalize",
               fontWeight: "bold",
               textDecoration: "none",
-              color: "purple"
+              color: "purple",
             }}
           >
             {producto.Nombre}
@@ -81,13 +78,16 @@ export const ProductCard = (props) => {
               </div>
             </Card.Text>
           ) : (
-            <Card.Text> ${producto.Precio}</Card.Text>
+            <Card.Text
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              {" "}
+              ${producto.Precio}
+            </Card.Text>
           )}
-          <Button
-            className="fw-bold"
-            variant="cyan"
-            onClick={handleAddCar}
-          >
+          <Button className="fw-bold" variant="cyan" onClick={handleAddCar}>
             Agregar al carrito <FontAwesomeIcon icon={faCartPlus} />
           </Button>
         </Card.Body>

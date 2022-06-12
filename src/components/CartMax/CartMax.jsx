@@ -93,7 +93,7 @@ export const CartMax = () => {
                             <td>
                               <div className="text-end">
                                 {" "}
-                                <span>{total * 0.84}$</span>
+                                <span>{(total * 0.84).toFixed(2)}$</span>
                               </div>
                             </td>
                           </tr>
@@ -107,7 +107,7 @@ export const CartMax = () => {
                             <td>
                               <div className="text-end">
                                 {" "}
-                                <span>{total * 0.16}$</span>
+                                <span>{(total * 0.16).toFixed(2)}$</span>
                               </div>
                             </td>
                           </tr>
@@ -123,7 +123,7 @@ export const CartMax = () => {
                               <td>
                                 <div className="text-end">
                                   {" "}
-                                  <span>- {discount}$</span>
+                                  <span>- {discount.toFixed(2)}$</span>
                                 </div>
                               </td>
                             </tr>
@@ -138,7 +138,7 @@ export const CartMax = () => {
                             <td>
                               <div className="text-end">
                                 {" "}
-                                <span>{total - discount}$ </span>
+                                <span>{(total - discount).toFixed(2)}$ </span>
                               </div>
                             </td>
                           </tr>

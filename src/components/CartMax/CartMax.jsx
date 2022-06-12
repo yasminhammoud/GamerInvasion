@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
-import { ProductoCarritoMax } from "../ProductoCarritoMax/ProductoCarritoMax";
+import { ProductoCarritoMax } from "./ProductoCarritoMax/ProductoCarritoMax";
 import ReactWhatsapp from "react-whatsapp";
 import { Card, Row, Col, Container } from "react-bootstrap";
 
@@ -69,7 +69,7 @@ export const CartMax = () => {
                     ))}
                   </Row>
                 </Col>
-                <Col xs={{order: "first"}} md={{order: "first"}} lg={{order: "last"}} className="m-4">
+                <Col xs={{ order: "first" }} md={{ order: "first" }} lg={{ order: "last" }} className="m-4">
                   <Card
                     style={{
                       color: "white",
@@ -148,7 +148,7 @@ export const CartMax = () => {
                     <ReactWhatsapp
                       style={{
                         fontWeight: "bold",
-                        background: "rgb(239, 211, 0)", border: "rgb(239, 211, 0)" ,
+                        background: "rgb(239, 211, 0)", border: "rgb(239, 211, 0)",
                       }}
                       className="btn btn-cyan"
                       number="58-412-194-4161"

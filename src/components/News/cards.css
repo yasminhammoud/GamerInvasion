@@ -5,7 +5,7 @@
 #line{
     border-width: 0.5px;
     border-style: solid;
-    border-color: white;
+    border-color: rgb(68, 66, 66);
     width: 70%;
     margin: auto;
 }
@@ -18,18 +18,18 @@
 }
 #news-card-body{
     padding: 2rem 1.5rem;
-
 }
 
 #news-overflow{
     overflow: hidden;
     object-fit: contain;
-    height: 30vh;
+    height: 18rem;
 }
 
 #news-image{
     transition: all 0.6s ease-in-out;
     height: 100%;
+    
 }
 
 #news-image:hover {
@@ -37,7 +37,7 @@
 }
 
 #news-card-body{
-    margin-top: 0.50rem;
+    margin-top: 0rem;
 }
 
 #source{
@@ -47,6 +47,8 @@
 #card-body-text{
     margin-top: 2rem;
 }
-#mierda1{
+#card-title-container{
     min-height: 8vw;
+    display: flex;
+    align-items: center;
 }

@@ -13,7 +13,7 @@ export const NewsCard = ({ data }) => {
         <Card.Img src={data.urlToImage} alt={data.title} variant='top' id='news-image' />
       </div>
       <Card.Body className='text-light' id='news-card-body'>
-        <div id='mierda1'>
+        <div id='card-title-container'>
           <a href={data.url} style={{ "text-decoration": "none", color: "#e7e727" }}><Card.Title target='blank'><h4>{data.title}</h4></Card.Title></a>
         </div>
         

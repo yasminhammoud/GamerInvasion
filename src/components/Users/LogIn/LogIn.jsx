@@ -4,27 +4,15 @@ import { db, auth, googleProvider } from "../../../firebase/firebaseconfig";
 import { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import { UserContext } from "../../../contexts/UserContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
-
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'; 
-
-
-
-import "./LogIn.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import "./LogIn.css"
 
 function LogIn() {
-
-
-
-  
-  
-
-
   const auth1 = getAuth();
-
 
   const setUser = useContext(UserContext);
   const navigate = useNavigate();
@@ -76,21 +64,7 @@ function LogIn() {
     console.log("Google Login");
   };
 
-
-
-
   const handleSubmit = async (e) => {
-    //console.log(values.email);
-    //console.log(values.password);
-
-
-
-
-
-
-
-
-
 
     signInWithEmailAndPassword(auth1,values.email,values.password).then((userCredential) => {
       const user = userCredential.user;
@@ -100,25 +74,12 @@ function LogIn() {
       const errorCode = error.code;
       const errorMessage = error.message;
     });
-
-
     
-    
-
-
-    //e.preventDefault();
-    //try {
-    //  await auth.signInWithEmailAndPassword(values.email, values.password);
-    //  console.log("Inicio de sesión exitoso.");
-    //  navigate.push("/");
-    //} catch {
-    //  console.log("Datos inválidos.*********************************************");
-    //}
   };
 
   const handleLogOut = async (e) => {
     signOut(auth1).then(()=>{
-      console.log("SEsion cerrada");
+      console.log("Sesión cerrada");
      
     }).catch((error) => {
       console.log(error)
@@ -126,25 +87,10 @@ function LogIn() {
     })
 };
 
-  /* const findFormErrors = () => {
-        const { email, nombre } = form;
-        const newErrors = {};
-        console.debug();
-
-        if (!email || email === "" || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) newErrors.email = "Dirección de correo inválido";
-        if (!nombre || nombre === '' || !/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/i.test(nombre)) newErrors.nombre = 'Nombre inválido'
-
-        return newErrors;
-    }; */
-
   return (
     <>
-
       <div className="container-log-in"
-        
       >
-
-        
           <Card className="card-log-in" bg="gray"
           >
             <Card.Body className="cardback" >

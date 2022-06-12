@@ -1,35 +1,38 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { db, auth, googleProvider } from "../../../firebase/firebaseconfig";
 import { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
-import { UserContext } from "../../../contexts/UserContext";
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import "./LogIn.css"
 
-function LogIn() {
-    const auth1 = getAuth();
 
-    const setUser = useContext(UserContext);
+function LogIn() {
+
+
     const navigate = useNavigate();
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState("");
+    const [form, setForm] = useState("");
+
     const [values, setValues] = useState({
         email: "",
         password: "",
     });
 
-    const handleOnChange = (event) => {
-        const { value, name: inputName } = event.target;
-        console.log({ inputName, value });
-        setValues({ ...values, [inputName]: value });
-        console.log(values.email.value);
-        console.log(values.password.value);
+    const handleOnChange = (e) => {
+        if (e.target.name === "email") {
+            setEmail(e.target.value);
+        } else if (e.target.name === "password") {
+            setPassword(e.target.value);
+        }
     };
 
-    const handleGoogleLogin = async () => {
+    /* const handleGoogleLogin = async () => {
         await auth.signInWithPopup(googleProvider);
         const docRef = db.collection("Usuarios").doc(auth.currentUser.uid);
 
@@ -62,37 +65,40 @@ function LogIn() {
 
         navigate.push("/Perfil");
         console.log("Google Login");
-    };
+    }; */
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        signInWithEmailAndPassword(auth1, values.email, values.password).then((userCredential) => {
-            const user = userCredential.user;
-            console.log(user.email, user.uid)
-            navigate.push("/")
-        }).catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-        });
+        try {
 
-    };
+            await signInWithEmailAndPassword(auth, email, password)
+            navigate("/store");
 
-    const handleLogOut = async (e) => {
-        signOut(auth1).then(() => {
-            console.log("Sesión cerrada");
+        } catch (error) {
 
-        }).catch((error) => {
-            console.log(error)
-            console.log("ERROR")
-        })
+            let message;
+
+            switch (error.code) {
+                case 'auth/wrong-password':
+                    message = 'Contraseña incorrecta';
+                    break;
+                case 'user-not-found':
+                    message = 'Usuario no encontrado';
+                    break;
+                default:
+                    message = 'Error desconocido';
+                    break;
+
+            }
+
+        }
     };
 
     return (
         <>
-            <div className="container-log-in"
-            >
-                <Card className="card-log-in" bg="gray"
-                >
+            <div className="container-log-in">
+                <Card className="card-log-in" bg="gray">
                     <Card.Body className="cardback" >
                         <Card.Title
                             className="cardtitle"
@@ -119,7 +125,7 @@ function LogIn() {
                                         id="email"
                                         type="email"
                                         placeholder="Ingresa tu correo"
-                                        value={values.email}
+                                        value={email}
                                         onChange={handleOnChange}
                                     />
                                 </Form.Group>
@@ -135,7 +141,7 @@ function LogIn() {
                                         type="password"
                                         autocomplete="off"
                                         placeholder="Ingresa tu contraseña"
-                                        value={values.password}
+                                        value={password}
                                         onChange={handleOnChange}
                                     />
                                 </Form.Group>
@@ -153,19 +159,11 @@ function LogIn() {
                                         className="loginWithGoogle mt-2 fw-bold"
                                         variant="cyan"
                                         type="button"
-                                        onClick={handleGoogleLogin}
+                                    /* onClick={handleSubmit} */
                                     >
                                         Ingresar con Google <FontAwesomeIcon icon={faGoogle} />
                                     </Button>
                                 </div>
-                                <Button
-                                    className="loginWithGoogle mt-2 fw-bold"
-                                    variant="cyan"
-                                    type="button"
-                                    onClick={handleLogOut}
-                                >
-                                    cerras sesionn
-                                </Button>
                             </Form>
                         </Card.Text>
                     </Card.Body>

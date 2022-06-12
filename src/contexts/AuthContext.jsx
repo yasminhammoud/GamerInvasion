@@ -15,7 +15,6 @@ const useAuth = () => {
 
 const AuthProvider = ({ children }) => {
 
-
     const [usuario, setUsuario] = useState();
     const [cargando, setCargando] = useState(true);
 
@@ -28,7 +27,6 @@ const AuthProvider = ({ children }) => {
         return cancelarSuscripcion
     }, []);
 
-
     return (
         <AuthContext.Provider value={{ usuario: usuario }}>
             {!cargando && children}
@@ -36,8 +34,6 @@ const AuthProvider = ({ children }) => {
     );
 
 };
-
-
 
 
 export { AuthProvider, AuthContext, useAuth };

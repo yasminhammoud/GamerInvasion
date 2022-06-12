@@ -7,11 +7,13 @@ const RutaProtegida = ({ children }) => {
     const { usuario } = useAuth();
 
     if (usuario) {
-        return children
+        return children;
     } else {
         return <Navigate replace to="/log-in" />
     }
 
 }
+
+
 
 export default RutaProtegida;

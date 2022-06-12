@@ -14,8 +14,13 @@ import { Search } from "../Search/Search";
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { useAuth } from "../../contexts/AuthContext";
+import BotonCerrarSesion from "../BotonCerrarSesion/CerrarSesion";
 
 export const NavBar = () => {
+
+  const { usuario } = useAuth();
+
   return (
     <>
       <Navbar
@@ -116,24 +121,32 @@ export const NavBar = () => {
                 </Nav.Link>
                 <Search />
               </Nav>
-              <Nav className="align-items-center">
-                <Nav.Link
-                  eventKey="9"
-                  as={Link}
-                  to="/log-in"
-                  className="nav-text justify-content-end"
-                >
-                  Acceder
-                </Nav.Link>
 
-                <Nav.Link
-                  eventKey="10"
-                  as={Link}
-                  to="/register"
-                  className="nav-text justify-content-end"
-                >
-                  Registrarse
-                </Nav.Link>
+              <Nav className="align-items-center">
+
+                {usuario ? <div></div> :
+
+                  <div>
+
+                    <Nav.Link
+                      eventKey="9"
+                      as={Link}
+                      to="/log-in"
+                      className="nav-text justify-content-end"
+                    >
+                      Acceder
+                    </Nav.Link>
+
+                    <Nav.Link
+                      eventKey="10"
+                      as={Link}
+                      to="/register"
+                      className="nav-text justify-content-end"
+                    >
+                      Registrarse
+                    </Nav.Link>
+
+                  </div>}
 
                 <Button
                   eventKey="11"

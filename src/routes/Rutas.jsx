@@ -49,19 +49,15 @@ export const Rutas = () => {
                     <Route path="/pd/:id" element={<ProductDetail />} />
 
                     <Route path="/log-in" element={
-
                         <RutaPrivada >
                             <LogIn />
                         </RutaPrivada>
-
                     } />
 
                     <Route path="/register" element={
-
                         <RutaPrivada >
                             <Register />
                         </RutaPrivada>
-
                     } />
 
                 </Routes>

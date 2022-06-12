@@ -123,12 +123,12 @@ function Register() {
                 fontSize: "2rem",
               }}
             >
-              Registro
+              Registro{" "}
               <FontAwesomeIcon icon={faUserShield} />
             </Card.Title>
             <Card.Text>
               <Form className="form" onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Group className="mb-3">
                   <Form.Label style={{ color: "rgb(239, 211, 0)" }}>
                     Nombre
                   </Form.Label>
@@ -150,7 +150,7 @@ function Register() {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3">
                   <Form.Label style={{ color: "rgb(239, 211, 0)" }}>
                     Correo
                   </Form.Label>
@@ -172,7 +172,7 @@ function Register() {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3">
                   <Form.Label style={{ color: "rgb(239, 211, 0)" }}>
                     Contraseña
                   </Form.Label>
@@ -181,6 +181,7 @@ function Register() {
                     name="password"
                     id="password"
                     type="password"
+                    autocomplete="off"
                     placeholder="Ingresa tu contraseña"
                     value={password}
                     onChange={handleChange}
@@ -194,7 +195,7 @@ function Register() {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3">
                   <Form.Label style={{ color: "rgb(239, 211, 0)" }}>
                     Repetir contraseña
                   </Form.Label>
@@ -203,6 +204,7 @@ function Register() {
                     name="password2"
                     id="password2"
                     type="password"
+                    autocomplete="off"
                     placeholder="Ingresa tu contraseña"
                     value={password2}
                     onChange={handleChange}

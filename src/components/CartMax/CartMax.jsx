@@ -78,28 +78,46 @@ export const CartMax = () => {
                   >
                     <tr>
                       <td>
-                        <div className="text-left">
+                        <div className="text-start">
                           <span className="text-muted"> Subtotal </span>
                         </div>
                       </td>
                       <td>
-                        <div className="text-right"> <span> {total * 0.84}$ </span></div>
+                        <div className="text-end">
+                          {" "}
+                          <span> {total * 0.84}$ </span>
+                        </div>
                       </td>
                     </tr>
 
                     <tr>
                       <td>
-                        <div className="text-left">
+                        <div className="text-start">
                           <span className="text-muted"> Iva </span>
                         </div>
                       </td>
                       <td>
-                        <div className="text-right"> <span>{total * 0.16}$ </span></div>
+                        <div className="text-end">
+                          {" "}
+                          <span>{total * 0.16}$ </span>
+                        </div>
                       </td>
                     </tr>
 
-                    <h3>Iva: </h3>
-                    <h3>Total: {total}$</h3>
+                    <tr>
+                      <td>
+                        <div className="text-start">
+                          <span> Total </span>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="text-end">
+                          {" "}
+                          <span>{total}$ </span>
+                        </div>
+                      </td>
+                    </tr>
+
                     <ReactWhatsapp
                       style={{ fontWeight: "bold" }}
                       className="btn btn-cyan"

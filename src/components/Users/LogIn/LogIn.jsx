@@ -105,7 +105,7 @@ function LogIn() {
 
               <Card.Text>
                 <Form className="form" onSubmit={handleSubmit}>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-3">
                     <Form.Label style={{ color: "rgb(131, 249, 255)" }}>
                       Correo electrónico
                     </Form.Label>
@@ -120,7 +120,7 @@ function LogIn() {
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Group className="mb-3">
                     <Form.Label style={{ color: "rgb(131, 249, 255)" }}>
                       Contraseña
                     </Form.Label>
@@ -129,6 +129,7 @@ function LogIn() {
                       name="password"
                       id="password"
                       type="password"
+                      autocomplete="off"
                       placeholder="Ingresa tu contraseña"
                       value={values.password}
                       onChange={handleOnChange}

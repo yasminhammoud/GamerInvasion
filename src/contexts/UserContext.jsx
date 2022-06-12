@@ -20,11 +20,6 @@ export default function UserContextProvider({ children }) {
     //const login2 = (email,password) => signInWithEmailAndPassword(auth, email, password)
 
 
-    useEffect(()=>{
-        app.auth().onAuthStateChanged(setCurrentUser);
-    }, []);
-
-
     const createUser = async (user, uid) => {
         await db.collection('users').doc(uid).set(user);
     };

@@ -16,6 +16,8 @@ import CrearProductos from "../components/Admin/Productos/CrearProductos";
 import EditarProductos from "../components/Admin/Productos/EditarProductos";
 import { ProductDetail } from "../components/Productos/ProductDetail";
 
+import Prueba from "../Prueba";
+
 export const Rutas = () => {
   return (
     <>
@@ -40,6 +42,11 @@ export const Rutas = () => {
 
           <Route path="/register" element={<Register />} />
           <Route path="/administrador/productos" element={<Productos />} />
+
+
+
+
+          <Route path="/prueba1" element={<Prueba />}></Route>
 
         <Route path="/administrador/productos-crear" element={<CrearProductos />} />
 

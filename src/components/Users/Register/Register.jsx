@@ -9,6 +9,7 @@ import { faUserShield } from "@fortawesome/free-solid-svg-icons";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 
+
 function Register() {
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ function Register() {
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState("");
   const [form, setForm] = useState("");
-  const colRef = collection(db, "Usuarios");
+  const colRef = collection(db,"Usuarios");
 
 
   const findFormErrors = () => {
@@ -88,14 +89,18 @@ function Register() {
       } else {
         await createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
+
+            
             console.log("registo exitoso");
 
              addDoc(colRef, {
               Nombre: name,
               Password: password,
               Email: email,
+              
             })
 
+       
 
             navigate("/");
           })

@@ -4,10 +4,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import { UserAuthContextProvider } from "./contexts/UserAuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+
+    <>
+
+        <UserAuthContextProvider>
+
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+
+        </UserAuthContextProvider>
+    
+    </>
+  
 );

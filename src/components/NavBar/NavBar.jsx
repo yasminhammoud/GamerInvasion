@@ -14,8 +14,12 @@ import { Search } from "../Search/Search";
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { useUserAuth } from "../../contexts/UserAuthContext";
+import BotonCerrarSesion from "../BotonCerrarSesion/CerrarSesion";
 
 export const NavBar = () => {
+  const { user } = useUserAuth();
+
   return (
     <>
       <Navbar
@@ -27,7 +31,11 @@ export const NavBar = () => {
         fixed="top"
         className="py-0"
       >
-        <Container className="navbar-container align-items-center" fluid id='mierda'>
+        <Container
+          className="navbar-container align-items-center"
+          fluid
+          id="mierda"
+        >
           <Navbar.Brand as={Link} to="/" className="nav-text">
             <img alt="logo" src={logo} />
           </Navbar.Brand>
@@ -116,25 +124,32 @@ export const NavBar = () => {
                 </Nav.Link>
                 <Search />
               </Nav>
-              <Nav className="align-items-center">
-                <Nav.Link
-                  eventKey="9"
-                  as={Link}
-                  to="/log-in"
-                  className="nav-text justify-content-end"
-                >
-                  Acceder
-                </Nav.Link>
 
-                <Nav.Link
-                  eventKey="10"
-                  as={Link}
-                  to="/register"
-                  className="nav-text justify-content-end"
-                >
-                  Registrarse
-                </Nav.Link>
-
+              {!!user ? (
+									<BotonCerrarSesion/>
+							) : (
+								<Nav className="align-items-center">
+									<Nav.Link>
+										<Link 
+                    as={Link}
+                    to="/log-in"
+                    className="nav-text justify-content-end">
+											Acceder
+										</Link>
+									</Nav.Link>
+									<Nav.Link>
+										<Link 
+                    eventKey="10"
+                    as={Link}
+                    to="/register"
+                    className="nav-text justify-content-end">
+											Registarse
+										</Link>
+									</Nav.Link>
+                  </Nav>
+							)}
+              
+              <Nav>
                 <Button
                   eventKey="11"
                   onClick={() =>

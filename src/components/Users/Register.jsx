@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { auth, db, app } from "../../firebase/firebaseconfig";
+import { auth, db} from "../../firebase/firebaseconfig";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";

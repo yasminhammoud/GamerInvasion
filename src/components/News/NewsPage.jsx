@@ -23,7 +23,7 @@ export const NewsPage = () => {
           Noticias
         </div>
       </div>
-      {loading ? (
+      {loading && news.length === 0 ? (
         <div className="d-flex align-items-center justify-content-center">
           <LoadingSpinner />
         </div>

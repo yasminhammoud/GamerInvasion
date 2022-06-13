@@ -1,37 +1,28 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { ContextoCarrito } from "../../contexts/ContextoCarrito";
-import { Button, Card } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import "./ProductDetail.css";
-import toast, { Toaster } from "react-hot-toast";
+import { Card } from "react-bootstrap";
+import { Toaster } from "react-hot-toast";
+import { ProductAddCarButton } from "./ProductAddCarButton";
 
 /**
  * It's a function that returns a card with a picture, a title, a price, and a button to add the
  * product to the cart.
  */
+export const ProductCard = ({ producto }) => {
 
-export const ProductCard = (props) => {
-  const producto = props.producto;
-  const { agregarProductoCarrito } = useContext(ContextoCarrito);
-
-  const notify = () => toast.success("Se agregó correctamente al carrito");
-
-  const handleAddCar = () => {
-    agregarProductoCarrito(producto);
-    notify();
-  };
-
-  const priceDescount = () => {
-    return producto.Precio - (producto.Precio * producto.Descuento) / 100;
-  };
+  const priceDiscount = () => {
+    return (producto.Precio - producto.Precio * producto.Descuento / 100)
+  }
 
   return (
     <>
-      <Toaster position="bottom-right" reverseOrder={false} />
-      <Card className="m-2 p-3 text-center justify-content-center glow">
-        <Link to={`/pd/${producto.id}`}>
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+      />
+      <Card
+        className="m-2 p-3 text-center justify-content-center glow"
+      >
+        <Link to={`/pd/${producto.id}`} >
           <Card.Img
             variant="top"
             src={producto.ImagenesUrl}
@@ -65,7 +56,7 @@ export const ProductCard = (props) => {
             >
               <div className="me-3">
                 <del> ${producto.Precio}</del>
-                <span> ${priceDescount()}</span>
+                <span> ${priceDiscount()}</span>
               </div>
               <div
                 style={{
@@ -87,9 +78,7 @@ export const ProductCard = (props) => {
               ${producto.Precio}
             </Card.Text>
           )}
-          <Button className="fw-bold" variant="cyan" onClick={handleAddCar}>
-            Agregar al carrito <FontAwesomeIcon icon={faCartPlus} />
-          </Button>
+          <ProductAddCarButton producto={producto} />
         </Card.Body>
       </Card>
     </>

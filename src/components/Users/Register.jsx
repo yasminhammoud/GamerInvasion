@@ -143,7 +143,7 @@ function Register() {
               <Form className="form" onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "rgb(239, 211, 0)" }}>
-                    Nombre
+                    Nombre completo
                   </Form.Label>
                   <Form.Control
                     className="name"
@@ -165,7 +165,7 @@ function Register() {
 
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "rgb(239, 211, 0)" }}>
-                    Correo
+                    Correo electrónico
                   </Form.Label>
                   <Form.Control
                     className="email"

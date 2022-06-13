@@ -1,5 +1,8 @@
 import { Spinner, Row } from "react-bootstrap";
 
+/**
+ * Component that returns a row of three spinners used when page/component is loading.
+ */
 export const LoadingSpinner = () => {
 
     return (

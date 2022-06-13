@@ -16,7 +16,7 @@ const rutaFoto = "productos-imagenes";
 const colletionProducts = "Productos"
 
 /**
- * It takes a bunch of form data, and adds it to a Firestore collection. (It creates a product without image)
+ * It takes a bunch of form data, and adds it to a Firestore collection. It creates a product without image.
  */
 export const productoCrearSF = async (
     formPc,

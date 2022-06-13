@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { getProductsPromotions } from "../../controllers/Productos";
 import { Productos } from "../Productos/Productos";
-import { Spinner, Row } from "react-bootstrap";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 
+/*Component that fetches all products with discount from a Firebase Colletion and displays it in product page. */
 export const PromotionPage = () => {
 
     const [products, setProducts] = useState([]);

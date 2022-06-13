@@ -1,11 +1,10 @@
 import RadioButton from './RadioButton';
-import React, { useState, useEffect, useContext } from 'react'
-import { Contexto } from "../../contexts/Contexto"
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 
+/* Components that renders all filters (by brands and by price) */
 export const Filters = (props) => {
 
-  const { products } = useContext(Contexto);
   const navigate = useNavigate();
   const [data, setData] = useState(props.productos);
 
@@ -22,16 +21,16 @@ export const Filters = (props) => {
 
 
   const filterByBrand = (brand) => {
-    return products.filter(producto => producto.Marca === brand)
+    return data.filter(producto => producto.Marca.toLowerCase() === brand.toLowerCase())
   }
 
   const filterByPrice = (option) => {
     if (option === 1) {
-      return products.filter(producto => parseInt(producto.Precio) <= 500)
+      return data.filter(producto => parseInt(producto.Precio) <= 500)
     } else if (option === 2) {
-      return products.filter(producto => parseInt(producto.Precio) > 500 && parseInt(producto.Precio) <= 1000)
+      return data.filter(producto => parseInt(producto.Precio) > 500 && parseInt(producto.Precio) <= 1000)
     } else {
-      return products.filter(producto => parseInt(producto.Precio) > 1000)
+      return data.filter(producto => parseInt(producto.Precio) > 1000)
     }
   }
 

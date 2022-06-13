@@ -1,21 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
-import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import { ProductCard } from "./ProductCard";
-import { Button, Card, Row, Col, Container } from "react-bootstrap";
-import { Contexto } from "../../contexts/Contexto"
-import { useSearchParams, useParams, useLocation } from "react-router-dom";
+import { Button, Row, Col, Container } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 export const ProductosFilter = () => {
+
   const navigate = useNavigate();
-  const { filter } = useParams();
   const location = useLocation();
   const { datos } = location.state;
-  const { agregarProductoCarrito } = useContext(ContextoCarrito);
-  const { products, setProducts, filterByMarca, emptyFilterData, filterData } =
-    useContext(Contexto);
 
   return (
     <Container className=" mt-7">

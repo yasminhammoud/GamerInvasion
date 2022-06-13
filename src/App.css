@@ -132,8 +132,15 @@
             justify-content: center;
           }
     
+     /* -------------------------------- Text --------------------------------*/
     
-    
+          .pd-text-principal {
+            text-transform: capitalize;
+            color:white
+        }
+
+    /* -------------------------------- Responsive --------------------------------*/
+        
     @media (min-width: 700px) {
             .card-log-in{
                 width: 45%

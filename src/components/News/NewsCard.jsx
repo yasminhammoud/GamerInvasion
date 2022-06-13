@@ -1,12 +1,10 @@
 import React from 'react';
 import { Card } from "react-bootstrap";
-import './cards.css';
+import './News.css';
 
 /**
- * It's a function that takes in a data object and returns a card with the news data object's properties.
- * @returns The NewsCard component is being returned.
+ * Component that takes in a data object and returns a card with the news data object's properties.
  */
-
 export const NewsCard = ({ data }) => {
 
   return (

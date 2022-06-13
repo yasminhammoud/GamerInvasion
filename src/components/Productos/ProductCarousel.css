@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 79%;
+  width: 100%;
   height: 100%;
   margin: auto;
 }
@@ -29,7 +29,7 @@
   white-space: nowrap;
 }
 .carousel-button {
-  border: 0;
+  border-radius: 10%;
   color: #777;
   font-size: 40px;
   margin: 0 8px;

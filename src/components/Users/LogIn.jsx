@@ -157,14 +157,14 @@ function LogIn() {
                       Ingresar con Google <FontAwesomeIcon icon={faGoogle} />
                     </Button>
                   </div>
-                  <Button
+                  {/* <Button
                     className="loginWithGoogle mt-2 fw-bold"
                     variant="cyan"
                     type = "button"
                     onClick={handleLogOut}
                   >
                     cerras sesionn
-                  </Button>
+                  </Button> */}
                 </Form>
               </Card.Text>
             </Card.Body>

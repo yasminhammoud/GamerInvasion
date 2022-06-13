@@ -10,14 +10,12 @@ import { NewsPage } from "../components/News/NewsPage"
 import Register from "../components/Users/Register";
 import LogIn from "../components/Users/LogIn";
 import { PromotionPage } from "../components/Promotions/PromotionPage";
-
 import Productos from "../components/Admin/Productos/Productos";
 import CrearProductos from "../components/Admin/Productos/CrearProductos";
 import EditarProductos from "../components/Admin/Productos/EditarProductos";
 import { ProductDetail } from "../components/Productos/ProductDetail";
 
-import Prueba from "../Prueba";
-
+/*Component that returns routes used in whole app */
 export const Rutas = () => {
   return (
     <>
@@ -44,13 +42,11 @@ export const Rutas = () => {
           
           <Route path="/administrador/productos" element={<Productos />} />
 
-          <Route path="/prueba1" element={<Prueba />}></Route>
+          <Route path="/administrador/productos-crear" element={<CrearProductos />} />
 
-        <Route path="/administrador/productos-crear" element={<CrearProductos />} />
+          <Route path="/administrador/productos-editar/:idProductoUrl" element={<EditarProductos />} /> 
 
-        <Route path="/administrador/productos-editar/:idProductoUrl" element={<EditarProductos />} /> 
-
-        <Route path="/pd/:id" element={<ProductDetail />} />
+          <Route path="/pd/:id" element={<ProductDetail />} />
         </Routes>
       </ScrollToTop>
     </>

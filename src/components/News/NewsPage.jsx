@@ -2,12 +2,9 @@ import { useState, useEffect } from "react";
 import { NewsCard } from "./NewsCard";
 import { fetchAPINews } from "../../controllers/FetchAPINews";
 import { Row, Col, Container } from "react-bootstrap";
-
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
-import "./cards.css";
 
-
-/* Fetching data from an API and then displaying it in cards. */
+/* Component that fetches data from an API and then displaying it in cards. */
 export const NewsPage = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,10 +18,10 @@ export const NewsPage = () => {
 
   return (
     <div>
-      <div
-        className="container-news"
-      >
-        <div className="centered" style={{letterSpacing: "3px"}}>Noticias</div>
+      <div className="container-news">
+        <div className="centered" style={{ letterSpacing: "3px" }}>
+          Noticias
+        </div>
       </div>
       {loading ? (
         <div className="d-flex align-items-center justify-content-center">

@@ -10,7 +10,7 @@ export const CartMax = () => {
   const { productoCarrito } = useContext(ContextoCarrito);
 
   const total = productoCarrito.reduce(
-    (anterior, actual) => anterior + actual.amount * actual.Precio,
+    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio*actual.Descuento/100),
     0
   );
 
@@ -63,7 +63,7 @@ export const CartMax = () => {
               <span>El carrito está vacío.</span>
             </div>
           ) : (
-            <div class="row no-gutters">
+            <div className="row no-gutters">
               <Row>
                 <Col xs={12} md={12} lg={9}>
                   <Row>
@@ -134,7 +134,7 @@ export const CartMax = () => {
                               <td>
                                 <div className="text-end">
                                   {" "}
-                                  <span>- {discount}$</span>
+                                  <span>- {discount.toFixed(2)}$</span>
                                 </div>
                               </td>
                             </tr>
@@ -149,7 +149,7 @@ export const CartMax = () => {
                             <td>
                               <div className="text-end">
                                 {" "}
-                                <span>{total - discount}$ </span>
+                                <span>{(total - discount).toFixed(2)}$ </span>
                               </div>
                             </td>
                           </tr>

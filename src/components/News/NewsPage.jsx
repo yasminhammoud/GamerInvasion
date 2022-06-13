@@ -33,7 +33,7 @@ export const NewsPage = () => {
           id="news-card-cointainer"
         >
           <Row>
-            {news.map((new1, index) => (
+            {news && news.map((new1, index) => (
               <Col lg={6} xl={4} md={6} sm="auto" key={index}>
                 <NewsCard data={new1} />
               </Col>

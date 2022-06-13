@@ -31,11 +31,7 @@ export const NavBar = () => {
         fixed="top"
         className="py-0"
       >
-        <Container
-          className="navbar-container align-items-center"
-          fluid
-          id="mierda"
-        >
+        <Container className="navbar-container align-items-center" fluid>
           <Navbar.Brand as={Link} to="/" className="nav-text">
             <img alt="logo" src={logo} />
           </Navbar.Brand>
@@ -125,36 +121,31 @@ export const NavBar = () => {
                 <Search />
               </Nav>
               <Nav className="align-items-center">
-                {!!user ? (
-                  <BotonCerrarSesion />
-                ) : (
-                  <>
-                    <Nav.Link>
-                      <Link
-                        as={Link}
-                        to="/acceder"
-                        className="nav-text justify-content-end"
-                      >
-                        Acceder
-                      </Link>
-                    </Nav.Link>
-                    <Nav.Link>
-                      <Link
-                        eventKey="10"
-                        as={Link}
-                        to="/registro"
-                        className="nav-text justify-content-end"
-                      >
-                        Registarse
-                      </Link>
-                    </Nav.Link>
-                    </>
-                )}
-              </Nav>
+                {!!user ? <BotonCerrarSesion eventKey="9" /> : (<>
 
-              <Nav>
+                  <Nav.Link
+                    as={Link}
+                    to="/acceder"
+                    eventKey="10"
+                    className="nav-link justify-content-end"
+                  >
+                    Acceder
+                  </Nav.Link>
+
+                  <Nav.Link
+                    eventKey="11"
+                    as={Link}
+                    to="/registro"
+                    className="nav-link justify-content-end"
+                  >
+                    Registarse
+                  </Nav.Link>
+
+
+                </>)}
+
                 <Button
-                  eventKey="11"
+                  eventKey="12"
                   onClick={() =>
                     window.open("https://discord.gg/zgvnMzyB", "_blank")
                   }

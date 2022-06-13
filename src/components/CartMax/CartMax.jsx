@@ -58,7 +58,7 @@ export const CartMax = () => {
               <span>El carrito está vacío.</span>
             </div>
           ) : (
-            <div class="row no-gutters">
+            <div className="row no-gutters">
               <Row>
                 <Col xs={12} md={12} lg={9}>
                   <Row>

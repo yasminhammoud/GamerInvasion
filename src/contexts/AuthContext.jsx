@@ -18,6 +18,12 @@ const AuthProvider = ({ children }) => {
     const [usuario, setUsuario] = useState();
     const [cargando, setCargando] = useState(true);
 
+
+
+
+
+
+
     useEffect(() => {
         const cancelarSuscripcion = onAuthStateChanged(auth, (usuario) => {
             setUsuario(usuario);
@@ -26,6 +32,12 @@ const AuthProvider = ({ children }) => {
 
         return cancelarSuscripcion
     }, []);
+
+
+
+
+    
+
 
     return (
         <AuthContext.Provider value={{ usuario: usuario }}>

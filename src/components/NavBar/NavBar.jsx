@@ -124,6 +124,7 @@ export const NavBar = () => {
 
               <Nav className="align-items-center">
 
+
                 {usuario ? <div></div> :
 
                   <div>

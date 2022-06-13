@@ -2,43 +2,56 @@ import React, { useContext } from 'react'
 import { ContextoCarrito } from '../../../contexts/ContextoCarrito'
 import styles from './styles.module.scss'
 import { Button, Card } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export const ProductoCarritoMax = ({ item }) => {
-    const { agregarProductoCarrito, eliminarProductoCarrito } = useContext(ContextoCarrito)
+    const { agregarProductoCarrito, eliminarProductoCarrito, eliminarTodoProducto } = useContext(ContextoCarrito)
 
     const { id } = item
 
     return (
         <Card className="m-2 p-3 text-center justify-content-center glow" >
+            <div>
             <Card.Img
                 variant="top"
                 alt={item.Nombre}
-                style={{ width: "15rem", height: "12rem" }}
+                style={{ width: "15rem", height: "12rem", position: "relative", marginTop: "30px"}}
                 src={item.ImagenesUrl[0]} />
+                <Button
+                style={{ position:"absolute", right:"4%", top: "1%", fontSize: "22px"}}
+                variant="transparent"
+                onClick={() => eliminarTodoProducto(item)}>
+                    <FontAwesomeIcon icon={faXmark} />
+                </Button>
+            </div>
+            
             <Card.Body>
                 <div className={styles.izquierda}>
                     <Card.Title style={{ textTransform: "capitalize", fontWeight: "bold" }}>
                         {item.Nombre}
                     </Card.Title>
-                    <div className={styles.botones}>
+                    <div>
                         <Button
                             size="sm"
-                            className="align-self-end"
+                            className="fw-bold"
                             variant="cyan"
-                            onClick={() => agregarProductoCarrito(item)}>Agregar</Button>
+                            onClick={() => agregarProductoCarrito(item) }>Agregar</Button>
                         <Button
-                            style={{ "margin": "10px" }}
+                            style={{ "margin": "10px"}}
                             size="sm"
-                            className="align-self-end"
+                            className="fw-bold"
                             variant="cyan"
                             onClick={() => eliminarProductoCarrito(item)}>Eliminar</Button>
                     </div>
                 </div>
                 <div className={styles.derecha}>
                     <Card.Text>
-                        <span> Cantidad: {item.amount}</span>
-                        <br></br>
-                        <span> <b>{item.amount * item.Precio * (1 - (item.Descuento / 100))}$</b></span>
+                        <div>
+                        <span style={{fontWeight: "bold"}}> Cantidad: </span>
+                        <span> {item.amount} </span>
+                        </div>
+                        <span className="mb-0"> <b>{item.amount * item.Precio * (1 - (item.Descuento / 100))}$</b></span>
                     </Card.Text>
                 </div>
             </Card.Body>

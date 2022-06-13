@@ -58,7 +58,7 @@ export const NavBar = () => {
                 <Nav.Link
                   eventKey="2"
                   as={Link}
-                  to="/store"
+                  to="/tienda"
                   className="nav-text"
                 >
                   Tienda
@@ -72,35 +72,35 @@ export const NavBar = () => {
                   <NavDropdown.Item
                     eventKey="3"
                     as={Link}
-                    to="/store/c/pc desktop"
+                    to="/tienda/c/pc desktop"
                   >
                     PC DESKTOP
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     eventKey="4"
                     as={Link}
-                    to="/store/c/consolas"
+                    to="/tienda/c/consolas"
                   >
                     CONSOLAS
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     eventKey="5"
                     as={Link}
-                    to="/store/c/laptops"
+                    to="/tienda/c/laptops"
                   >
                     LAPTOPS
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     eventKey="6"
                     as={Link}
-                    to="/store/c/videojuegos"
+                    to="/tienda/c/videojuegos"
                   >
                     VIDEOJUEGOS
                   </NavDropdown.Item>
                   <NavDropdown.Item
                     eventKey="7"
                     as={Link}
-                    to="/store/c/perifericos"
+                    to="/tienda/c/perifericos"
                   >
                     PERIFÉRICOS
                   </NavDropdown.Item>

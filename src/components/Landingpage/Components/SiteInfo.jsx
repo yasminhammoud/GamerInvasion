@@ -23,7 +23,7 @@ export const SiteInfo = () => {
             style={{position: "relative"}}
           >
             <img src={vid} alt="site-pic" className="w-100" />
-            <Button as={Link} to="/store" className="grad align-self-bottom"
+            <Button as={Link} to="/tienda" className="grad align-self-bottom"
             style={{position: "absolute", bottom: "6%", left: '50%',transform: 'translate(-50%, -50%)', fontSize: '20px', width: "12rem", borderRadius: '5px'}}
             >¡Compra ahora!</Button>
           </Col>

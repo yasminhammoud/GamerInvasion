@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { NewsCard } from "./NewsCard";
 import { fetchAPINews } from "../../controllers/FetchAPINews";
-import { Row, Col, Container, Spinner } from "react-bootstrap";
-import "./cards.css";
-import newspic from "../../images/news.jpg";
+import { Row, Col, Container } from "react-bootstrap";
+
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
+import "./cards.css";
+
 
 /* Fetching data from an API and then displaying it in cards. */
 export const NewsPage = () => {
@@ -21,10 +22,8 @@ export const NewsPage = () => {
   return (
     <div>
       <div
-        className="slider"
-        style={{ position: "relative", textAlign: "center" }}
+        className="container-news"
       >
-        <img className="d-block w-100" style={{height: "90vh"}} src={newspic} alt="news" />
         <div className="centered" style={{letterSpacing: "3px"}}>Noticias</div>
       </div>
       {loading ? (

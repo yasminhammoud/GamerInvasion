@@ -7,8 +7,8 @@ import { AboutUs } from "../components/AboutUs/AboutUs";
 import { CartMax } from "../components/CartMax/CartMax";
 import { ProductosFilter } from "../components/Productos/ProductosFilter";
 import { NewsPage } from "../components/News/NewsPage"
-import Register from "../components/Users/Register/Register";
-import LogIn from "../components/Users/LogIn/LogIn";
+import Register from "../components/Users/Register";
+import LogIn from "../components/Users/LogIn";
 import { PromotionPage } from "../components/Promotions/PromotionPage";
 
 import Productos from "../components/Admin/Productos/Productos";
@@ -24,13 +24,13 @@ export const Rutas = () => {
       <ScrollToTop>
         <Routes>
           <Route index element={<Landingpage />} />
-          <Route path="/store/filters" element={<ProductosFilter />} />
+          <Route path="/tienda/filters" element={<ProductosFilter />} />
 
-          <Route path="/store" element={<Store />} />
+          <Route path="/tienda" element={<Store />} />
 
           <Route path="/promociones" element={<PromotionPage />} />
 
-          <Route path="/store/c/:category" element={<Store />} />
+          <Route path="/tienda/c/:category" element={<Store />} />
 
           <Route path="/carrito" element={<CartMax />} />
 
@@ -41,10 +41,8 @@ export const Rutas = () => {
           <Route path="/quienes-somos" element={<AboutUs />} />
 
           <Route path="/register" element={<Register />} />
+          
           <Route path="/administrador/productos" element={<Productos />} />
-
-
-
 
           <Route path="/prueba1" element={<Prueba />}></Route>
 

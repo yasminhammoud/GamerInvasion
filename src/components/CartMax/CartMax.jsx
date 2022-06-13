@@ -38,6 +38,10 @@ export const CartMax = () => {
       productoCarrito.reduce((anterior, actual) => anterior + actual.amount, 0)
     );
   }, [productoCarrito]);
+  
+  function roundToTwo(num) {
+    return +(Math.round(num + "e+2") + "e-2");
+  }
 
   return (
     <>
@@ -46,7 +50,8 @@ export const CartMax = () => {
           {productoCarrito.length === 0 ? (
             <div
               style={{
-                color: "white",
+                margin: "auto",
+                color: "yellow",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -69,7 +74,13 @@ export const CartMax = () => {
                     ))}
                   </Row>
                 </Col>
-                <Col xs={{ order: "first" }} md={{ order: "first" }} lg={{ order: "last" }} className="m-4">
+                <Col
+                  xs={{ order: "first" }}
+                  md={{ order: "first" }}
+                  lg={{ order: "first" }}
+                  xl={{ order: "last" }}
+                  className="m-4"
+                >
                   <Card
                     style={{
                       color: "white",
@@ -93,7 +104,7 @@ export const CartMax = () => {
                             <td>
                               <div className="text-end">
                                 {" "}
-                                <span>{total * 0.84}$</span>
+                                <span>{roundToTwo(total * 0.84)}$</span>
                               </div>
                             </td>
                           </tr>
@@ -107,7 +118,7 @@ export const CartMax = () => {
                             <td>
                               <div className="text-end">
                                 {" "}
-                                <span>{total * 0.16}$</span>
+                                <span>{roundToTwo(total * 0.16)}$</span>
                               </div>
                             </td>
                           </tr>
@@ -148,7 +159,8 @@ export const CartMax = () => {
                     <ReactWhatsapp
                       style={{
                         fontWeight: "bold",
-                        background: "rgb(239, 211, 0)", border: "rgb(239, 211, 0)",
+                        background: "rgb(239, 211, 0)",
+                        border: "rgb(239, 211, 0)",
                       }}
                       className="btn btn-cyan"
                       number="58-412-194-4161"

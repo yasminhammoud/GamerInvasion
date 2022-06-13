@@ -39,7 +39,7 @@ export const Filters = (props) => {
   const onChangeValueBrand = (event) => {
     const brand = event.target.value
     const filteredProducts = filterByBrand(brand)
-    navigate("/store/filters?brand=" + brand, {
+    navigate("/tienda/filters?brand=" + brand, {
       state: {
         datos: filteredProducts
       }
@@ -49,7 +49,7 @@ export const Filters = (props) => {
   const onChangeValuePrice = (event) => {
     const price = event.target.value
     const filteredProducts = filterByPrice(parseInt(price))
-    navigate("/store/filters?price=" + price, {
+    navigate("/tienda/filters?price=" + price, {
       state: {
         datos: filteredProducts
       }

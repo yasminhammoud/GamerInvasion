@@ -34,7 +34,7 @@ export const Category = () => {
             >
               <Card.Body>
                 <Card.Img variant="top" src={computer} className="rounded-0" />
-                <Button as={Link} to="/store/c/pc desktop"className="gradual-effect w-100">
+                <Button as={Link} to="/tienda/c/pc desktop"className="gradual-effect w-100">
                   <span>PC desktop</span>
                 </Button>
               </Card.Body>
@@ -50,7 +50,7 @@ export const Category = () => {
             >
               <Card.Body>
                 <Card.Img variant="top" src={console} className="rounded-0" />
-                <Button as={Link} to="/store/c/consolas" className="gradual-effect w-100">
+                <Button as={Link} to="/tienda/c/consolas" className="gradual-effect w-100">
                   <span>Consolas</span>
                 </Button>
               </Card.Body>
@@ -65,7 +65,7 @@ export const Category = () => {
             >
               <Card.Body>
                 <Card.Img variant="top" src={laptop} className="rounded-0" />
-                <Button as={Link} to="/store/c/laptops" className="gradual-effect w-100">
+                <Button as={Link} to="/tienda/c/laptops" className="gradual-effect w-100">
                   <span>Laptops</span>
                 </Button>
               </Card.Body>
@@ -87,7 +87,7 @@ export const Category = () => {
                   src={videogames}
                   className="rounded-0"
                 />
-                <Button as={Link} to="/store/c/videojuegos" className="gradual-effect w-100">
+                <Button as={Link} to="/tienda/c/videojuegos" className="gradual-effect w-100">
                   <span>VideoJuegos</span>
                 </Button>
               </Card.Body>
@@ -107,7 +107,7 @@ export const Category = () => {
                   src={perifericos}
                   className="rounded-0"
                 />
-                <Button as={Link} to="/store/c/perifericos" className="gradual-effect w-100">
+                <Button as={Link} to="/tienda/c/perifericos" className="gradual-effect w-100">
                   <span>Periféricos</span>
                 </Button>
               </Card.Body>
@@ -123,7 +123,7 @@ export const Category = () => {
             >
               <Card.Body>
                 <Card.Img variant="top" src={gRoom} className="rounded-0" />
-                <Button as={Link} to="/store" className="gradual-effect w-100">
+                <Button as={Link} to="/tienda" className="gradual-effect w-100">
                   <span>Y mucho más...</span>
                 </Button>
               </Card.Body>

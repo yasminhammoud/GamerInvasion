@@ -1,15 +1,14 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { db, auth, googleProvider } from "../../../firebase/firebaseconfig";
+import { db, auth, googleProvider } from "../../firebase/firebaseconfig";
 import { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
-import { UserContext } from "../../../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import "./LogIn.css"
 
 function LogIn() {
   const auth1 = getAuth();

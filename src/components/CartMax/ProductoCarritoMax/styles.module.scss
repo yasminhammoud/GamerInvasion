@@ -32,25 +32,6 @@
         font-size: 13px;
         color: black;
       }
-
-      .botones {
-        display: flex;
-        gap: 5px;
-
-
-
-        button {
-          border: none;
-          cursor: pointer;
-          justify-content: space-between;
-          font-size: 12px;
-          margin: 12px;
-          padding: 3px 5px;
-          border-radius: 5px;
-          font-weight: bold;
-          color: rgba(23, 2, 33, 255);
-        }
-      }
     }
 
     .numerito {

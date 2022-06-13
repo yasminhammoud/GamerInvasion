@@ -97,7 +97,7 @@ export const Search = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate("/store?search=" + value)
+    navigate("/tienda?search=" + value)
   };
 
   useEffect(() => {

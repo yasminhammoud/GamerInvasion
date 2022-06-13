@@ -88,7 +88,7 @@ function Register() {
         await createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
 
-            console.log("registo exitoso");
+            // console.log("registo exitoso");
             toast.success("Se ha registrado exitósamente");
 
              addDoc(colRef, {
@@ -112,7 +112,7 @@ function Register() {
                 break;
             }
             toast.error("Ya existe una cuenta con el correo electrónico proporcionado.");
-            console.log(message);
+            // console.log(message);
           });
       }
     } catch (error) {

@@ -82,7 +82,7 @@ function LogIn() {
           toast.error("Usuario no encontrado");
           break;
         default:
-          toast.error("Datos inválidos");
+          toast.error("Error de conexión");
           break;
       }
     }

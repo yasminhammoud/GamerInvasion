@@ -1,44 +1,26 @@
 import { useEffect, useState } from "react";
-import { Row, Spinner } from "react-bootstrap";
 import { useSearchParams, useParams } from "react-router-dom";
-import {
-  getAllProducts,
-  getProductsByCategory,
-  getProductsByKeywords,
-} from "../../services/products";
+import { getAllProducts, getProductsByCategory, getProductsByKeywords } from "../../controllers/Productos";
 import { Productos } from "../Productos/Productos";
+import { orderProducts } from "../../utilities/OrderProducts"
+import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 
-//import { Contexto } from "../context2.0/Contexto"
-
+/* Component that fetches products data by Keywords or Category from Firestore Collection and renders it in 
+*Products Page 
+*/
 export const Store = () => {
 
   const [query, setQuery] = useSearchParams();
   const search = query.get("search");
+  const { category } = useParams();
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { category } = useParams();
-
-  const orderProducts = (response) => {
-    const productsCoincidences = [];
-    const inputArray = search.toLowerCase().split(" ");
-    response.map((prod) =>
-      productsCoincidences.push({
-        coincidencias: prod.Keywords.filter((element) =>
-          inputArray.includes(element)
-        ).length,
-        ...prod,
-      })
-    );
-    return productsCoincidences.sort(function (a, b) {
-      return parseFloat(b.coincidencias) - parseFloat(a.coincidencias);
-    });
-  };
 
   useEffect(() => {
     if (search) {
       getProductsByKeywords(search.toLowerCase().split(" ")).then((response) => {
-        setProducts(orderProducts(response))
+        setProducts(orderProducts(response, search))
         setLoading(false)
       })
     } else if (category) {
@@ -56,19 +38,10 @@ export const Store = () => {
 
   return (
     <div className="d-flex align-items-center justify-content-center">
-      {loading ? (
-        <>
-          {" "}
-          <Row style={{ position: "absolute", top: "50%" }}>
-            <Spinner variant="yellow" animation="grow" />
-            <Spinner className="mx-5" variant="yellow" animation="grow" />
-            <Spinner variant="yellow" animation="grow" />
-          </Row>
-        </>
-      ) : products.length !== 0 ? (
+      {loading ? <LoadingSpinner /> : products.length !== 0 ? (
         <Productos data={products} />
       ) : (
-        <div style={{ color: "white", position:"absolute", top: "50%", fontWeight:"bold", fontSize: "2em"}}>
+        <div style={{ color: "white", position: "absolute", top: "50%", fontWeight: "bold", fontSize: "2em" }}>
           <span>No se encontraron resultados</span>
         </div>
       )}

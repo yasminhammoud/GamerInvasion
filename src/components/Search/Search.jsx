@@ -2,31 +2,34 @@ import { Form, Button } from "react-bootstrap";
 import "./Search.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getNamesAllProducts } from "../../services/products"
+import { getNamesAllProducts } from "../../controllers/Productos"
 import Autosuggest from "react-autosuggest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
+/**
+ * Component that is a search bar that uses the Autosuggest component from react-autosuggest.
+ */
 export const Search = () => {
   const navigate = useNavigate();
   const [options, setOptions] = useState([]);
-  const [nombres, setNombres] = useState([]);
+  const [optionsValue, setOptionsValue] = useState([]);
   const [value, setValue] = useState("");
-  const [nombreSelected, setNombreSelected] = useState({});
+  const [optionSelected, setOptionSelected] = useState({});
 
   const onSuggestionsFetchRequested = ({ value }) => {
-    setNombres(filterOptions(value));
+    setOptionsValue(filterOptions(value));
   };
 
   const filterOptions = (value) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    var filtrado = options.filter((option) => {
-      var textoCompleto = option.nombre;
+    var filtered = options.filter((option) => {
+      var completeText = option.nombre;
 
       if (
-        textoCompleto
+        completeText
           .toLowerCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")
@@ -36,11 +39,11 @@ export const Search = () => {
       }
     });
 
-    return inputLength === 0 ? [] : filtrado;
+    return inputLength === 0 ? [] : filtered;
   };
 
   const onSuggestionsClearRequested = () => {
-    setNombres([]);
+    setOptionsValue([]);
   };
 
   const getSuggestionValue = (suggestion) => {
@@ -53,8 +56,8 @@ export const Search = () => {
         <div
           className="sugerencia dropdown"
           id={`offcanvasNavbarDropdown-expand-xl`}
-         
-          onClick={() => selectNombre(suggestion)}
+
+          onClick={() => selectOptionValue(suggestion)}
         >
           {`${suggestion.nombre}`}
         </div>
@@ -63,8 +66,8 @@ export const Search = () => {
     }
   };
 
-  const selectNombre = (nombre) => {
-    setNombreSelected(nombre);
+  const selectOptionValue = (nombre) => {
+    setOptionSelected(nombre);
   };
 
   const onChange = (e, { newValue }) => {
@@ -86,18 +89,18 @@ export const Search = () => {
       var nombre = {
         nombre: split[0].trim(),
       };
-      selectNombre(nombre);
+      selectOptionValue(nombre);
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate("/store?search=" + value)
+    navigate("/tienda?search=" + value)
   };
 
   useEffect(() => {
     getNamesAllProducts().then((response) => {
-      setNombres(response)
+      setOptionsValue(response)
       setOptions(response)
     })
   }, []);
@@ -106,7 +109,7 @@ export const Search = () => {
     <>
       <Form className="my-2 d-inline-flex align-items-center justify-content-center" onSubmit={handleSubmit}>
         <Autosuggest
-          suggestions={nombres}
+          suggestions={optionsValue}
           onSuggestionsFetchRequested={onSuggestionsFetchRequested}
           onSuggestionsClearRequested={onSuggestionsClearRequested}
           getSuggestionValue={getSuggestionValue}

@@ -1,0 +1,38 @@
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+.corousel-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  max-width: 100%;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
+.corousel-list::-webkit-scrollbar {
+  background: transparent;
+ /* make scrollbar transparent */
+  -webkit-appearance: none;
+  width: 0;
+  height: 0;
+}
+.corousel-list .coruousel-item {
+  padding: 8px;
+  border-radius: 4px;
+  margin: 0 4px;
+  white-space: nowrap;
+}
+.carousel-button {
+  border-radius: 10%;
+  color: #777;
+  font-size: 40px;
+  margin: 0 8px;
+  background: linear-gradient(180deg, #360047 0%, rgba(24, 0, 71, 1) 80%);
+  border: none;
+}

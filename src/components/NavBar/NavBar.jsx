@@ -1,24 +1,29 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./NavBar.css";
 import {
   Container,
   Navbar,
   Nav,
   NavDropdown,
-  Form,
   Offcanvas,
-  FormControl,
   Button,
 } from "react-bootstrap";
-import { Search } from '../Search/Search';
+import { Search } from "../Search/Search";
 
 import logo from "../../images/logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { useUserAuth } from "../../contexts/UserAuthContext";
+import BotonCerrarSesion from "../BotonCerrarSesion/CerrarSesion";
 
 export const NavBar = () => {
+  const { user } = useUserAuth();
+
   return (
     <>
       <Navbar
+        collapseOnSelect
         key="xl"
         bg="dark-purple"
         variant="dark"
@@ -26,11 +31,17 @@ export const NavBar = () => {
         fixed="top"
         className="py-0"
       >
-        <Container className="navbar-container align-items-center" fluid>
+        <Container
+          className="navbar-container align-items-center"
+          fluid
+          id="mierda"
+        >
           <Navbar.Brand as={Link} to="/" className="nav-text">
             <img alt="logo" src={logo} />
           </Navbar.Brand>
+
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-xl`} />
+
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-xl`}
             aria-labelledby={`offcanvasNavbarLabel-expand-xl`}
@@ -40,34 +51,119 @@ export const NavBar = () => {
               closeButton
               className="btn-close-white align-items-center justify-content-end"
             ></Offcanvas.Header>
+
             <Offcanvas.Body>
               <Nav className="align-items-center justify-content-center flex-grow-1 pe-3">
-                <Nav.Link as={Link} to="/store" className="nav-text">
+                <Nav.Link
+                  eventKey="1"
+                  as={Link}
+                  to="/promociones"
+                  className="nav-text justify-content-end "
+                >
+                  💥Promociones💥
+                </Nav.Link>
+
+                <Nav.Link
+                  eventKey="2"
+                  as={Link}
+                  to="/tienda"
+                  className="nav-text"
+                >
                   Tienda
                 </Nav.Link>
+
                 <NavDropdown
                   title="Categorías"
                   className="nav-dropdown-title"
                   id={`offcanvasNavbarDropdown-expand-xl`}
                 >
-                  <NavDropdown.Item as={Link} to="/store/c/pc desktop">PC DESKTOP</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/consolas">CONSOLAS</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/laptops">LAPTOPS</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/videojuegos">VIDEOJUEGOS</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/store/c/perifericos">PERIFÉRICOS</NavDropdown.Item>
+                  <NavDropdown.Item
+                    eventKey="3"
+                    as={Link}
+                    to="/tienda/c/pc desktop"
+                  >
+                    PC DESKTOP
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    eventKey="4"
+                    as={Link}
+                    to="/tienda/c/consolas"
+                  >
+                    CONSOLAS
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    eventKey="5"
+                    as={Link}
+                    to="/tienda/c/laptops"
+                  >
+                    LAPTOPS
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    eventKey="6"
+                    as={Link}
+                    to="/tienda/c/videojuegos"
+                  >
+                    VIDEOJUEGOS
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    eventKey="7"
+                    as={Link}
+                    to="/tienda/c/perifericos"
+                  >
+                    PERIFÉRICOS
+                  </NavDropdown.Item>
                 </NavDropdown>
+
+                <Nav.Link
+                  eventKey="8"
+                  as={Link}
+                  to="/noticias"
+                  className="nav-text justify-content-end"
+                >
+                  Noticias
+                </Nav.Link>
                 <Search />
               </Nav>
               <Nav className="align-items-center">
-                <Nav.Link
-                  as={Link}
-                  to="/quienes-somos"
-                  className="nav-text justify-content-end"
-                >
-                  ¿Quiénes somos?
-                </Nav.Link>
+                {!!user ? (
+                  <BotonCerrarSesion />
+                ) : (
+                  <>
+                    <Nav.Link>
+                      <Link
+                        as={Link}
+                        to="/acceder"
+                        className="nav-text justify-content-end"
+                      >
+                        Acceder
+                      </Link>
+                    </Nav.Link>
+                    <Nav.Link>
+                      <Link
+                        eventKey="10"
+                        as={Link}
+                        to="/registro"
+                        className="nav-text justify-content-end"
+                      >
+                        Registarse
+                      </Link>
+                    </Nav.Link>
+                    </>
+                )}
               </Nav>
-              
+
+              <Nav>
+                <Button
+                  eventKey="11"
+                  onClick={() =>
+                    window.open("https://discord.gg/zgvnMzyB", "_blank")
+                  }
+                  className="btn p-0 mx-3"
+                  variant="dark-purple"
+                >
+                  <FontAwesomeIcon icon={faDiscord} />
+                </Button>
+              </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>

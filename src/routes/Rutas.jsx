@@ -25,7 +25,7 @@ export const Rutas = () => {
             <Route index element={<Landingpage />} />
             <Route path="/tienda/filters" element={<ProductosFilter />} />
 
-            <Route path="/tienda" element={<RutaPrivada><Store /></RutaPrivada>} />
+            <Route path="/tienda" element={<Store />} />
 
             <Route path="/promociones" element={<PromotionPage />} />
 
@@ -37,8 +37,7 @@ export const Rutas = () => {
 
             <Route path="/quienes-somos" element={<AboutUs />} />
 
-            
-              <Route path="/administrador/productos" element={<Productos />} />
+            <Route path="/administrador/productos" element={<Productos />} />
 
               <Route
                 path="/administrador/productos-crear"
@@ -52,9 +51,9 @@ export const Rutas = () => {
 
               <Route path="/pd/:id" element={<ProductDetail />} />
 
-            <Route path="/log-in" element={<LogIn />} />
+            <Route path="/acceder" element={<LogIn />} />
 
-            <Route path="/register" element={<Register />} />
+            <Route path="/registro" element={<Register />} />
           </Routes>
       </ScrollToTop>
     </>

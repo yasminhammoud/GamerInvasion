@@ -24,7 +24,7 @@ a.nav-link:before{
     left: 0;
     height: 3px;
     width: 0%;
-    background:rgb(239, 211, 0);
+    background:rgb(131, 249, 255);
     border-radius: 12px;
     transition: all 0.4s ease;
 }
@@ -39,10 +39,6 @@ a.nav-link:before{
 a.nav-link:hover:before{
     transform: scaleX(1);
     transform-origin: left;
-}
-
-a.nav-link:hover{
-    color: rgb(239, 211, 0) !important;
 }
 
 .offcanvas{
@@ -91,5 +87,5 @@ a.nav-link:hover{
 }
 
 .fa-discord:hover{
-    color: rgb(239, 211, 0) !important;
+    color: rgb(13, 167, 175) !important;
 }

@@ -17,9 +17,13 @@ const BotonCerrarSesion = () => {
   };
 
   return (
-      <Button variant="cyan" onClick={cerrarSesion}>
-        Salir
-      </Button>
+    <Button
+      variant="cyan"
+      style={{ fontFamily: "EvilEmpire"}}
+      onClick={cerrarSesion}
+    >
+      Salir
+    </Button>
   );
 };
 

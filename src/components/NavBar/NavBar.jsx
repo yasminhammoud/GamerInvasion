@@ -124,31 +124,34 @@ export const NavBar = () => {
                 </Nav.Link>
                 <Search />
               </Nav>
+              <Nav className="align-items-center">
+                {!!user ? (
+                  <BotonCerrarSesion />
+                ) : (
+                  <>
+                    <Nav.Link>
+                      <Link
+                        as={Link}
+                        to="/acceder"
+                        className="nav-text justify-content-end"
+                      >
+                        Acceder
+                      </Link>
+                    </Nav.Link>
+                    <Nav.Link>
+                      <Link
+                        eventKey="10"
+                        as={Link}
+                        to="/registro"
+                        className="nav-text justify-content-end"
+                      >
+                        Registarse
+                      </Link>
+                    </Nav.Link>
+                    </>
+                )}
+              </Nav>
 
-              {!!user ? (
-									<BotonCerrarSesion/>
-							) : (
-								<Nav className="align-items-center">
-									<Nav.Link>
-										<Link 
-                    as={Link}
-                    to="/log-in"
-                    className="nav-text justify-content-end">
-											Acceder
-										</Link>
-									</Nav.Link>
-									<Nav.Link>
-										<Link 
-                    eventKey="10"
-                    as={Link}
-                    to="/register"
-                    className="nav-text justify-content-end">
-											Registarse
-										</Link>
-									</Nav.Link>
-                  </Nav>
-							)}
-              
               <Nav>
                 <Button
                   eventKey="11"

@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { db, auth, googleProvider } from "../../firebase/firebaseconfig";
+import { auth } from "../../firebase/firebaseconfig";
 import { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import toast from "react-hot-toast";
 
 function LogIn() {
   const navigate = useNavigate();
@@ -20,67 +21,68 @@ function LogIn() {
     password: "",
   });
 
+  const findFormErrors = () => {
+    const { email, password } = form;
+    const newErrors = {};
+
+    if (
+      !email ||
+      email === "" ||
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)
+    )
+      newErrors.email = "Dirección de correo inválido";
+
+    if (!password || password === "" || !/^.{8,12}$/i.test(password))
+      newErrors.password = "Entre 8 y 12 caracteres";
+
+    return newErrors;
+  };
+
+  const setField = (field, value) => {
+    setForm({
+      ...form,
+      [field]: value,
+    });
+
+    if (!!errors[field])
+      setErrors({
+        ...errors,
+        [field]: null,
+      });
+  };
+
   const handleOnChange = (e) => {
     if (e.target.name === "email") {
       setEmail(e.target.value);
     } else if (e.target.name === "password") {
       setPassword(e.target.value);
     }
+
+    setField(e.target.name, e.target.value);
   };
-
-  /* const handleGoogleLogin = async () => {
-        await auth.signInWithPopup(googleProvider);
-        const docRef = db.collection("Usuarios").doc(auth.currentUser.uid);
-
-        docRef
-            .get()
-            .then((doc) => {
-                console.log(doc.data());
-
-                if (doc.data() == null) {
-                    const newGoogleLogin = {
-                        email: auth.currentUser.email,
-                        password: "",
-                        nombre: auth.currentUser.displayName,
-                        fecha_de_nacimiento: "",
-                        uid: auth.currentUser.uid,
-                    };
-
-                    docRef.set(newGoogleLogin).catch((err) => {
-                        console.log(err.message);
-                    });
-
-                    navigate.push("/Perfil");
-                }
-
-                navigate.push("/Perfil");
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-
-        navigate.push("/Perfil");
-        console.log("Google Login");
-    }; */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/store");
-    } catch (error) {
-      let message;
+      const newErrors = findFormErrors();
 
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+      } else {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/tienda");}
+      toast.success("Inicio de sesión exitoso");
+    } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":
-          message = "Contraseña incorrecta";
+          toast.error("Datos inválidos");
           break;
         case "user-not-found":
-          message = "Usuario no encontrado";
+          toast.error("Usuario no encontrado");
           break;
         default:
-          message = "Error desconocido";
+          toast.error("Datos inválidos");
           break;
       }
     }
@@ -118,7 +120,14 @@ function LogIn() {
                     placeholder="Ingresa tu correo"
                     value={email}
                     onChange={handleOnChange}
+                    isInvalid={!!errors.email}
                   />
+                  <Form.Control.Feedback
+                    type="invalid"
+                    style={{ color: "rgb(239, 211, 0)" }}
+                  >
+                    {errors.email}
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mb-3">
@@ -134,8 +143,16 @@ function LogIn() {
                     placeholder="Ingresa tu contraseña"
                     value={password}
                     onChange={handleOnChange}
+                    isInvalid={!!errors.password}
                   />
+                  <Form.Control.Feedback
+                    type="invalid"
+                    style={{ color: "rgb(239, 211, 0)" }}
+                  >
+                    {errors.password}
+                  </Form.Control.Feedback>
                 </Form.Group>
+
                 <div className="botones text-center">
                   <Button
                     className="submitLogin fw-bold"
@@ -145,15 +162,14 @@ function LogIn() {
                   >
                     Ingresar
                   </Button>
-                  <br />
-                  <Button
+                  {
+                  /*<br /> <Button
                     className="loginWithGoogle mt-2 fw-bold"
                     variant="cyan"
                     type="button"
-                    /* onClick={handleSubmit} */
                   >
                     Ingresar con Google <FontAwesomeIcon icon={faGoogle} />
-                  </Button>
+                  </Button> */}
                 </div>
               </Form>
             </Card.Text>

@@ -1,4 +1,4 @@
-.nav-text, .nav-link{
+.nav-link{
     text-align: center !important;
     justify-content: center !important;
     text-decoration: none !important;
@@ -24,7 +24,7 @@ a.nav-link:before{
     left: 0;
     height: 3px;
     width: 0%;
-    background:rgb(239, 211, 0);
+    background:rgb(131, 249, 255);
     border-radius: 12px;
     transition: all 0.4s ease;
 }
@@ -41,10 +41,15 @@ a.nav-link:hover:before{
     transform-origin: left;
 }
 
-a.nav-link:hover{
-    color: rgb(239, 211, 0) !important;
+.nav-link.active:before{
+    transform: scaleX(1) !important;
+    transform-origin: left !important;
 }
 
+.dropdown-toogle.nav-link.active:before{
+    transform: scaleX(1) !important;
+    transform-origin: left !important;
+}
 .offcanvas{
     background-color: rgb(17, 6, 28) !important;
 }
@@ -91,5 +96,5 @@ a.nav-link:hover{
 }
 
 .fa-discord:hover{
-    color: rgb(239, 211, 0) !important;
+    color: rgb(13, 167, 175) !important;
 }

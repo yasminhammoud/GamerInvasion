@@ -14,8 +14,12 @@ import { Search } from "../Search/Search";
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { useUserAuth } from "../../contexts/UserAuthContext";
+import BotonCerrarSesion from "../BotonCerrarSesion/CerrarSesion";
 
 export const NavBar = () => {
+  const { user } = useUserAuth();
+
   return (
     <>
       <Navbar
@@ -27,7 +31,7 @@ export const NavBar = () => {
         fixed="top"
         className="py-0"
       >
-        <Container className="navbar-container align-items-center" fluid id='mierda'>
+        <Container className="navbar-container align-items-center" fluid>
           <Navbar.Brand as={Link} to="/" className="nav-text">
             <img alt="logo" src={logo} />
           </Navbar.Brand>
@@ -117,26 +121,31 @@ export const NavBar = () => {
                 <Search />
               </Nav>
               <Nav className="align-items-center">
-                <Nav.Link
-                  eventKey="9"
-                  as={Link}
-                  to="/log-in"
-                  className="nav-text justify-content-end"
-                >
-                  Acceder
-                </Nav.Link>
+                {!!user ? <BotonCerrarSesion eventKey="9" /> : (<>
 
-                <Nav.Link
-                  eventKey="10"
-                  as={Link}
-                  to="/register"
-                  className="nav-text justify-content-end"
-                >
-                  Registrarse
-                </Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    to="/acceder"
+                    eventKey="10"
+                    className="nav-link justify-content-end"
+                  >
+                    Acceder
+                  </Nav.Link>
+
+                  <Nav.Link
+                    eventKey="11"
+                    as={Link}
+                    to="/registro"
+                    className="nav-link justify-content-end"
+                  >
+                    Registarse
+                  </Nav.Link>
+
+
+                </>)}
 
                 <Button
-                  eventKey="11"
+                  eventKey="12"
                   onClick={() =>
                     window.open("https://discord.gg/zgvnMzyB", "_blank")
                   }

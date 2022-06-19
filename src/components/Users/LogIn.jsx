@@ -16,11 +16,6 @@ function LogIn() {
   const [errors, setErrors] = useState("");
   const [form, setForm] = useState("");
 
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-  });
-
   const findFormErrors = () => {
     const { email, password } = form;
     const newErrors = {};
@@ -71,8 +66,8 @@ function LogIn() {
         setErrors(newErrors);
       } else {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/tienda");}
       toast.success("Inicio de sesión exitoso");
+      navigate("/tienda");}
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":

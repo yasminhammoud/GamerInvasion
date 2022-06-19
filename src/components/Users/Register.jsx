@@ -1,13 +1,17 @@
 import React from "react";
 import { useState } from "react";
-import { auth, db} from "../../firebase/firebaseconfig";
+import { auth, db } from "../../firebase/firebaseconfig";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserShield } from "@fortawesome/free-solid-svg-icons";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
+import { useUserAuth } from "../../contexts/UserAuthContext";
 
 function Register() {
   const navigate = useNavigate();
@@ -18,12 +22,13 @@ function Register() {
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState("");
   const [form, setForm] = useState("");
-  const colRef = collection(db,"Usuarios");
+  const colRef = collection(db, "Usuarios");
+  const { setTimeActive } = useUserAuth();
 
   const findFormErrors = () => {
     const { email, name, password } = form;
     const newErrors = {};
-    
+
     if (
       !email ||
       email === "" ||
@@ -75,7 +80,6 @@ function Register() {
     setField(e.target.name, e.target.value);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -87,16 +91,19 @@ function Register() {
       } else {
         await createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
+            sendEmailVerification(auth.currentUser)
+              .then(() => {
+                setTimeActive(true);
+                navigate("/verificacion-de-correo");
+              })
+              .catch((err) => alert(err.message));
 
-            console.log("registo exitoso");
             toast.success("Se ha registrado exitósamente");
 
-             addDoc(colRef, {
+            addDoc(colRef, {
               Nombre: name,
-              Password: password,
               Email: email,
-              
-            })
+            });
             navigate("/tienda");
           })
           .catch((error) => {
@@ -111,7 +118,9 @@ function Register() {
                 console.log(error);
                 break;
             }
-            toast.error("Ya existe una cuenta con el correo electrónico proporcionado.");
+            toast.error(
+              "Ya existe una cuenta con el correo electrónico proporcionado."
+            );
             console.log(message);
           });
       }
@@ -123,7 +132,7 @@ function Register() {
   return (
     <>
       <div className="container-log-in">
-      <Toaster position="bottom-right" reverseOrder={false} />
+        <Toaster position="bottom-right" reverseOrder={false} />
         <Card className="card-log-in" bg="gray">
           <Card.Body className="cardbodyre">
             <Card.Title
@@ -136,8 +145,7 @@ function Register() {
                 fontSize: "2rem",
               }}
             >
-              Registro{" "}
-              <FontAwesomeIcon icon={faUserShield} />
+              Registro <FontAwesomeIcon icon={faUserShield} />
             </Card.Title>
             <Card.Text>
               <Form className="form" onSubmit={handleSubmit}>

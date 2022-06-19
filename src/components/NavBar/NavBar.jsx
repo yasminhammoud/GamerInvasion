@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./NavBar.css";
 import {
   Container,
@@ -14,11 +14,24 @@ import { Search } from "../Search/Search";
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
-import { useUserAuth } from "../../contexts/UserAuthContext";
-import BotonCerrarSesion from "../BotonCerrarSesion/CerrarSesion";
+import { useUserAuth } from "../../contexts/UserAuthContext"
+import BotonCerrarSesion from "../Users/BotonCerrarSesion/CerrarSesion";
 
 export const NavBar = () => {
-  const { user } = useUserAuth();
+  const {currentUser} = useUserAuth()
+
+  let location = useLocation();
+  useEffect(() => {
+    console.log(location.pathname);
+  }, [location]);
+
+  const [show, setShow] = useState(false);
+  const showDropdown = (e) => {
+    setShow(!show);
+  };
+  const hideDropdown = (e) => {
+    setShow(false);
+  };
 
   return (
     <>
@@ -32,9 +45,12 @@ export const NavBar = () => {
         className="py-0"
       >
         <Container className="navbar-container align-items-center" fluid>
-          <Navbar.Brand as={Link} to="/" className="nav-text">
+          <Link
+            className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
+            to="/"
+          >
             <img alt="logo" src={logo} />
-          </Navbar.Brand>
+          </Link>
 
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-xl`} />
 
@@ -50,28 +66,33 @@ export const NavBar = () => {
 
             <Offcanvas.Body>
               <Nav className="align-items-center justify-content-center flex-grow-1 pe-3">
-                <Nav.Link
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/promociones" ? "active" : ""
+                  }`}
                   eventKey="1"
-                  as={Link}
                   to="/promociones"
-                  className="nav-text justify-content-end "
                 >
                   💥Promociones💥
-                </Nav.Link>
+                </Link>
 
-                <Nav.Link
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/tienda" ? "active" : ""
+                  }`}
                   eventKey="2"
-                  as={Link}
                   to="/tienda"
-                  className="nav-text"
                 >
                   Tienda
-                </Nav.Link>
+                </Link>
 
                 <NavDropdown
                   title="Categorías"
                   className="nav-dropdown-title"
                   id={`offcanvasNavbarDropdown-expand-xl`}
+                  show={show}
+                  onMouseEnter={showDropdown}
+                  onMouseLeave={hideDropdown}
                 >
                   <NavDropdown.Item
                     eventKey="3"
@@ -110,42 +131,61 @@ export const NavBar = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
 
-                <Nav.Link
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/noticias" ? "active" : ""
+                  }`}
                   eventKey="8"
-                  as={Link}
                   to="/noticias"
-                  className="nav-text justify-content-end"
                 >
                   Noticias
-                </Nav.Link>
+                </Link>
+
                 <Search />
               </Nav>
               <Nav className="align-items-center">
-                {!!user ? <BotonCerrarSesion eventKey="9" /> : (<>
+                {!!currentUser?.emailVerified ? (
+                  <>
+                    <div className="nav-link">{currentUser.email}</div>
+                    <Link
+                      className={`nav-link ${
+                        location.pathname === "/perfil" ? "active" : ""
+                      }`}
+                      eventKey="9"
+                      to="/perfil"
+                    >
+                      Perfil
+                    </Link>
+                    <BotonCerrarSesion />
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      className={`nav-link ${
+                        location.pathname === "/acceder" ? "active" : ""
+                      }`}
+                      eventKey="9"
+                      to="/acceder"
+                    >
+                      Acceder
+                    </Link>
 
-                  <Nav.Link
-                    as={Link}
-                    to="/acceder"
-                    eventKey="10"
-                    className="nav-link justify-content-end"
-                  >
-                    Acceder
-                  </Nav.Link>
+                    <Link
+                      className={`nav-link ${
+                        location.pathname === "/registro" ? "active" : ""
+                      }`}
+                      eventKey="10"
+                      to="/registro"
+                    >
+                      Registarse
+                    </Link>
+                  </>
+                )}
+              </Nav>
 
-                  <Nav.Link
-                    eventKey="11"
-                    as={Link}
-                    to="/registro"
-                    className="nav-link justify-content-end"
-                  >
-                    Registarse
-                  </Nav.Link>
-
-
-                </>)}
-
+              <Nav>
                 <Button
-                  eventKey="12"
+                  eventKey="11"
                   onClick={() =>
                     window.open("https://discord.gg/zgvnMzyB", "_blank")
                   }

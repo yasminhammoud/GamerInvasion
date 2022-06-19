@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { auth, db } from "../../firebase/firebaseconfig";
-import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase/firebaseconfig";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +10,6 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
 import { useUserAuth } from "../../contexts/UserAuthContext";
 
 function Register() {
@@ -20,9 +19,9 @@ function Register() {
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [terms, setTerms] = useState(false);
   const [errors, setErrors] = useState("");
   const [form, setForm] = useState("");
-  const colRef = collection(db, "Usuarios");
   const { setTimeActive } = useUserAuth();
 
   const findFormErrors = () => {
@@ -42,6 +41,8 @@ function Register() {
 
     if (password2 !== password)
       newErrors.password2 = "Las contraseñas no coinciden";
+
+    if (!terms) newErrors.terms = "Debe aceptar los términos y condiciones";
 
     return newErrors;
   };
@@ -73,6 +74,9 @@ function Register() {
       case "password2":
         setPassword2(e.target.value);
         break;
+      case "terms":
+        setTerms(e.target.checked);
+        break;
       default:
         break;
     }
@@ -94,33 +98,29 @@ function Register() {
             sendEmailVerification(auth.currentUser)
               .then(() => {
                 setTimeActive(true);
-                navigate("/verificacion-de-correo");
+                navigate('/verificacion-de-correo',
+                { state: {
+                  name: name,
+                  email: email,
+                }
               })
+            })
               .catch((err) => alert(err.message));
-
-            toast.success("Se ha registrado exitósamente");
-
-            addDoc(colRef, {
-              Nombre: name,
-              Email: email,
-            });
-            navigate("/tienda");
           })
           .catch((error) => {
             let message;
             switch (error.code) {
               case "auth/email-already-in-use":
-                message =
-                  "Ya existe una cuenta con el correo electrónico proporcionado.";
+                toast.error(
+                  "Ya existe una cuenta con el correo electrónico proporcionado."
+                );
                 break;
 
               default:
+                toast.error("Error de conexión.");
                 console.log(error);
                 break;
             }
-            toast.error(
-              "Ya existe una cuenta con el correo electrónico proporcionado."
-            );
             console.log(message);
           });
       }
@@ -236,6 +236,31 @@ function Register() {
                     style={{ color: "cyan" }}
                   >
                     {errors.password2}
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group
+                  className="mb-3"
+                  controlId="formBasicCheckbox"
+                  style={{ color: "rgb(255, 255, 255)" }}
+                >
+                  <Form.Check
+                    required
+                    name="terms"
+                    id="switch"
+                    type="checkbox"
+                    label="Aceptar términos y condiciones"
+                    onChange={handleChange}
+                    value={terms}
+                    isInvalid={!!errors.terms}
+                    feedback={errors.terms}
+                    feedbackType="invalid"
+                  />
+                  <Form.Control.Feedback
+                    type="invalid"
+                    style={{ color: "cyan" }}
+                  >
+                    {errors.terms}
                   </Form.Control.Feedback>
                 </Form.Group>
 

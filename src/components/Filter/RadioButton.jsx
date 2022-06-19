@@ -1,6 +1,7 @@
 /**
  * Component that takes a value as a prop and returns a radio button with that value as the label.
  */
+// DEPRECATED 
 const RadioButton = (props) => {
 
   return (

@@ -3,6 +3,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import { Filters } from "../Filter/Filters"
 
 /* Component that renders page of products that contains Filters and ProductCards */
+//DEPRECATED 
 export const Productos = ({ data}) => {
 
     return (

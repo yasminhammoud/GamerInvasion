@@ -18,6 +18,7 @@ const BotonCerrarSesion = () => {
 
   return (
     <Button
+    className="my-2"
       variant="cyan"
       style={{ fontFamily: "EvilEmpire"}}
       onClick={cerrarSesion}

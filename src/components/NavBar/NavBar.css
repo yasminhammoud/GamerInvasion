@@ -99,3 +99,12 @@ a.nav-link:hover:before{
 .fa-discord:hover{
     color: rgb(13, 167, 175) !important;
 }
+
+
+.fa-user-gear{
+    color: yellow !important;
+    }
+
+.fa-user-gear:hover{
+    color: rgb(131, 249, 255) !important;
+}

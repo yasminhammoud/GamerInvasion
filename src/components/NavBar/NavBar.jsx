@@ -10,20 +10,20 @@ import {
   Button,
 } from "react-bootstrap";
 import { Search } from "../Search/Search";
-
+import ReactWhatsapp from "react-whatsapp";
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
-import { useUserAuth } from "../../contexts/UserAuthContext"
+import { useUserAuth } from "../../contexts/UserAuthContext";
 import BotonCerrarSesion from "../Users/BotonCerrarSesion/CerrarSesion";
+import { faUserGear } from "@fortawesome/free-solid-svg-icons";
 
 export const NavBar = () => {
-  const {currentUser} = useUserAuth()
+  const { currentUser } = useUserAuth();
 
   let location = useLocation();
-  useEffect(() => {
-    console.log(location.pathname);
-  }, [location]);
+
+  useEffect(() => {}, [location]);
 
   const [show, setShow] = useState(false);
   const showDropdown = (e) => {
@@ -32,6 +32,16 @@ export const NavBar = () => {
   const hideDropdown = (e) => {
     setShow(false);
   };
+
+  const [show2, setShow2] = useState(false);
+  const showDropdown2 = (e) => {
+    setShow2(!show2);
+  };
+  const hideDropdown2 = (e) => {
+    setShow2(false);
+  };
+
+  var mensaje = `Hola, me gustaría comunicarme con el soporte técnico de Gamer Invasion`;
 
   return (
     <>
@@ -144,18 +154,30 @@ export const NavBar = () => {
                 <Search />
               </Nav>
               <Nav className="align-items-center">
+                <ReactWhatsapp
+                  className="btn p-0 mx-3"
+                  number="58-412-194-4161"
+                  message={`${mensaje}`}
+                >
+                  <FontAwesomeIcon icon={faUserGear} />
+                </ReactWhatsapp>
                 {!!currentUser?.emailVerified ? (
                   <>
-                    <div className="nav-link">{currentUser.email}</div>
-                    <Link
-                      className={`nav-link ${
-                        location.pathname === "/perfil" ? "active" : ""
-                      }`}
-                      eventKey="9"
-                      to="/perfil"
+                    <NavDropdown
+                      title={currentUser.email}
+                      className="nav-dropdown-title"
+                      id={`offcanvasNavbarDropdown-expand-xl`}
+                      show={show2}
+                      onMouseEnter={showDropdown2}
+                      onMouseLeave={hideDropdown2}
                     >
-                      Perfil
-                    </Link>
+                      <NavDropdown.Item eventKey="9" as={Link} to="/perfil">
+                        Perfil
+                      </NavDropdown.Item>
+                      <NavDropdown.Item eventKey="10" as={Link} to="/carrito">
+                        Compras realizadas
+                      </NavDropdown.Item>
+                    </NavDropdown>
                     <BotonCerrarSesion />
                   </>
                 ) : (

@@ -22,9 +22,9 @@ function App() {
   }, []);
 
   return (
-    <UserAuthContextProvider value={{currentUser, timeActive, setTimeActive}}>
+    
+    <UserAuthContextProvider value={{ currentUser, timeActive, setTimeActive }}>
       <ContextoCarritoProvider>
-        <>
           <div className="container-app d-flex flex-column min-vh-100">
             <Toaster position="bottom-right" reverseOrder={false} />
             <NavBar />
@@ -32,9 +32,9 @@ function App() {
             <Rutas />
             <Footer />
           </div>
-        </>
       </ContextoCarritoProvider>
     </UserAuthContextProvider>
+
   );
 }
 

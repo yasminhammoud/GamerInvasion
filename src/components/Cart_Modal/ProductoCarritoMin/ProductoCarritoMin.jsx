@@ -12,7 +12,7 @@ export const ProductoCarritoMin = ({ item }) => {
   return (
     <div className={styles.productoCarrito}>
       <div className="m-0">
-        <img src={item.ImagenesUrl[0]} alt="producto" />
+        <img src={item?.ImagenesUrl[0]} alt="producto" />
       </div>
 
       <div className={styles.contendorDeDatos}>
@@ -30,7 +30,7 @@ export const ProductoCarritoMin = ({ item }) => {
         <div className={styles.derecha}>
           <div className={styles.numerito}>{item.amount}</div>
           <p style={{ fontWeight: "bold" }}>Total</p>
-          <p>{item.amount * item.Precio * (1 - (item.Descuento / 100))}$</p>
+          <p>{item.amount * item.Precio * (1 - item.Descuento / 100)}$</p>
         </div>
       </div>
     </div>

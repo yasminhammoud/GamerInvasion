@@ -3,11 +3,17 @@ import React, { useContext } from "react";
 import { ContextoCarrito } from "../../../contexts/ContextoCarrito";
 import styles from "./styles.module.scss";
 
+// Aca lo que hacemos con el useContext es conectarnos al contexto del carrito para luego poder utilizar las funciones que se 
+// crearon en el contexto como la de agregar al carrito y eliminar del carrito
+
 export const ProductoCarritoMin = ({ item }) => {
   const { agregarProductoCarrito, eliminarProductoCarrito } =
     useContext(ContextoCarrito);
 
   const { id } = item;
+
+  // En el return se le agregan los estilos necesarios utilizando styled components en donde a cada etiqueta se le pone su 
+  // respectivo classname para poder aplicarle estilos desde el archivo scss 
 
   return (
     <div className={styles.productoCarrito}>

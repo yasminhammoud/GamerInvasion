@@ -1,30 +1,35 @@
 import React from "react";
 import { useState } from "react";
-import { auth, db } from "../../firebase/firebaseconfig";
+import { auth } from "../../firebase/firebaseconfig";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserShield } from "@fortawesome/free-solid-svg-icons";
+import { faFileWord, faUserShield } from "@fortawesome/free-solid-svg-icons";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
 import { useUserAuth } from "../../contexts/UserAuthContext";
 
 function Register() {
   const navigate = useNavigate();
 
+  // Constantes a usar para almacenar información de los usuarios
   const [name, setName] = useState("");
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [terms, setTerms] = useState(false);
+
+  // Constantes a usar para validación de input
   const [errors, setErrors] = useState("");
   const [form, setForm] = useState("");
-  const colRef = collection(db, "Usuarios");
+
+  // Constante para activar el tiempo para el reenvio de correo de validación
   const { setTimeActive } = useUserAuth();
 
+  // Función para la validación de input (correo y contraseña)
   const findFormErrors = () => {
     const { email, name, password } = form;
     const newErrors = {};
@@ -42,6 +47,8 @@ function Register() {
 
     if (password2 !== password)
       newErrors.password2 = "Las contraseñas no coinciden";
+
+    if (!terms) newErrors.terms = "Debe aceptar los términos y condiciones";
 
     return newErrors;
   };
@@ -73,6 +80,9 @@ function Register() {
       case "password2":
         setPassword2(e.target.value);
         break;
+      case "terms":
+        setTerms(e.target.checked);
+        break;
       default:
         break;
     }
@@ -89,38 +99,40 @@ function Register() {
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
       } else {
+        // Se crea la autenticación en Firebase del usuario
         await createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
+            // Se envia correo de verificación del usuario recién registrado
             sendEmailVerification(auth.currentUser)
               .then(() => {
+                // Activar tiempo para el reenvió de correo de validación
                 setTimeActive(true);
-                navigate("/verificacion-de-correo");
+
+                // Se envía el nombre y correo a la ruta /verificación para poder
+                // almacenar los datos del usuario en Firestore
+                navigate("/verificacion-de-correo", {
+                  state: {
+                    name: name,
+                    email: email,
+                  },
+                });
               })
               .catch((err) => alert(err.message));
-
-            toast.success("Se ha registrado exitósamente");
-
-            addDoc(colRef, {
-              Nombre: name,
-              Email: email,
-            });
-            navigate("/tienda");
           })
           .catch((error) => {
             let message;
             switch (error.code) {
               case "auth/email-already-in-use":
-                message =
-                  "Ya existe una cuenta con el correo electrónico proporcionado.";
+                toast.error(
+                  "Ya existe una cuenta con el correo electrónico proporcionado."
+                );
                 break;
 
               default:
+                toast.error("Error de conexión.");
                 console.log(error);
                 break;
             }
-            toast.error(
-              "Ya existe una cuenta con el correo electrónico proporcionado."
-            );
             console.log(message);
           });
       }
@@ -147,7 +159,7 @@ function Register() {
             >
               Registro <FontAwesomeIcon icon={faUserShield} />
             </Card.Title>
-            <Card.Text>
+            <div>
               <Form className="form" onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label style={{ color: "rgb(239, 211, 0)" }}>
@@ -202,7 +214,7 @@ function Register() {
                     name="password"
                     id="password"
                     type="password"
-                    autocomplete="off"
+                    autoComplete="off"
                     placeholder="Ingresa tu contraseña"
                     value={password}
                     onChange={handleChange}
@@ -225,7 +237,7 @@ function Register() {
                     name="password2"
                     id="password2"
                     type="password"
-                    autocomplete="off"
+                    autoComplete="off"
                     placeholder="Ingresa tu contraseña"
                     value={password2}
                     onChange={handleChange}
@@ -237,6 +249,43 @@ function Register() {
                   >
                     {errors.password2}
                   </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group
+                  className="mb-3 d-flex"
+                  controlId="formBasicCheckbox"
+                >
+                  <Form.Check
+                    required
+                    name="terms"
+                    id="switch"
+                    type="checkbox"
+                    label="Aceptar términos y condiciones"
+                    onChange={handleChange}
+                    value={terms}
+                    isInvalid={!!errors.terms}
+                    feedback={errors.terms}
+                    feedbackType="invalid"
+                    style={{ color: "rgb(239, 211, 0)" }}
+                  />
+                  <Form.Control.Feedback
+                    type="invalid"
+                    style={{ color: "cyan" }}
+                  >
+                    {errors.terms}
+                  </Form.Control.Feedback>
+                  <Button
+                    onClick={() =>
+                      window.open(
+                        "https://docs.google.com/document/d/1LlLSy6Egx3EM02QPCj-ON9LyxBTn0Rsj9GGLsTohr6U/edit?usp=sharing",
+                        "_blank"
+                      )
+                    }
+                    className="btn p-0 mx-3"
+                    variant="gray"
+                  >
+                    <FontAwesomeIcon icon={faFileWord} />
+                  </Button>
                 </Form.Group>
 
                 <div
@@ -256,7 +305,7 @@ function Register() {
                   </Button>
                 </div>
               </Form>
-            </Card.Text>
+            </div>
           </Card.Body>
         </Card>
       </div>

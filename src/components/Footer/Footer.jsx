@@ -4,6 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import "../../buttons/border-draw.scss"
 
+// Footer de la página web contiene el botón que dirige a quienes somos
 export const Footer = () => {
   return (
     <>

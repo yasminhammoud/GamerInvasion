@@ -14,6 +14,7 @@ import { db } from "../firebase/firebaseconfig";
 const coleccion = "Productos";
 const rutaFoto = "productos-imagenes";
 const colletionProducts = "Productos"
+const colletionOrders = "Facturas"
 
 /**
  * It takes a bunch of form data, and adds it to a Firestore collection. It creates a product without image.
@@ -298,4 +299,25 @@ export const getProductsPromotions = async () => {
         });;
 
     return products
+}
+
+/**
+ * It gets all the products from the database and returns them as an array of objects.
+ * @returns An array of objects.
+ */
+ export const getAllOrders = async () => {
+
+    let orders = [];
+
+    const q = collection(db, colletionOrders);
+
+    await getDocs(q).then((data) => {
+        data.docs.forEach((element) => {
+            orders.push({ id: element.id, ...element.data() });
+        });
+    })
+        .catch((error) => {
+            console.log(error);
+        });
+    return orders
 }

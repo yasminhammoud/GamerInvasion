@@ -22,7 +22,7 @@ export const ProductCard = ({ producto }) => {
       <Card
         className="m-2 p-3 text-center justify-content-center glow"
       >
-        <Link to={`/pd/${producto.id}`} >
+        <Link to={`/pd/${producto.UrlProducto}`} state={{ id: producto.id }} >
           <Card.Img
             variant="top"
             src={producto.ImagenesUrl}
@@ -31,10 +31,12 @@ export const ProductCard = ({ producto }) => {
           />
         </Link>
         <Card.Body>
+          
           <Card.Title
             className="mb-5"
             as={Link}
-            to={`/pd/${producto.id}`}
+            to={`/pd/${producto.UrlProducto}`}
+            state={{ id: producto.id }}
             style={{
               textTransform: "capitalize",
               fontWeight: "bold",

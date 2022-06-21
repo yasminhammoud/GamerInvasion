@@ -10,7 +10,6 @@ import { AboutUs } from "../components/AboutUs/AboutUs";
 import { Store } from "../components/Store/Store";
 import Productos from "../components/Admin/Productos/Productos";
 import { ProductDetail } from "../components/Productos/ProductDetail";
-import { ProductosFilter } from "../components/Productos/ProductosFilter";
 import { PromotionPage } from "../components/Promotions/PromotionPage";
 import CrearProductos from "../components/Admin/Productos/CrearProductos";
 import EditarProductos from "../components/Admin/Productos/EditarProductos";
@@ -69,8 +68,6 @@ export const Rutas = () => {
           />
 
           <Route path="/tienda" element={<Store />} />
-
-          <Route path="/tienda/filters" element={<ProductosFilter />} />
 
           <Route path="/promociones" element={<PromotionPage />} />
 

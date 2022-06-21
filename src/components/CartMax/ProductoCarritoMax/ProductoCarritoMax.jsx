@@ -5,6 +5,9 @@ import { Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
+// Aca lo que hacemos con el useContext es conectarnos al contexto del carrito para luego poder utilizar las funciones que se 
+// crearon en el contexto como la de agregar al carrito y eliminar del carrito
+
 export const ProductoCarritoMax = ({ item }) => {
   const {
     agregarProductoCarrito,
@@ -14,6 +17,9 @@ export const ProductoCarritoMax = ({ item }) => {
 
   const { id } = item;
 
+// En el return se le agregan los estilos necesarios utilizando styled components en donde a cada etiqueta se le pone su 
+    // respectivo classname para poder aplicarle estilos desde el archivo scss 
+  
   return (
     <Card className="m-2 p-3 text-center justify-content-center glow">
       <div>

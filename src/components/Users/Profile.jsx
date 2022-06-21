@@ -1,5 +1,6 @@
 import { useUserAuth } from "../../contexts/UserAuthContext"
 
+// Contenedor que muestra información del usuario
 function Profile() {
   const {currentUser} = useUserAuth()
 

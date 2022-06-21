@@ -8,18 +8,28 @@ import { collection, addDoc } from "firebase/firestore";
 import toast from "react-hot-toast";
 
 function VerifyEmail() {
+  
   const colRef = collection(db, "Usuarios");
+
+  // Se usa para recibir los parámetros envíados desde la ruta 
+  // de registro
+  const {state} = useLocation();
+  const {name, email} = state;
+
   const { currentUser } = useUserAuth();
+
   const [time, setTime] = useState(60);
   const { timeActive, setTimeActive } = useUserAuth();
   const navigate = useNavigate();
 
-  const {state} = useLocation();
-  const {name, email} = state;
-
-
+  
+  // Al asegurarse de que el correo del usuario ha sido verificado 
+  // se almacenan sus datos en Firestore, en caso contrario, el usuario
+  // el temporizador se puede resetear para volver enviar el correo
+  // hasta que esté verificado.
   useEffect(() => {
 
+    // Almacenar los datos del usuario en Firestore
     const addDataToFirestore = async () => {
       try{
         await addDoc(colRef, {
@@ -31,7 +41,8 @@ function VerifyEmail() {
         console.log(error);
     }
   }
-  
+   
+  // Al verificarse el correo se dispara la función para almacenar los datos
     const interval = setInterval(() => {
       currentUser
         ?.reload()
@@ -49,6 +60,7 @@ function VerifyEmail() {
     }, 1000);
   }, [navigate, currentUser]);
 
+  // Temporizador para el reenvio de correo de verificación
   useEffect(() => {
     let interval = null;
     if (timeActive && time !== 0) {
@@ -63,6 +75,7 @@ function VerifyEmail() {
     return () => clearInterval(interval);
   }, [timeActive, time, setTimeActive]);
 
+  // ReEnvío de correo de verificación
   const resendEmailVerification = () => {
     sendEmailVerification(auth.currentUser)
       .then(() => {

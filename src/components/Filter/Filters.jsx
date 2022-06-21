@@ -68,8 +68,8 @@ export const Filters = (props) => {
         </h4>
         <form onChange={onChangeValuePrice}>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={1} />
-            <label class="form-check-label" for="flexRadioDefault1">
+            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={1} />
+            <label className="form-check-label" htmlFor="flexRadioDefault1">
               Menor 500$
             </label>
 

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 
 import "../../../buttons/gradient.css";
 
+// Tarjeta con la información general de la página
 export const SiteInfo = () => {
   return (
     <>

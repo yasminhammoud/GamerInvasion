@@ -5,17 +5,21 @@ import { Form, Button, Card } from "react-bootstrap";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import toast from "react-hot-toast";
 
+// Función que se ejecuta al hacer click en el botón de iniciar sesión
 function LogIn() {
   const navigate = useNavigate();
 
+  // Constantes a usar para almacenar información de los usuarios
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Constantes a usar para validación de input
   const [errors, setErrors] = useState("");
   const [form, setForm] = useState("");
 
+  // Función para la validación de input (correo y contraseña)
   const findFormErrors = () => {
     const { email, password } = form;
     const newErrors = {};
@@ -65,9 +69,11 @@ function LogIn() {
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
       } else {
-      await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Inicio de sesión exitoso");
-      navigate("/tienda");}
+        // Si no hay errores, se inicia sesión con correo y contraseña
+        await signInWithEmailAndPassword(auth, email, password);
+        toast.success("Inicio de sesión exitoso");
+        navigate("/tienda");
+      }
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":
@@ -134,7 +140,7 @@ function LogIn() {
                     name="password"
                     id="password"
                     type="password"
-                    autocomplete="off"
+                    autoComplete="off"
                     placeholder="Ingresa tu contraseña"
                     value={password}
                     onChange={handleOnChange}
@@ -157,14 +163,6 @@ function LogIn() {
                   >
                     Ingresar
                   </Button>
-                  {
-                  /*<br /> <Button
-                    className="loginWithGoogle mt-2 fw-bold"
-                    variant="cyan"
-                    type="button"
-                  >
-                    Ingresar con Google <FontAwesomeIcon icon={faGoogle} />
-                  </Button> */}
                 </div>
               </Form>
             </Card.Text>

@@ -7,8 +7,6 @@ export const ProductoCarritoMin = ({ item }) => {
   const { agregarProductoCarrito, eliminarProductoCarrito } =
     useContext(ContextoCarrito);
 
-  const { id } = item;
-
   return (
     <div className={styles.productoCarrito}>
       <div className="m-0">

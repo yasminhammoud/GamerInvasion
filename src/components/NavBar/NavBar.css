@@ -28,6 +28,7 @@ a.nav-link:before{
     transition: all 0.4s ease;
 }
 
+/* Transición del subrayado  */
 a.nav-link:before{
     width: 100%;
     transform: scaleX(0);
@@ -35,11 +36,13 @@ a.nav-link:before{
     transition: transform 0.4s ease;
 }
 
+/* Subrayar on hover  */
 a.nav-link:hover:before{
     transform: scaleX(1);
     transform-origin: left;
 }
 
+/* Subrayar al estar en la ruta activa  */
 .nav-link.active:before{
     transform: scaleX(1) !important;
     transform-origin: left !important;
@@ -92,6 +95,8 @@ a.nav-link:hover:before{
     color: rgb(32, 0, 49) !important;
 }
 
+/* Asignación de colores a los íconos */
+
 .fa-discord{
     color: rgb(131, 249, 255) !important;
 }
@@ -100,11 +105,10 @@ a.nav-link:hover:before{
     color: rgb(13, 167, 175) !important;
 }
 
-
 .fa-user-gear{
-    color: yellow !important;
+    color: rgb(131, 249, 255) !important;
     }
 
 .fa-user-gear:hover{
-    color: rgb(131, 249, 255) !important;
+    color: rgb(13, 167, 175) !important;
 }

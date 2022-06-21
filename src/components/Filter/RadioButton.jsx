@@ -6,8 +6,8 @@ const RadioButton = (props) => {
   return (
     <>
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={props.value} />
-        <label class="form-check-label" for="flexRadioDefault1" style={{ "text-transform": "capitalize" }}>
+        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value={props.value} />
+        <label className="form-check-label" htmlFor="flexRadioDefault1" style={{ textTransform: "capitalize" }}>
           {props.value}
         </label>
       </div>

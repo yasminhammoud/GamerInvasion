@@ -4,6 +4,7 @@ import { Feature } from "./Components/Feature";
 import { SiteInfo } from "./Components/SiteInfo";
 import Slides from "./Components/Slides";
 
+// Página de início
 export const Landingpage = () => {
   return (
     <div>

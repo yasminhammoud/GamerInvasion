@@ -46,7 +46,7 @@ export const ProductCard = ({ producto }) => {
           </Card.Title>
 
           {producto.Descuento !== 0 ? (
-            <Card.Text
+            <div className="my-2"
               style={{
                 textAlign: "center",
                 fontWeight: "bold",
@@ -67,7 +67,7 @@ export const ProductCard = ({ producto }) => {
               >
                 {producto.Descuento}% OFF
               </div>
-            </Card.Text>
+            </div>
           ) : (
             <Card.Text
               style={{

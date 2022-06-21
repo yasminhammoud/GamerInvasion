@@ -10,7 +10,7 @@ export const Productos = ({ data}) => {
             <Row className="justify-content-center">
 
                 <Col xs={8} md={8} lg={3} className="mb-4">
-                    <div style={{ color: "white", border: "1px", "border-color": "white", "background": "linear-gradient(180deg, rgb(43, 0, 56) 20%, rgb(24, 0, 71) 100%)", "border-radius": "0.5rem", "padding": "2rem", "margin-top": "0.5rem"}}>
+                    <div style={{ color: "white", border: "1px", borderColor: "white", "background": "linear-gradient(180deg, rgb(43, 0, 56) 20%, rgb(24, 0, 71) 100%)", borderRadius: "0.5rem", "padding": "2rem", marginTop: "0.5rem"}}>
                         <span>{data.length} resultados</span>
                         <br></br>
                         <br></br>

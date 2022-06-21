@@ -10,15 +10,13 @@ export const ProductoCarritoMin = ({ item }) => {
   const { agregarProductoCarrito, eliminarProductoCarrito } =
     useContext(ContextoCarrito);
 
-  const { id } = item;
-
   // En el return se le agregan los estilos necesarios utilizando styled components en donde a cada etiqueta se le pone su 
   // respectivo classname para poder aplicarle estilos desde el archivo scss 
 
   return (
     <div className={styles.productoCarrito}>
       <div className="m-0">
-        <img src={item.ImagenesUrl[0]} alt="producto" />
+        <img src={item?.ImagenesUrl[0]} alt="producto" />
       </div>
 
       <div className={styles.contendorDeDatos}>
@@ -36,7 +34,7 @@ export const ProductoCarritoMin = ({ item }) => {
         <div className={styles.derecha}>
           <div className={styles.numerito}>{item.amount}</div>
           <p style={{ fontWeight: "bold" }}>Total</p>
-          <p>{item.amount * item.Precio * (1 - (item.Descuento / 100))}$</p>
+          <p>{item.amount * item.Precio * (1 - item.Descuento / 100)}$</p>
         </div>
       </div>
     </div>

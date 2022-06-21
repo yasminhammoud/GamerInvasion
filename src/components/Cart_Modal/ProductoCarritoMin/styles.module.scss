@@ -1,13 +1,12 @@
 .productoCarrito {
     background-color: white; /* Aca cambias los colores del background de los items del carrito */
-    margin: 8px 15px;
+    margin: 8px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 15px;
     border-radius: 3px;
-
-  
+    
     img {
       height: 50px;
       width: 60px;

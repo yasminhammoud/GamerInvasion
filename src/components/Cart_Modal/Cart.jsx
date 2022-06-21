@@ -6,8 +6,13 @@ import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 export const Cart = () => {
+
+  // Aca se crean dos states el cual uno es para verificar si el carrito esta desplegado o no esta desplegado , mientras que el otro
+  // state es para saber la cantidad de productos que se encuentran dentro del carrito 
+
   const [carritoAbierto, setCarritoAbierto] = useState(false);
   const [cantidadProductos, setCantidadProductos] = useState(0);
+
 
   const ref = useRef();
 
@@ -27,6 +32,9 @@ export const Cart = () => {
     }
   }, [carritoAbierto])
 
+  // Aca con el useContext nos conectamos al contexto del carrito y nos traemos el useState del productoCarrito
+
+
   const { productoCarrito } = useContext(ContextoCarrito);
 
   useEffect(() => {
@@ -36,7 +44,7 @@ export const Cart = () => {
   }, [productoCarrito]);
 
   const total = productoCarrito.reduce(
-    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio*actual.Descuento/100),
+    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
     0
   );
 

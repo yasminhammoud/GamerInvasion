@@ -5,6 +5,7 @@ import products from "../../../images/gaming-products.png";
 import community from "../../../images/gaming-community.png";
 import shopping from "../../../images/shopping.png";
 
+// Container con las caracteristicas principales de la pagina
 export const Feature = () => {
   return (
     <>

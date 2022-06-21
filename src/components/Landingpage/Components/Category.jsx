@@ -12,6 +12,7 @@ import {Link } from "react-router-dom"
 
 import "../../../buttons/gradual-effect.css"
 
+// Contenedor que muestra las categorías que ofrece la página
 export const Category = () => {
   return (
     <>

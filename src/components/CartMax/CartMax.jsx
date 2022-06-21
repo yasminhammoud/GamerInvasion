@@ -5,12 +5,19 @@ import ReactWhatsapp from "react-whatsapp";
 import { Card, Row, Col, Container } from "react-bootstrap";
 
 export const CartMax = () => {
+
+  // Aca se crean dos states el cual uno es para verificar si el carrito esta desplegado o no esta desplegado , mientras que el otro
+  // state es para saber la cantidad de productos que se encuentran dentro del carrito 
+
   const [carritoAbierto, setCarritoAbierto] = useState(true);
   const [cantidadProductos, setCantidadProductos] = useState(0);
+
+  // Aca con el useContext nos conectamos al contexto del carrito y nos traemos el useState del productoCarrito
+
   const { productoCarrito } = useContext(ContextoCarrito);
 
   const total = productoCarrito.reduce(
-    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio*actual.Descuento/100),
+    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
     0
   );
 
@@ -19,6 +26,10 @@ export const CartMax = () => {
       anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
     0
   );
+
+  // Aca lse guarda en una variable la descripcion de los productos que estan dentro del carrito , y esto sirve para luego 
+  // cuando el cliente quiera comprar , se mande de manera automatizada un mensaje al whatssap empresarial con todos los 
+  // productos que se encuentran en el carrito. 
 
   var descripcionProductos = productoCarrito.map((item) => {
     return (
@@ -38,7 +49,7 @@ export const CartMax = () => {
       productoCarrito.reduce((anterior, actual) => anterior + actual.amount, 0)
     );
   }, [productoCarrito]);
-  
+
   function roundToTwo(num) {
     return +(Math.round(num + "e+2") + "e-2");
   }

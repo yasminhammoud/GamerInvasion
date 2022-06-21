@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 import { getAllProducts, getProductsByCategory, getProductsByKeywords } from "../../controllers/Productos";
-import { Productos } from "../Productos/Productos";
 import { orderProducts } from "../../utilities/OrderProducts"
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
+import ProductsPage from "../Productos/ProductsPage";
 
 /* Component that fetches products data by Keywords or Category from Firestore Collection and renders it in 
 *Products Page 
@@ -39,7 +39,7 @@ export const Store = () => {
   return (
     <div className="d-flex align-items-center justify-content-center">
       {loading ? <LoadingSpinner /> : products.length !== 0 ? (
-        <Productos data={products} />
+        <ProductsPage products={products} />
       ) : (
         <div style={{ color: "white", position: "absolute", top: "50%", fontWeight: "bold", fontSize: "2em" }}>
           <span>No se encontraron resultados</span>

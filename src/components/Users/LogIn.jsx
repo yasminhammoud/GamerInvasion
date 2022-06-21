@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/firebaseconfig";
 import { useState } from "react";
@@ -77,7 +78,7 @@ function LogIn() {
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":
-          toast.error("Datos inválidos");
+          toast.error("Dato s inválidos");
           break;
         case "user-not-found":
           toast.error("Usuario no encontrado");

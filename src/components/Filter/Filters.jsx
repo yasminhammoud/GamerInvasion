@@ -1,8 +1,9 @@
 import RadioButton from './RadioButton';
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 /* Components that renders all filters (by brands and by price) */
+// DEPRECATED 
 export const Filters = (props) => {
 
   const navigate = useNavigate();
@@ -14,10 +15,6 @@ export const Filters = (props) => {
     const auxArray = [...new Set(brandArray)]
     return auxArray
   }
-
-  useEffect(() => {
-    setData(props.productos)
-  }, [props.productos]);
 
 
   const filterByBrand = (brand) => {

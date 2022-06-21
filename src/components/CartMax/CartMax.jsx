@@ -3,8 +3,19 @@ import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import { ProductoCarritoMax } from "./ProductoCarritoMax/ProductoCarritoMax";
 import ReactWhatsapp from "react-whatsapp";
 import { Card, Row, Col, Container } from "react-bootstrap";
+import {
+  collection,
+  addDoc,
+} from "firebase/firestore";
+import { db } from "../../firebase/firebaseconfig";
+import { useNavigate } from "react-router-dom";
+
+//Nombre coleccion en firebase que guarda las facturas de compra
+const coleccion = "Facturas";
 
 export const CartMax = () => {
+
+  const navigate = useNavigate();
 
   // Aca se crean dos states el cual uno es para verificar si el carrito esta desplegado o no esta desplegado , mientras que el otro
   // state es para saber la cantidad de productos que se encuentran dentro del carrito 
@@ -20,12 +31,21 @@ export const CartMax = () => {
     (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
     0
   );
+  
+    //Estado inicial formulario factura y useState
+    const initFormFactura = {
+      fecha: new Date(),
+      monto: total,
+      productos: []
+    };
+    const [formFactura, setFormFactura] = useState(initFormFactura);
 
-  const discount = productoCarrito.reduce(
-    (anterior, actual) =>
-      anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
-    0
-  );
+    const discount = productoCarrito.reduce(
+      (anterior, actual) =>
+        anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
+      0 
+    );
+
 
   // Aca lse guarda en una variable la descripcion de los productos que estan dentro del carrito , y esto sirve para luego 
   // cuando el cliente quiera comprar , se mande de manera automatizada un mensaje al whatssap empresarial con todos los 
@@ -48,11 +68,43 @@ export const CartMax = () => {
     setCantidadProductos(
       productoCarrito.reduce((anterior, actual) => anterior + actual.amount, 0)
     );
+
+    setFormFactura({
+      ...formFactura,
+      monto: total,
+    });
   }, [productoCarrito]);
 
   function roundToTwo(num) {
     return +(Math.round(num + "e+2") + "e-2");
   }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+      productoCarrito.map((product) => {
+        var Productos = {
+          urlImagen: product.ImagenesUrl[0],
+          nombre: product.Nombre,
+          cantidad: product.amount,
+          subTotal: product.Precio,
+        };
+        formFactura.productos.push(Productos)
+      }
+      
+      )
+    try {
+      await addDoc(collection(db, coleccion), {
+          formFactura
+      });
+  } catch (e) {
+      console.error("Error al agregar la factura ", e);
+  }
+    formFactura.productos = []
+    formFactura.monto = 0
+    navigate("/tienda");
+  };
+  
 
   return (
     <>
@@ -168,6 +220,7 @@ export const CartMax = () => {
                       </table>
                     </div>
                     <ReactWhatsapp
+                      onClick = {handleSubmit}
                       style={{
                         fontWeight: "bold",
                         background: "rgb(239, 211, 0)",

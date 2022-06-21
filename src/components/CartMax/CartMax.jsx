@@ -9,13 +9,14 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase/firebaseconfig";
 import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../../contexts/UserAuthContext";
 
 //Nombre coleccion en firebase que guarda las facturas de compra
 const coleccion = "Facturas";
 
 export const CartMax = () => {
-
   const navigate = useNavigate();
+  const {currentUser} = useUserAuth()
 
   // Aca se crean dos states el cual uno es para verificar si el carrito esta desplegado o no esta desplegado , mientras que el otro
   // state es para saber la cantidad de productos que se encuentran dentro del carrito 
@@ -36,7 +37,8 @@ export const CartMax = () => {
     const initFormFactura = {
       fecha: new Date(),
       monto: total,
-      productos: []
+      productos: [],
+      idCliente: currentUser.uid
     };
     const [formFactura, setFormFactura] = useState(initFormFactura);
 
@@ -95,14 +97,17 @@ export const CartMax = () => {
       )
     try {
       await addDoc(collection(db, coleccion), {
-          formFactura
+          fecha: formFactura.fecha,
+          idCliente: formFactura.idCliente,
+          total: formFactura.monto,
+          productos: formFactura.productos
       });
   } catch (e) {
       console.error("Error al agregar la factura ", e);
   }
     formFactura.productos = []
     formFactura.monto = 0
-    navigate("/tienda");
+    navigate("/historial-compras");
   };
   
 

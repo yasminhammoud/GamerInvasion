@@ -305,7 +305,7 @@ export const getProductsPromotions = async () => {
  * It gets all the products from the database and returns them as an array of objects.
  * @returns An array of objects.
  */
- export const getAllOrdersByID = async (id) => {
+ export const getOrdersByID = async (id) => {
     const q = query(collection(db, colletionOrders), where("idCliente", "==", id));
     let orders = [];
     

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllOrders, getAllOrdersByID } from "../../controllers/Productos";
+import { getOrdersByID } from "../../controllers/Productos";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 import { useUserAuth } from "../../contexts/UserAuthContext";
 import { Col, Row, Container } from "react-bootstrap"
@@ -12,16 +12,16 @@ export const OrdersHistory = () => {
   const { currentUser } = useUserAuth()
 
   useEffect(() => {
-    getAllOrdersByID(currentUser.uid).then((response) => {
+    getOrdersByID(currentUser.uid).then((response) => {
       setOrders(response)
       setLoading(false)
     })
   }, []);
 
   return (
-    <div >
+    <div className="d-flex align-items-center justify-content-center">
       {loading ? (
-        <div className="d-flex align-items-center justify-content-center">
+        <div >
           <LoadingSpinner />
         </div>
       ) : orders.length !== 0 ? ((
@@ -38,8 +38,8 @@ export const OrdersHistory = () => {
       )) :
         (
           <div style={{ color: "white", position: "absolute", top: "50%", fontWeight: "bold", fontSize: "2em" }}>
-          <span>No se encontraron resultados</span>
-        </div>
+            <span>No se encontraron resultados</span>
+          </div>
         )}
     </div>
 

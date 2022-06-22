@@ -305,12 +305,10 @@ export const getProductsPromotions = async () => {
  * It gets all the products from the database and returns them as an array of objects.
  * @returns An array of objects.
  */
- export const getAllOrders = async () => {
-
+ export const getAllOrdersByID = async (id) => {
+    const q = query(collection(db, colletionOrders), where("idCliente", "==", id));
     let orders = [];
-
-    const q = collection(db, colletionOrders);
-
+    
     await getDocs(q).then((data) => {
         data.docs.forEach((element) => {
             orders.push({ id: element.id, ...element.data() });

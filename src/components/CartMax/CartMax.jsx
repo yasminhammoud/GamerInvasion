@@ -26,16 +26,17 @@ export const CartMax = () => {
 
   // Aca con el useContext nos conectamos al contexto del carrito y nos traemos el useState del productoCarrito
 
-  const { productoCarrito } = useContext(ContextoCarrito);
+    const { productoCarrito } = useContext(ContextoCarrito);
 
-  const total = productoCarrito.reduce(
-    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
-    0
-  );
-  
+    const total = productoCarrito.reduce(
+      (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
+      0
+    );
+    const today = new Date().toISOString().slice(0, 10)
+
     //Estado inicial formulario factura y useState
     const initFormFactura = {
-      fecha: new Date(),
+      fecha: today,
       monto: total,
       productos: [],
       idCliente: currentUser.uid

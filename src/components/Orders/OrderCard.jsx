@@ -1,7 +1,6 @@
 import { OrderProductCard } from "./OrderProductCard"
 
 export const OrderCard = ({ order }) => {
-    console.log(order)
     return (
         <div className="container mt-5 mb-5" style={{ color: "white" }}>
             <div className="row d-flex justify-content-center">
@@ -13,7 +12,7 @@ export const OrderCard = ({ order }) => {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <div className="py-2"> <span className="d-block text-muted">Order Date</span> <span>15-11-2001</span> </div>
+                                                <div className="py-2"> <span className="d-block text-muted">Order Date</span> <span>{order.fecha}</span> </div>
                                             </td>
                                             <td>
                                                 <div className="py-2"> <span className="d-block text-muted">Order ID</span> <span>{order.id}</span> </div>
@@ -30,12 +29,18 @@ export const OrderCard = ({ order }) => {
                             </div>
                             <div className="product border-bottom table-responsive">
                                 <table className="table table-borderless">
-                                    <tbody>
-                                        {order.productos.map((prod, index) => {
-                                            <OrderProductCard key={index} product={prod} />
-                                        })
-                                        }
-                                    </tbody>
+                                {order.productos.map((prod, index) => (
+                                    <tr>
+                                        <td width="20%"> <img src={order.productos[index].urlImagen} width="90" /> </td>
+                                        <td width="60%"> <span className="font-weight-bold">{order.productos[index].nombre}</span>
+                                            <div className="product-qty"> <span className="d-block">Cantidad: {order.productos[index].cantidad}</span></div>
+                                        </td>
+                                        <td width="20%">
+                                            <div className="text-right"> <span className="font-weight-bold">${order.productos[index].subTotal}</span> </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                                    
                                 </table>
                             </div>
                             <div className="row d-flex justify-content-end">

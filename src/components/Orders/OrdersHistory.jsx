@@ -19,9 +19,9 @@ export const OrdersHistory = () => {
   }, []);
 
   return (
-    <div >
+    <div className="d-flex align-items-center justify-content-center">
       {loading ? (
-        <div className="d-flex align-items-center justify-content-center">
+        <div >
           <LoadingSpinner />
         </div>
       ) : orders.length !== 0 ? ((
@@ -38,8 +38,8 @@ export const OrdersHistory = () => {
       )) :
         (
           <div style={{ color: "white", position: "absolute", top: "50%", fontWeight: "bold", fontSize: "2em" }}>
-          <span>No se encontraron resultados</span>
-        </div>
+            <span>No se encontraron resultados</span>
+          </div>
         )}
     </div>
 

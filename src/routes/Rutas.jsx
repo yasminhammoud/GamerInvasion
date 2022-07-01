@@ -21,6 +21,7 @@ import Register from "../components/Users/Register";
 import LogIn from "../components/Users/LogIn";
 import EmailVerification from "../components/Users/EmailVerification";
 import PrivateRoute from "./PrivateRoute";
+
 import Profile from "../components/Users/Profile";
 import { OrdersHistory } from "../components/Orders/OrdersHistory";
 

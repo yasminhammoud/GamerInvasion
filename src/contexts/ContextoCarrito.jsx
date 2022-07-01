@@ -90,9 +90,7 @@ export const ContextoCarritoProvider = ({ children }) => {
     // Se eliminan todos los productos del carrito
 
     const resetearCarrito = () => {
-        setproductoCarrito(
-            productoCarrito = []
-        )
+        setproductoCarrito([])
     }
 
     return (

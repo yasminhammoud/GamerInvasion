@@ -10,13 +10,12 @@ import {
   Button,
 } from "react-bootstrap";
 import { Search } from "../Search/Search";
-import ReactWhatsapp from "react-whatsapp";
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { useUserAuth } from "../../contexts/UserAuthContext";
 import BotonCerrarSesion from "../Users/BotonCerrarSesion/CerrarSesion";
-import { faUserGear } from "@fortawesome/free-solid-svg-icons";
+
 
 export const NavBar = () => {
   // Se obtiene el estado de autenticación del usuario
@@ -52,9 +51,6 @@ export const NavBar = () => {
   };
 
   const handleClose = () => setMenuOpen(false);
-
-  // Mensaje de soporte técnico
-  var mensaje = `Hola, me gustaría comunicarme con el soporte técnico de Gamer Invasion`;
 
   return (
     <>
@@ -156,17 +152,7 @@ export const NavBar = () => {
                 <Search onClick={toggleMenu}/>
               </Nav>
               <Nav className="align-items-center">
-                {/*Enviar mensaje por whatsapp para soporte técnico*/}
-                <ReactWhatsapp
-                  className="btn p-0 mx-3"
-                  number="58-412-194-4161"
-                  message={`${mensaje}`}
-                  onClick={toggleMenu}
-                >
-                  <FontAwesomeIcon icon={faUserGear} />
-                </ReactWhatsapp>
-
-                {/*Se verifica si el correo del usuario ha sido verificar para darle acceso a ventanas privadas*/}
+              {/*Se verifica si el correo del usuario ha sido verificar para darle acceso a ventanas privadas*/}
                 {!!currentUser?.emailVerified ? (
                   <>
                     <NavDropdown

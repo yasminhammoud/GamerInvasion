@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import { ProductoCarritoMax } from "./ProductoCarritoMax/ProductoCarritoMax";
-import ReactWhatsapp from "react-whatsapp";
-import { Card, Row, Col, Container } from "react-bootstrap";
+import { Card, Row, Col, Container, Button } from "react-bootstrap";
 import {
   collection,
   addDoc,
@@ -26,7 +25,7 @@ export const CartMax = () => {
 
   // Aca con el useContext nos conectamos al contexto del carrito y nos traemos el useState del productoCarrito
 
-    const { productoCarrito } = useContext(ContextoCarrito);
+    const { productoCarrito, resetearCarrito } = useContext(ContextoCarrito);
 
     const total = productoCarrito.reduce(
       (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
@@ -108,6 +107,7 @@ export const CartMax = () => {
   }
     formFactura.productos = []
     formFactura.monto = 0
+    resetearCarrito()
     navigate("/historial-compras");
   };
   
@@ -225,19 +225,17 @@ export const CartMax = () => {
                         </tbody>
                       </table>
                     </div>
-                    <ReactWhatsapp
+                    <Button
                       onClick = {handleSubmit}
                       style={{
                         fontWeight: "bold",
                         background: "rgb(239, 211, 0)",
                         border: "rgb(239, 211, 0)",
+                        color: 'black'
                       }}
-                      className="btn btn-cyan"
-                      number="58-412-194-4161"
-                      message={`${mensaje} \n Con un *monto total* de ${total} $`}
                     >
                       Pagar
-                    </ReactWhatsapp>
+                    </Button>
                   </Card>
                 </Col>
               </Row>

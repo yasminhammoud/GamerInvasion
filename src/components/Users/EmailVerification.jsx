@@ -4,50 +4,45 @@ import { sendEmailVerification } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../contexts/UserAuthContext";
 import { Button, Card } from "react-bootstrap";
-import { collection, addDoc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import toast from "react-hot-toast";
 
 function VerifyEmail() {
-  
-  const colRef = collection(db, "Usuarios");
-
-  // Se usa para recibir los parámetros envíados desde la ruta 
+  // Se usa para recibir los parámetros envíados desde la ruta
   // de registro
-  const {state} = useLocation();
-  const {name, email} = state;
+  const { state } = useLocation();
+  const { name, email } = state;
 
   const { currentUser } = useUserAuth();
+  const colRef = doc(db, "Usuarios", currentUser.uid);
 
   const [time, setTime] = useState(60);
   const { timeActive, setTimeActive } = useUserAuth();
   const navigate = useNavigate();
 
-  
-  // Al asegurarse de que el correo del usuario ha sido verificado 
+  // Al asegurarse de que el correo del usuario ha sido verificado
   // se almacenan sus datos en Firestore, en caso contrario, el usuario
   // el temporizador se puede resetear para volver enviar el correo
   // hasta que esté verificado.
   useEffect(() => {
-
     // Almacenar los datos del usuario en Firestore
     const addDataToFirestore = async () => {
-      try{
-        await addDoc(colRef, {
+      try {
+        await setDoc(colRef, {
           Nombre: name,
           Email: email,
         });
         toast.success("Se ha registrado exitósamente");
-      } catch(error){
+      } catch (error) {
         console.log(error);
-    }
-  }
-   
-  // Al verificarse el correo se dispara la función para almacenar los datos
+      }
+    };
+
+    // Al verificarse el correo se dispara la función para almacenar los datos
     const interval = setInterval(() => {
       currentUser
         ?.reload()
         .then(() => {
-
           if (currentUser?.emailVerified) {
             clearInterval(interval);
             addDataToFirestore();
@@ -119,7 +114,9 @@ function VerifyEmail() {
             </Button>
             <br />
             <br />
-            <p style={{ color: "yellow" }}>¡No olvide revisar su correo spam!</p>
+            <p style={{ color: "yellow" }}>
+              ¡No olvide revisar su correo spam!
+            </p>
           </Card.Text>
         </Card.Body>
       </Card>

@@ -30,7 +30,7 @@ const Slides = () => {
           </Carousel.Item>
         </Carousel>
         
-        <div className="centered">Gamer Invasion</div>
+        <div className="app-name">Gamer Invasion</div>
       </div>
     </>
   );

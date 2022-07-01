@@ -22,7 +22,7 @@ import LogIn from "../components/Users/LogIn";
 import EmailVerification from "../components/Users/EmailVerification";
 import PrivateRoute from "./PrivateRoute";
 
-import Profile from "../components/Users/Profile";
+import Profile from "../components/Profile/Profile";
 import { OrdersHistory } from "../components/Orders/OrdersHistory";
 
 // Rutas de toda la página web (es llamada desde el componente App.jsx)

@@ -180,7 +180,7 @@ export const NavBar = () => {
                       <NavDropdown.Item as={Link} to="/perfil" onClick={toggleMenu}>
                         Perfil
                       </NavDropdown.Item>
-                      <NavDropdown.Item as={Link} to="/carrito" onClick={toggleMenu}>
+                      <NavDropdown.Item as={Link} to="/historial-compras" onClick={toggleMenu}>
                         Compras realizadas
                       </NavDropdown.Item>
                     </NavDropdown>

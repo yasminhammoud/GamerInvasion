@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./NavBar.css";
 import {
   Container,
@@ -10,15 +10,47 @@ import {
   Button,
 } from "react-bootstrap";
 import { Search } from "../Search/Search";
-
 import logo from "../../images/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { useUserAuth } from "../../contexts/UserAuthContext";
-import BotonCerrarSesion from "../BotonCerrarSesion/CerrarSesion";
+import BotonCerrarSesion from "../Users/BotonCerrarSesion/CerrarSesion";
+
 
 export const NavBar = () => {
-  const { user } = useUserAuth();
+  // Se obtiene el estado de autenticación del usuario
+  const { currentUser } = useUserAuth();
+
+  // Se obtiene la url actual para reflejarlo en el navbar con un subrayado
+  let location = useLocation();
+  useEffect(() => {}, [location]);
+
+  // Se activa el dropdown menu de categorias on hover
+  const [show, setShow] = useState(false);
+  const showDropdown = (e) => {
+    setShow(!show);
+  };
+  // Se desactiva el dropdown menu de categorias on mouse leave
+  const hideDropdown = (e) => {
+    setShow(false);
+  };
+
+  const [show2, setShow2] = useState(false);
+  // Se activa el dropdown menu de detalles del usuario on hover
+  const showDropdown2 = (e) => {
+    setShow2(!show2);
+  };
+  // Se desactiva el dropdown menu de detalles del usuario on mouse leave
+  const hideDropdown2 = (e) => {
+    setShow2(false);
+  };
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const handleClose = () => setMenuOpen(false);
 
   return (
     <>
@@ -31,22 +63,30 @@ export const NavBar = () => {
         fixed="top"
         className="py-0"
       >
-        <Container
-          className="navbar-container align-items-center"
-          fluid
-          id="mierda"
-        >
-          <Navbar.Brand as={Link} to="/" className="nav-text">
+        <Container className="navbar-container align-items-center" fluid>
+          {/* Se muestra el logo y redirecciona a la pagina principal */}
+          <Link
+            className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
+            to="/"
+          >
             <img alt="logo" src={logo} />
-          </Navbar.Brand>
+          </Link>
 
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-xl`} />
+          <Navbar.Toggle
+            aria-controls={`offcanvasNavbar-expand-xl`}
+            onClick={toggleMenu}
+          />
 
+          {/* Contenedor del offcanvas para activarlo cuando el tamaño de la pantalla es xl */}
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-xl`}
             aria-labelledby={`offcanvasNavbarLabel-expand-xl`}
             placement="end"
+            restoreFocus={false}
+            show={menuOpen}
+            onHide={handleClose}
           >
+            {/* Botón de cerrado del offcanvas menu */}
             <Offcanvas.Header
               closeButton
               className="btn-close-white align-items-center justify-content-end"
@@ -54,109 +94,114 @@ export const NavBar = () => {
 
             <Offcanvas.Body>
               <Nav className="align-items-center justify-content-center flex-grow-1 pe-3">
-                <Nav.Link
-                  eventKey="1"
-                  as={Link}
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/promociones" ? "active" : ""
+                  }`}
                   to="/promociones"
-                  className="nav-text justify-content-end "
+                  onClick={toggleMenu}
                 >
                   💥Promociones💥
-                </Nav.Link>
+                </Link>
 
-                <Nav.Link
-                  eventKey="2"
-                  as={Link}
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/tienda" ? "active" : ""
+                  }`}
                   to="/tienda"
-                  className="nav-text"
+                  onClick={toggleMenu}
                 >
                   Tienda
-                </Nav.Link>
+                </Link>
 
                 <NavDropdown
                   title="Categorías"
                   className="nav-dropdown-title"
                   id={`offcanvasNavbarDropdown-expand-xl`}
+                  show={show}
+                  onMouseEnter={showDropdown}
+                  onMouseLeave={hideDropdown}
                 >
-                  <NavDropdown.Item
-                    eventKey="3"
-                    as={Link}
-                    to="/tienda/c/pc desktop"
-                  >
+                  <NavDropdown.Item as={Link} to="/tienda/c/pc desktop" onClick={toggleMenu}>
                     PC DESKTOP
                   </NavDropdown.Item>
-                  <NavDropdown.Item
-                    eventKey="4"
-                    as={Link}
-                    to="/tienda/c/consolas"
-                  >
+                  <NavDropdown.Item as={Link} to="/tienda/c/consolas" onClick={toggleMenu}>
                     CONSOLAS
                   </NavDropdown.Item>
-                  <NavDropdown.Item
-                    eventKey="5"
-                    as={Link}
-                    to="/tienda/c/laptops"
-                  >
+                  <NavDropdown.Item as={Link} to="/tienda/c/laptops" onClick={toggleMenu}>
                     LAPTOPS
                   </NavDropdown.Item>
-                  <NavDropdown.Item
-                    eventKey="6"
-                    as={Link}
-                    to="/tienda/c/videojuegos"
-                  >
+                  <NavDropdown.Item as={Link} to="/tienda/c/videojuegos" onClick={toggleMenu}>
                     VIDEOJUEGOS
                   </NavDropdown.Item>
-                  <NavDropdown.Item
-                    eventKey="7"
-                    as={Link}
-                    to="/tienda/c/perifericos"
-                  >
+                  <NavDropdown.Item as={Link} to="/tienda/c/perifericos" onClick={toggleMenu}>
                     PERIFÉRICOS
                   </NavDropdown.Item>
                 </NavDropdown>
 
-                <Nav.Link
-                  eventKey="8"
-                  as={Link}
+                <Link
+                  className={`nav-link ${
+                    location.pathname === "/noticias" ? "active" : ""
+                  }`}
                   to="/noticias"
-                  className="nav-text justify-content-end"
+                  onClick={toggleMenu}
                 >
                   Noticias
-                </Nav.Link>
-                <Search />
+                </Link>
+
+                <Search onClick={toggleMenu}/>
               </Nav>
               <Nav className="align-items-center">
-                {!!user ? (
-                  <BotonCerrarSesion />
+              {/*Se verifica si el correo del usuario ha sido verificar para darle acceso a ventanas privadas*/}
+                {!!currentUser?.emailVerified ? (
+                  <>
+                    <NavDropdown
+                      title={currentUser.email}
+                      className="nav-dropdown-title"
+                      id={`offcanvasNavbarDropdown-expand-xl`}
+                      show={show2}
+                      onMouseEnter={showDropdown2}
+                      onMouseLeave={hideDropdown2}
+                    >
+                      <NavDropdown.Item as={Link} to="/perfil" onClick={toggleMenu}>
+                        Perfil
+                      </NavDropdown.Item>
+                      <NavDropdown.Item as={Link} to="/historial-compras" onClick={toggleMenu}>
+                        Compras realizadas
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                    <BotonCerrarSesion />
+                  </>
                 ) : (
                   <>
-                    <Nav.Link>
-                      <Link
-                        as={Link}
-                        to="/acceder"
-                        className="nav-text justify-content-end"
-                      >
-                        Acceder
-                      </Link>
-                    </Nav.Link>
-                    <Nav.Link>
-                      <Link
-                        eventKey="10"
-                        as={Link}
-                        to="/registro"
-                        className="nav-text justify-content-end"
-                      >
-                        Registarse
-                      </Link>
-                    </Nav.Link>
-                    </>
+                    <Link
+                      className={`nav-link ${
+                        location.pathname === "/acceder" ? "active" : ""
+                      }`}
+                      to="/acceder"
+                      onClick={toggleMenu}
+                    >
+                      Acceder
+                    </Link>
+
+                    <Link
+                      className={`nav-link ${
+                        location.pathname === "/registro" ? "active" : ""
+                      }`}
+                      to="/registro"
+                      onClick={toggleMenu}
+                    >
+                      Registarse
+                    </Link>
+                  </>
                 )}
               </Nav>
 
               <Nav>
+                {/*Direcciona al canal de discord (comunidad)*/}
                 <Button
-                  eventKey="11"
                   onClick={() =>
-                    window.open("https://discord.gg/zgvnMzyB", "_blank")
+                    window.open("https://discord.gg/skdvNZ6q55", "_blank")
                   }
                   className="btn p-0 mx-3"
                   variant="dark-purple"

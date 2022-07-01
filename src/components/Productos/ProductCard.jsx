@@ -22,7 +22,7 @@ export const ProductCard = ({ producto }) => {
       <Card
         className="m-2 p-3 text-center justify-content-center glow"
       >
-        <Link to={`/pd/${producto.id}`} >
+        <Link to={`/pd/${producto.UrlProducto}`} state={{ id: producto.id }} >
           <Card.Img
             variant="top"
             src={producto.ImagenesUrl}
@@ -31,10 +31,12 @@ export const ProductCard = ({ producto }) => {
           />
         </Link>
         <Card.Body>
+          
           <Card.Title
             className="mb-5"
             as={Link}
-            to={`/pd/${producto.id}`}
+            to={`/pd/${producto.UrlProducto}`}
+            state={{ id: producto.id }}
             style={{
               textTransform: "capitalize",
               fontWeight: "bold",
@@ -46,7 +48,7 @@ export const ProductCard = ({ producto }) => {
           </Card.Title>
 
           {producto.Descuento !== 0 ? (
-            <Card.Text
+            <div className="my-2"
               style={{
                 textAlign: "center",
                 fontWeight: "bold",
@@ -67,7 +69,7 @@ export const ProductCard = ({ producto }) => {
               >
                 {producto.Descuento}% OFF
               </div>
-            </Card.Text>
+            </div>
           ) : (
             <Card.Text
               style={{

@@ -7,7 +7,7 @@
   height: 100%;
   margin: auto;
 }
-.corousel-list {
+.corousel-list { 
   display: flex;
   align-items: center;
   list-style: none;
@@ -36,3 +36,13 @@
   background: linear-gradient(180deg, #360047 0%, rgba(24, 0, 71, 1) 80%);
   border: none;
 }
+
+/* @media (max-width: 576px) {
+  .carousel-button {
+    visibility: hidden !important;
+  }
+
+  .carousel-container {
+    margin: 0px !important;
+  }
+} */

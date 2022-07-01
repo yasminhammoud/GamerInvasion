@@ -38,7 +38,7 @@ export const CartMax = () => {
       fecha: today,
       monto: total,
       productos: [],
-      idCliente: currentUser.uid
+      idCliente: ""
     };
     const [formFactura, setFormFactura] = useState(initFormFactura);
 
@@ -70,7 +70,6 @@ export const CartMax = () => {
     setCantidadProductos(
       productoCarrito.reduce((anterior, actual) => anterior + actual.amount, 0)
     );
-
     setFormFactura({
       ...formFactura,
       monto: total,
@@ -96,12 +95,14 @@ export const CartMax = () => {
       
       )
     try {
-      await addDoc(collection(db, coleccion), {
+      if (currentUser !== null ){ 
+        await addDoc(collection(db, coleccion), {
           fecha: formFactura.fecha,
-          idCliente: formFactura.idCliente,
+          idCliente: currentUser.uid,
           total: formFactura.monto,
           productos: formFactura.productos
       });
+      }
   } catch (e) {
       console.error("Error al agregar la factura ", e);
   }

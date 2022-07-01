@@ -5,7 +5,7 @@ import leagueOfLegends from "../../../images/slider-league-of-legends.jpg";
 import sonyGames from "../../../images/slider-sony-games.jpg";
 import deadCells from "../../../images/slider-dead-cells.jpg";
 
-
+// Carousel de la página de inicio
 const Slides = () => {
   return (
     <>
@@ -30,7 +30,7 @@ const Slides = () => {
           </Carousel.Item>
         </Carousel>
         
-        <div className="centered">Gamer Invasion</div>
+        <div className="app-name">Gamer Invasion</div>
       </div>
     </>
   );

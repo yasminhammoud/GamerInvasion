@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import styles from "./styles.module.scss";
 import { ProductoCarritoMin } from "./ProductoCarritoMin/ProductoCarritoMin";
@@ -6,8 +6,34 @@ import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 export const Cart = () => {
+
+  // Aca se crean dos states el cual uno es para verificar si el carrito esta desplegado o no esta desplegado , mientras que el otro
+  // state es para saber la cantidad de productos que se encuentran dentro del carrito 
+
   const [carritoAbierto, setCarritoAbierto] = useState(false);
   const [cantidadProductos, setCantidadProductos] = useState(0);
+
+
+  const ref = useRef();
+
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      // If the menu is open and the clicked target is not within the menu,
+      // then close the menu
+      if (carritoAbierto && ref.current && !ref.current.contains(e.target)) {
+        setCarritoAbierto(false)
+      }
+    }
+    document.addEventListener("mousedown", checkIfClickedOutside)
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", checkIfClickedOutside)
+    }
+  }, [carritoAbierto])
+
+  // Aca con el useContext nos conectamos al contexto del carrito y nos traemos el useState del productoCarrito
+
 
   const { productoCarrito } = useContext(ContextoCarrito);
 
@@ -18,7 +44,7 @@ export const Cart = () => {
   }, [productoCarrito]);
 
   const total = productoCarrito.reduce(
-    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio*actual.Descuento/100),
+    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
     0
   );
 
@@ -29,7 +55,7 @@ export const Cart = () => {
   );
 
   return (
-    <div className={styles.contenedor_carrito}>
+    <div className={styles.contenedor_carrito} ref={ref}>
       <div
         onClick={() => {
           setCarritoAbierto(!carritoAbierto);
@@ -76,7 +102,7 @@ export const Cart = () => {
           <h3>Tu carrito</h3>
 
           {productoCarrito.length === 0 ? (
-            <p className={styles.carritoVacio}>Tu carrito esta vacio</p>
+            <p className={styles.carritoVacio}>Tu carrito esta vacío</p>
           ) : (
             <div className={styles.contenedorProductos}>
               {productoCarrito.map((item, i) => (

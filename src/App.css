@@ -76,7 +76,7 @@
 }
 
 /* Centered text with blur background*/
-.centered {
+.app-name{
     padding: 10px;
     border-radius: 20px ;
     border: 2px solid #E7E727; 
@@ -94,11 +94,11 @@
 
 /* -------------------------------- Containers --------------------------------*/
 
-  .container-news{
+  .banner{
         /* The image used */
         background-image: url("./images/news.jpg");
         /* Full height */
-        height: 90vh;
+        height: 25vh;
         /* Center and scale the image nicely */
         background-position: center;
         background-repeat: no-repeat;
@@ -110,11 +110,37 @@
         position: relative;
       }
 
-      @media (max-width: 700px) {
-        .container-news{
-          height: 40vh
-        }
-        }
+      .centered{
+        padding: 10px;
+        border-radius: 20px ;
+        border: 2px solid #E7E727; 
+        font-size: 4vw;
+        box-shadow: 10px 5px 5px black;
+        color: #E7E727 !important;
+        backdrop-filter: blur(5px);
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'EvilEmpire';
+      }
+
+      .container-about-us{
+        /* The image used */
+        background-image: url("./images/about-us.jpg");
+        /* Full height */
+        height: 30vh;
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
 
       .container-log-in{
         z-index: 15;
@@ -127,6 +153,7 @@
             background-repeat: no-repeat;
             background-size: cover;
     
+            margin-top: -9px;
             display: flex;
             align-items: center;
             justify-content: center;

@@ -1,4 +1,4 @@
-         
+/* Botón con efecto gradiente se usa en landing page */      
 .grad {
     background-image: linear-gradient(to right, rgb(131, 249, 255) 0%, rgb(239, 211, 0)  51%, rgb(131, 249, 255) 100%);
     padding: 5px 10px;

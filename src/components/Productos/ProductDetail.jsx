@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Row, Col, Container } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 import { productoUno } from "../../controllers/Productos";
 import { ProductCarousel } from "./ProductCarousel";
@@ -9,7 +9,8 @@ import { ProductAddCarButton } from "./ProductAddCarButton";
 
 /*It's a component that shows the product detail. */
 export const ProductDetail = () => {
-  const { id } = useParams();
+  const { id } = useLocation().state
+  //const { id } = useParams();
   const [formProducto, setFormProducto] = useState({});
   const [fotos, setFotos] = useState([]);
   const [fotosVista, setFotosVista] = useState([]);
@@ -69,7 +70,7 @@ export const ProductDetail = () => {
                   className="d-flex align-items-center pd-text-principal"
                 >
                   <Row className="pd-text-specifications">
-                    <h1 className="text-center" style={{ color: "cyan" }}>
+                    <h1 className="text-center" style={{ color: "cyan", fontFamily: 'EvilEmpire', letterSpacing: "3px"}}>
                       {formProducto.nombre}
                     </h1>
 

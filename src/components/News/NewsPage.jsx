@@ -18,7 +18,7 @@ export const NewsPage = () => {
 
   return (
     <div>
-      <div className="container-news">
+      <div className="banner">
         <div className="centered" style={{ letterSpacing: "3px" }}>
           Noticias
         </div>

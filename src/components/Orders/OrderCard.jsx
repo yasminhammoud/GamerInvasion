@@ -13,7 +13,7 @@ export const OrderCard = ({ order }) => {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <div className="py-2"> <span className="d-block text-muted">Order Date</span> <span>15-11-2001</span> </div>
+                                                <div className="py-2"> <span className="d-block text-muted">Order Date</span> <span>{order.fecha}</span> </div>
                                             </td>
                                             <td>
                                                 <div className="py-2"> <span className="d-block text-muted">Order ID</span> <span>{order.id}</span> </div>

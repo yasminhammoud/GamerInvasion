@@ -3,6 +3,7 @@ import "./Profile.css";
 import { useState } from "react";
 import { db } from "../../firebase/firebaseconfig";
 import toast, { Toaster } from "react-hot-toast";
+import { updateUser } from "../../controllers/Users"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getFirestore, collection } from "firebase/firestore";
 import {
@@ -15,6 +16,7 @@ import {
   TabContent,
   Image,
 } from "react-bootstrap";
+import { useUserAuth } from "../../contexts/UserAuthContext";
 
 //importar useUserAuth de UserAuthContext
 // traer current user: const { currentUser } = useUserAuth();
@@ -22,23 +24,25 @@ import {
 //
 
 function Profile() {
-  const [name, setName] = useState("");
-  const [email, setemail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+
+  const { currentUser, setCurrentUser } = useUserAuth()
+
+  const [name, setName] = useState(currentUser.name);
+  const [email, setemail] = useState(currentUser.email);
+  const [phone, setPhone] = useState(currentUser.phone);
+  const [address, setAddress] = useState(currentUser.address);
   const [form, setForm] = useState("");
   const [errors, setErrors] = useState("");
 
   const findFormErrors = () => {
-    const { email, name, password } = form;
+    const { name } = form;
     const newErrors = {};
 
     if (!name || name === "" || !/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/i.test(name))
       newErrors.name = "Nombre inválido";
-    if (!password || password === "" || !/^.{8,12}$/i.test(password))
-      newErrors.password = "Entre 8 y 12 caracteres";
-    if (!phone || phone.length != 11) newErrors.phone = "Teléfono inválido";
+    if (!phone || phone === "" || phone.length != 11) newErrors.phone = "Teléfono inválido";
+    if (!address || address === "")
+      newErrors.address = "Dirección inválida"
     return newErrors;
   };
 
@@ -49,9 +53,6 @@ function Profile() {
         break;
       case "email":
         setemail(e.target.value);
-        break;
-      case "password":
-        setPassword(e.target.value);
         break;
       case "phone":
         setPhone(e.target.value);
@@ -68,24 +69,24 @@ function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const updates = {
+      name: name,
+      phone: phone,
+      address: address
+    }
+
     try {
       const newErrors = findFormErrors();
 
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
+      } else {
+        updateUser(currentUser.uid, updates)
+        setCurrentUser({ ...currentUser, updates })
+        toast.success('Cambios guardados exitosamente.')
       }
     } catch (error) {
-      switch (error.code) {
-        case "auth/wrong-password":
-          toast.error("Datos inválidos");
-          break;
-        case "user-not-found":
-          toast.error("Usuario no encontrado");
-          break;
-        default:
-          toast.error("Datos inválidos");
-          break;
-      }
+      toast.error("Ocurrió un error inesperado.");
     }
   };
 
@@ -102,14 +103,6 @@ function Profile() {
       });
   };
 
-  const currentUser = {
-    nombre: "Miguel Colina",
-    password: "9809841",
-    correo: "miguelcolina@gmail.com",
-    telefono: "04143964240",
-    direccion: "Urbanización Los Pomelos",
-  };
-
   return (
     <div className="container-log-in">
       <Container className="container-md emp-profile">
@@ -121,13 +114,7 @@ function Profile() {
                   src="https://s3.amazonaws.com/prod-media.gameinformer.com/styles/body_default/s3/legacy-images/imagefeed/RIP%3A%20Honoring%20The%20Life%20And%20Death%20Of%20Xbox%20One%E2%80%99s%20Default%20Gamerpics/4SamNxh.jpg"
                   alt="Profile picture"
                 />
-                <Button
-                  className="file btn btn-lg btn-primary text-yellow"
-                  id="changeImgButton"
-                >
-                  Cambiar foto
-                  <input type="file" name="file" />
-                </Button>
+
               </div>
             </Col>
             <Col className="col-md-6">
@@ -142,7 +129,7 @@ function Profile() {
                     fontSize: "2rem",
                   }}
                 >
-                  {currentUser.nombre}
+                  {currentUser.name}
                 </Card.Title>
                 <Card.Title
                   className="registrotitle"
@@ -156,19 +143,6 @@ function Profile() {
                 >
                   GAMER
                 </Card.Title>
-                <Card.Title
-                  className="registrotitle"
-                  style={{
-                    textAlign: "center ",
-                    fontFamily: "EvilEmpire",
-                    color: "rgb(255, 255, 255)",
-                    letterSpacing: "2px",
-                    fontSize: "1.3rem",
-                  }}
-                >
-                  COMPRAS: 4
-                </Card.Title>
-
                 <br></br>
               </div>
 
@@ -212,16 +186,24 @@ function Profile() {
                       <label>NOMBRE:</label>
                     </Col>
                     <Col className="col-md-6" id="profileInfoContainer">
-                      <Form.Control
-                        className="name"
-                        type="text"
-                        id="name"
-                        placeholder={currentUser.nombre}
-                        name="name"
-                        value={name}
-                        onChange={handleChange}
-                        isInvalid={!!errors.name}
-                      />
+                      <Form.Group>
+                        <Form.Control
+                          className="name"
+                          type="text"
+                          id="name"
+                          placeholder={currentUser.name}
+                          name="name"
+                          value={name}
+                          onChange={handleChange}
+                          isInvalid={!!errors.name}
+                        />
+                        <Form.Control.Feedback
+                          type="invalid"
+                          style={{ color: "rgb(239, 211, 0)" }}
+                        >
+                          {errors.name}
+                        </Form.Control.Feedback>
+                      </Form.Group>
                     </Col>
                   </Row>
 
@@ -235,10 +217,11 @@ function Profile() {
                         name="email"
                         id="email"
                         type="email"
-                        placeholder={currentUser.correo}
+                        placeholder={currentUser.email}
                         value={email}
                         onChange={handleChange}
                         isInvalid={!!errors.email}
+
                       />
                     </Col>
                   </Row>
@@ -247,16 +230,24 @@ function Profile() {
                       <label>TELÉFONO:</label>
                     </Col>
                     <Col className="col-md-6" id="profileInfoContainer">
-                      <Form.Control
-                        className="name"
-                        name="phone"
-                        id="phone"
-                        type="phone"
-                        placeholder={currentUser.telefono}
-                        value={phone}
-                        onChange={handleChange}
-                        isInvalid={!!errors.email}
-                      />
+                      <Form.Group>
+                        <Form.Control
+                          className="name"
+                          name="phone"
+                          id="phone"
+                          type="phone"
+                          placeholder={currentUser.phone}
+                          value={phone}
+                          onChange={handleChange}
+                          isInvalid={!!errors.phone}
+                        />
+                        <Form.Control.Feedback
+                          type="invalid"
+                          style={{ color: "rgb(239, 211, 0)" }}
+                        >
+                          {errors.phone}
+                        </Form.Control.Feedback>
+                      </Form.Group>
                     </Col>
                   </Row>
                   <Row className="row">
@@ -269,11 +260,18 @@ function Profile() {
                         name="address"
                         id="address"
                         type="address"
-                        placeholder={currentUser.direccion}
+                        placeholder={currentUser.address}
                         value={address}
                         onChange={handleChange}
-                        isInvalid={!!errors.email}
+                        isInvalid={!!errors.address}
                       />
+                      <Form.Control.Feedback
+                        type="invalid"
+                        style={{ color: "rgb(239, 211, 0)" }}
+                      >
+                        {errors.address}
+                      </Form.Control.Feedback>
+
                     </Col>
                   </Row>
                 </div>

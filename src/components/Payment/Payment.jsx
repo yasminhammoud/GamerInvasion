@@ -91,7 +91,7 @@ export const Payment = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-    if (!initPago.cedula || !initPago.banco || !initPago.telefono || !initPago.clavePago) {
+    if (!formPago.cedula || !formPago.banco || !formPago.telefono || !formPago.clavePago) {
       setformIncompleto(true)
     }
     else {

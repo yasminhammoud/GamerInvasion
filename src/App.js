@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { UserAuthContextProvider } from "./contexts/UserAuthContext";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebaseconfig";
+import { getUserByID } from "./controllers/Users"
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -17,10 +18,22 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+      getUserByID(user.uid).then((response) => {
+        console.log("respuesta:")
+        console.log(response)
+        setCurrentUser({
+          ...user,
+          name: response?.Nombre,
+          address: response?.Direccion,
+          phone: response?.Telefono,
+          discount: response?.Descuento,
+          nextAttempt: response?.ProximoIntento.toDate()
+        })
+        console.log(currentUser)
+      })
     });
-  }, []);
 
+  }, []);
   return (
     
     <UserAuthContextProvider value={{ currentUser, timeActive, setTimeActive }}>

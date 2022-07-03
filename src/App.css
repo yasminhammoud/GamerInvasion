@@ -158,6 +158,23 @@
             align-items: center;
             justify-content: center;
           }
+
+          .container-user-profile{
+            z-index: 15;
+                /* The image used */
+                background-image: url('./images/log-in.png');
+                /* Full height */
+                height: 100vh;
+                /* Center and scale the image nicely */
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+        
+                margin-top: -9px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
     
      /* -------------------------------- Text --------------------------------*/
     

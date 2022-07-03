@@ -27,9 +27,9 @@ const TableStyled = styled.div`
   }
   .results {
     text-align: center;
-    h2 {
+    .results-text {
       text-transform: uppercase;
-      font-size: 56px;
+      font-size: 35px;
       margin: 10px;
     }
   }
@@ -88,9 +88,9 @@ const TableStyled = styled.div`
       > div {
         order: 2;
       }
-      > p {
+      > .choose {
         order: 1;
-        margin-bottom: 2em;
+        margin-bottom: 3em;
       }
     }
   }
@@ -126,29 +126,29 @@ const Table = () => {
     setPlaying(true)
     setPick(name)
     const house = await launchHousePick()
-    const results = playWithIA(name, house)
-    setResults(results)
+    playWithIA(name, house).then((results) => {
+      setResults(results)
+    })
   }
 
-  const handleUpdateUserDiscount = () => {
-    updateUserDiscount(currentUser.uid, true)
+  const handleUpdateUserDiscount = async () => {
+    await updateUserDiscount(currentUser.uid, true)
     setCurrentUser({
       ...currentUser, discount: true
     })
   }
 
-  const handleUpdateUserAttempt = () => {
+  const handleUpdateUserAttempt = async () => {
     let nextAttempt = new Date()
     nextAttempt.setHours(nextAttempt.getHours() + 1)
-    console.log(nextAttempt)
 
-    updateUserAttempt(currentUser.uid, nextAttempt)
+    await updateUserAttempt(currentUser.uid, nextAttempt)
     setCurrentUser({
       ...currentUser, nextAttempt: nextAttempt
     })
   }
 
-  function playWithIA(pick, housePick) {
+  async function playWithIA(pick, housePick) {
     handleUpdateUserAttempt()
     if (housePick === pick) {
       return 'draw'
@@ -158,13 +158,13 @@ const Table = () => {
         return 'lose'
       }
       if (housePick === 'rock') {
-        handleUpdateUserDiscount()
+        await handleUpdateUserDiscount()
         return 'win'
       }
     }
     if (pick === 'scissors') {
       if (housePick === 'paper') {
-        handleUpdateUserDiscount()
+        await handleUpdateUserDiscount()
         return 'win'
       }
       if (housePick === 'rock') {
@@ -176,7 +176,7 @@ const Table = () => {
         return 'lose'
       }
       if (housePick === 'scissors') {
-        handleUpdateUserDiscount()
+        await handleUpdateUserDiscount()
         return 'win'
       }
     }
@@ -196,25 +196,24 @@ const Table = () => {
           <>
             <div className="in-game">
               <Token playing={playing} name={pick} isShadowAnimated={(results === 'win')} />
-              <p>Elegiste</p>
+              <div className="choose mt-5">Elegiste</div>
             </div>
             <div className="in-game">
               <Token playing={playing} name={housePick} isShadowAnimated={(results === 'lose')} />
-              <p>Gamer Invasion eligió</p>
+              <div className="choose mt-5">Gamer Invasion eligió</div>
             </div>
             <div className="results">
               {
-                results && (
+                (results) ? (
                   <>
-                    <h2>YOU {results}</h2>
-
-                    <Link to="/carrito">
+                    <div className="results-text">{results === 'win' ? "¡Ganaste!" : "Será para la próxima" }</div>
+                    <Link to="/carrito" style={{ textDecoration: "none" }}>
                       <WhiteButton>
                         {results === 'win' ? <span>Reclamar premio</span> : <span>Volver al carrito</span>}
                       </WhiteButton>
                     </Link>
                   </>
-                )
+                ) : <></>
               }
             </div>
           </>

@@ -6,19 +6,22 @@ import {
   collection,
   addDoc,
 } from "firebase/firestore";
-import { db } from "../../firebase/firebaseconfig";
+import { db, auth } from "../../firebase/firebaseconfig";
 import { useNavigate, Link } from "react-router-dom";
 import { useUserAuth } from "../../contexts/UserAuthContext";
 import { updateUserDiscount } from "../../controllers/Users"
 import { Discount } from "./Discount"
-import "./GameButton.css"
+import toast from "react-hot-toast";
+import {
+  sendEmailVerification,
+} from "firebase/auth";
 
 //Nombre coleccion en firebase que guarda las facturas de compra
 const coleccion = "Facturas";
 
 export const CartMax = () => {
   const navigate = useNavigate();
-  const { currentUser, setCurrentUser } = useUserAuth()
+  const { currentUser, setCurrentUser, setTimeActive } = useUserAuth()
   console.log(currentUser)
 
   // Aca se crean dos states el cual uno es para verificar si el carrito esta desplegado o no esta desplegado , mientras que el otro
@@ -90,7 +93,7 @@ export const CartMax = () => {
   }
 
   const handleUpdateUserDiscount = () => {
-    updateUserDiscount(currentUser.uid, true)
+    updateUserDiscount(currentUser.uid, false)
     setCurrentUser({
       ...currentUser, discount: false
     })
@@ -99,32 +102,47 @@ export const CartMax = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    productoCarrito.map((product) => {
-      var Productos = {
-        urlImagen: product.ImagenesUrl[0],
-        nombre: product.Nombre,
-        cantidad: product.amount,
-        subTotal: product.Precio,
-      };
-      formFactura.productos.push(Productos)
-    }
+    if (!currentUser.emailVerified) {
+      toast.error("Necesita estar verificado para realizar la compra.")
+      await sendEmailVerification(auth.currentUser)
+        .then(() => {
+          // Activar tiempo para el reenvió de correo de validación
+          setTimeActive(true);
 
-    )
-    try {
-      await addDoc(collection(db, coleccion), {
-        fecha: formFactura.fecha,
-        idCliente: formFactura.idCliente,
-        total: formFactura.monto,
-        productos: formFactura.productos
-      });
-    } catch (e) {
-      console.error("Error al agregar la factura ", e);
+          // Se envía el nombre y correo a la ruta /verificación para poder
+          // almacenar los datos del usuario en Firestore
+          navigate("/verificacion-de-correo");
+        })
+        .catch((err) => alert(err.message))
+    } else {
+      productoCarrito.map((product) => {
+        var Productos = {
+          urlImagen: product.ImagenesUrl[0],
+          nombre: product.Nombre,
+          cantidad: product.amount,
+          subTotal: product.Precio,
+        };
+        formFactura.productos.push(Productos)
+      }
+
+      )
+      try {
+        await addDoc(collection(db, coleccion), {
+          fecha: formFactura.fecha,
+          idCliente: formFactura.idCliente,
+          total: formFactura.monto,
+          productos: formFactura.productos
+        });
+      } catch (e) {
+        toast.error("Necesita estar registrado para realizar la compra.")
+        navigate("/acceder")
+      }
+      formFactura.productos = []
+      formFactura.monto = 0
+      handleUpdateUserDiscount()
+      resetearCarrito()
+      navigate("/historial-compras");
     }
-    formFactura.productos = []
-    formFactura.monto = 0
-    handleUpdateUserDiscount()
-    resetearCarrito()
-    navigate("/historial-compras");
   };
 
 
@@ -251,7 +269,7 @@ export const CartMax = () => {
                             <td>
                               <div className="text-end">
                                 {" "}
-                                <span>{(total - discount).toFixed(2)}$ </span>
+                                <span>{(total).toFixed(2)}$ </span>
                               </div>
                             </td>
                           </tr>
@@ -270,15 +288,8 @@ export const CartMax = () => {
                       Pagar
                     </Button>
                   </Card>
-                  {(currentUser && currentUser?.emailVerified ) ? <Discount user={currentUser} /> : <></>}
+                  {(currentUser && currentUser?.emailVerified) ? <Discount user={currentUser} /> : <></>}
 
-                  {/* <Button as={Link} to="/game" className="glow-on-hover mt-4">
-                    <span></span>
-                    <span></span>
-                    Clic para descuento
-                    <span></span>
-                    <span></span>
-                  </Button> */}
                 </Col>
               </Row>
             </div>

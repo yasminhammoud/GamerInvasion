@@ -70,6 +70,7 @@ export const Rutas = () => {
               </PrivateRoute>
             }
           />
+          
 
           <Route
             path="/historial-compras"
@@ -94,7 +95,14 @@ export const Rutas = () => {
 
           <Route path="/administrador/productos" element={<Productos />} />
 
-          <Route path="/game" element={<Game />} />
+          <Route
+            path="/game"
+            element={
+              <PrivateRoute>
+                <Game />
+              </PrivateRoute>
+            }
+          />
 
           <Route
             path="/administrador/productos-crear"

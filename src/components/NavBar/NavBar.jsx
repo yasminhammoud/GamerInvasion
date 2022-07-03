@@ -153,7 +153,7 @@ export const NavBar = () => {
               </Nav>
               <Nav className="align-items-center">
               {/*Se verifica si el correo del usuario ha sido verificar para darle acceso a ventanas privadas*/}
-                {!!currentUser?.emailVerified ? (
+                {currentUser ? (
                   <>
                     <NavDropdown
                       title={currentUser.name}

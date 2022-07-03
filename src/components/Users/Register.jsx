@@ -132,8 +132,6 @@ function Register() {
                 console.log(error);
                 break;
             }
-            toast.error("Ya existe una cuenta con el correo electrónico proporcionado.");
-            // console.log(message);
           });
       }
     } catch (error) {

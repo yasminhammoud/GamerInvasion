@@ -10,7 +10,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 /**
  * Component that is a search bar that uses the Autosuggest component from react-autosuggest.
  */
-export const Search = () => {
+export const Search = ({toggleMenu}) => {
   const navigate = useNavigate();
   const [options, setOptions] = useState([]);
   const [optionsValue, setOptionsValue] = useState([]);
@@ -119,7 +119,7 @@ export const Search = () => {
         />
         <br />
         <Button
-          type="submit" className="nav-btn" variant="outline-cyan"
+          type="submit" className="nav-btn" variant="outline-cyan" onClick={toggleMenu}
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </Button>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getOrdersByID } from "../../controllers/Productos";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner";
 import { useUserAuth } from "../../contexts/UserAuthContext";
-import { Row, Container } from "react-bootstrap";
+import { Row, Container, Col } from "react-bootstrap";
 import { OrderCard } from "./OrderCard";
 
 export const OrdersHistory = () => {
@@ -42,11 +42,11 @@ export const OrdersHistory = () => {
           className="d-flex justify-content-center border-0"
           id="news-card-cointainer"
         >
-          <Row>
+          <Col style={{ overFlow: "hidden" }}>
             {orders.map((order, index) => (
-              <OrderCard key={index} order={order} />
+                <OrderCard key={index} order={order} />
             ))}
-          </Row>
+          </Col>
         </Container>
       ) : (
         <div className="d-flex align-items-center justify-content-center">

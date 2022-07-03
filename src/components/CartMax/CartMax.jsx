@@ -7,15 +7,19 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase/firebaseconfig";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useUserAuth } from "../../contexts/UserAuthContext";
+import { updateUserDiscount } from "../../controllers/Users"
+import { Discount } from "./Discount"
+import "./GameButton.css"
 
 //Nombre coleccion en firebase que guarda las facturas de compra
 const coleccion = "Facturas";
 
 export const CartMax = () => {
   const navigate = useNavigate();
-  const {currentUser} = useUserAuth()
+  const { currentUser, setCurrentUser } = useUserAuth()
+  console.log(currentUser)
 
   // Aca se crean dos states el cual uno es para verificar si el carrito esta desplegado o no esta desplegado , mientras que el otro
   // state es para saber la cantidad de productos que se encuentran dentro del carrito 
@@ -25,28 +29,32 @@ export const CartMax = () => {
 
   // Aca con el useContext nos conectamos al contexto del carrito y nos traemos el useState del productoCarrito
 
-    const { productoCarrito, resetearCarrito } = useContext(ContextoCarrito);
+  const { productoCarrito, resetearCarrito } = useContext(ContextoCarrito);
 
-    const total = productoCarrito.reduce(
-      (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
-      0
-    );
-    const today = new Date().toISOString().slice(0, 10)
+  let total = productoCarrito.reduce(
+    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
+    0
+  );
 
-    //Estado inicial formulario factura y useState
-    const initFormFactura = {
-      fecha: today,
-      monto: total,
-      productos: [],
-      idCliente: currentUser.uid
-    };
-    const [formFactura, setFormFactura] = useState(initFormFactura);
+  if (currentUser?.emailVerified && currentUser.discount) {
+    total = total - 5
+  }
+  const today = new Date().toISOString().slice(0, 10)
 
-    const discount = productoCarrito.reduce(
-      (anterior, actual) =>
-        anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
-      0 
-    );
+  //Estado inicial formulario factura y useState
+  const initFormFactura = {
+    fecha: today,
+    monto: total,
+    productos: [],
+    idCliente: currentUser?.uid
+  };
+  const [formFactura, setFormFactura] = useState(initFormFactura);
+
+  const discount = productoCarrito.reduce(
+    (anterior, actual) =>
+      anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
+    0
+  );
 
 
   // Aca lse guarda en una variable la descripcion de los productos que estan dentro del carrito , y esto sirve para luego 
@@ -81,36 +89,44 @@ export const CartMax = () => {
     return +(Math.round(num + "e+2") + "e-2");
   }
 
+  const handleUpdateUserDiscount = () => {
+    updateUserDiscount(currentUser.uid, true)
+    setCurrentUser({
+      ...currentUser, discount: false
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      productoCarrito.map((product) => {
-        var Productos = {
-          urlImagen: product.ImagenesUrl[0],
-          nombre: product.Nombre,
-          cantidad: product.amount,
-          subTotal: product.Precio,
-        };
-        formFactura.productos.push(Productos)
-      }
-      
-      )
+    productoCarrito.map((product) => {
+      var Productos = {
+        urlImagen: product.ImagenesUrl[0],
+        nombre: product.Nombre,
+        cantidad: product.amount,
+        subTotal: product.Precio,
+      };
+      formFactura.productos.push(Productos)
+    }
+
+    )
     try {
       await addDoc(collection(db, coleccion), {
-          fecha: formFactura.fecha,
-          idCliente: formFactura.idCliente,
-          total: formFactura.monto,
-          productos: formFactura.productos
+        fecha: formFactura.fecha,
+        idCliente: formFactura.idCliente,
+        total: formFactura.monto,
+        productos: formFactura.productos
       });
-  } catch (e) {
+    } catch (e) {
       console.error("Error al agregar la factura ", e);
-  }
+    }
     formFactura.productos = []
     formFactura.monto = 0
+    handleUpdateUserDiscount()
     resetearCarrito()
     navigate("/historial-compras");
   };
-  
+
 
   return (
     <>
@@ -148,16 +164,15 @@ export const CartMax = () => {
                   md={{ order: "first" }}
                   lg={{ order: "first" }}
                   xl={{ order: "last" }}
-                  className="m-4"
+                  className="m-4 text-center"
                 >
                   <Card
                     style={{
                       color: "white",
                       border: "1px",
-                      "border-color": "white",
-                      background:
-                        "linear-gradient(180deg, rgb(43, 0, 56) 20%, rgb(24, 0, 71) 100%)",
-                      "border-radius": "0.5rem",
+                      borderColor: "white",
+                      background: "linear-gradient(180deg, rgb(43, 0, 56) 20%, rgb(24, 0, 71) 100%)",
+                      borderRadius: "0.5rem",
                       padding: "2rem",
                     }}
                   >
@@ -209,6 +224,24 @@ export const CartMax = () => {
                             </tr>
                           )}
 
+                          {!currentUser?.discount ? (
+                            ""
+                          ) : (
+                            <tr style={{ color: "rgb(131, 249, 255)" }}>
+                              <td>
+                                <div className="text-start fw-bold">
+                                  <span> Descuento Erin </span>
+                                </div>
+                              </td>
+                              <td>
+                                <div className="text-end">
+                                  {" "}
+                                  <span>- {parseInt("5").toFixed(2)}$</span>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+
                           <tr className="border-top border-bottom">
                             <td>
                               <div className="text-start fw-bold">
@@ -226,7 +259,7 @@ export const CartMax = () => {
                       </table>
                     </div>
                     <Button
-                      onClick = {handleSubmit}
+                      onClick={handleSubmit}
                       style={{
                         fontWeight: "bold",
                         background: "rgb(239, 211, 0)",
@@ -237,6 +270,15 @@ export const CartMax = () => {
                       Pagar
                     </Button>
                   </Card>
+                  {(currentUser && currentUser?.emailVerified ) ? <Discount user={currentUser} /> : <></>}
+
+                  {/* <Button as={Link} to="/game" className="glow-on-hover mt-4">
+                    <span></span>
+                    <span></span>
+                    Clic para descuento
+                    <span></span>
+                    <span></span>
+                  </Button> */}
                 </Col>
               </Row>
             </div>

@@ -156,7 +156,7 @@ export const NavBar = () => {
                 {!!currentUser?.emailVerified ? (
                   <>
                     <NavDropdown
-                      title={currentUser.email}
+                      title={currentUser.name}
                       className="nav-dropdown-title"
                       id={`offcanvasNavbarDropdown-expand-xl`}
                       show={show2}

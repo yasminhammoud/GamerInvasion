@@ -4,7 +4,7 @@ import { sendEmailVerification } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../contexts/UserAuthContext";
 import { Button, Card } from "react-bootstrap";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, Timestamp } from "firebase/firestore";
 import toast from "react-hot-toast";
 
 function VerifyEmail() {
@@ -31,6 +31,10 @@ function VerifyEmail() {
         await setDoc(colRef, {
           Nombre: name,
           Email: email,
+          Descuento: false,
+          ProximoIntento: Timestamp.fromDate(new Date),
+          Direccion: "",
+          Telefono: ""
         });
         toast.success("Se ha registrado exitósamente");
       } catch (error) {

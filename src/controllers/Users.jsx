@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebase/firebaseconfig";
 const colletionUsers = "Usuarios"
 
@@ -20,10 +20,10 @@ export const updateUserDiscount = async (userID, value) => {
 }
 
 export const updateUserAttempt = async (userID, date) => {
-
+    
     const docRef = doc(db, colletionUsers, userID)
     await updateDoc(docRef, {
-        UltimoIntentoDescuento: date
+        ProximoIntento: Timestamp.fromDate(date)
     });
 }
 

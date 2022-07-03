@@ -25,6 +25,8 @@ import PrivateRoute from "./PrivateRoute";
 import Profile from "../components/Profile/Profile";
 import { OrdersHistory } from "../components/Orders/OrdersHistory";
 
+import Game from "../components/Game/Game"
+
 // Rutas de toda la página web (es llamada desde el componente App.jsx)
 export const Rutas = () => {
   return (
@@ -91,6 +93,8 @@ export const Rutas = () => {
           <Route path="/quienes-somos" element={<AboutUs />} />
 
           <Route path="/administrador/productos" element={<Productos />} />
+
+          <Route path="/game" element={<Game />} />
 
           <Route
             path="/administrador/productos-crear"

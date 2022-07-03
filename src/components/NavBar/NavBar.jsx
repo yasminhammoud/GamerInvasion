@@ -35,16 +35,7 @@ export const NavBar = () => {
     setShow(false);
   };
 
-  const [show2, setShow2] = useState(false);
-  // Se activa el dropdown menu de detalles del usuario on hover
-  const showDropdown2 = (e) => {
-    setShow2(!show2);
-  };
-  // Se desactiva el dropdown menu de detalles del usuario on mouse leave
-  const hideDropdown2 = (e) => {
-    setShow2(false);
-  };
-
+  // Para cerrar el offCanvas menu al darle clic un botón
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -56,10 +47,10 @@ export const NavBar = () => {
     <>
       <Navbar
         collapseOnSelect
-        key="xl"
+        key="xxl"
         bg="dark-purple"
         variant="dark"
-        expand="xl"
+        expand="xxl"
         fixed="top"
         className="py-0"
       >
@@ -73,14 +64,14 @@ export const NavBar = () => {
           </Link>
 
           <Navbar.Toggle
-            aria-controls={`offcanvasNavbar-expand-xl`}
+            aria-controls={`offcanvasNavbar-expand-xxl`}
             onClick={toggleMenu}
           />
 
-          {/* Contenedor del offcanvas para activarlo cuando el tamaño de la pantalla es xl */}
+          {/* Contenedor del offcanvas para activarlo cuando el tamaño de la pantalla es xxl */}
           <Navbar.Offcanvas
-            id={`offcanvasNavbar-expand-xl`}
-            aria-labelledby={`offcanvasNavbarLabel-expand-xl`}
+            id={`offcanvasNavbar-expand-xxl`}
+            aria-labelledby={`offcanvasNavbarLabel-expand-xxl`}
             placement="end"
             restoreFocus={false}
             show={menuOpen}
@@ -117,7 +108,7 @@ export const NavBar = () => {
                 <NavDropdown
                   title="Categorías"
                   className="nav-dropdown-title"
-                  id={`offcanvasNavbarDropdown-expand-xl`}
+                  id={`offcanvasNavbarDropdown-expand-xxl`}
                   show={show}
                   onMouseEnter={showDropdown}
                   onMouseLeave={hideDropdown}
@@ -149,7 +140,7 @@ export const NavBar = () => {
                   Noticias
                 </Link>
 
-                <Search onClick={toggleMenu}/>
+                <Search toggleMenu = {toggleMenu}/>
               </Nav>
               <Nav className="align-items-center">
               {/*Se verifica si el correo del usuario ha sido verificar para darle acceso a ventanas privadas*/}
@@ -158,10 +149,7 @@ export const NavBar = () => {
                     <NavDropdown
                       title={currentUser.name}
                       className="nav-dropdown-title"
-                      id={`offcanvasNavbarDropdown-expand-xl`}
-                      show={show2}
-                      onMouseEnter={showDropdown2}
-                      onMouseLeave={hideDropdown2}
+                      id={`offcanvasNavbarDropdown-expand-xxl`}
                     >
                       <NavDropdown.Item as={Link} to="/perfil" onClick={toggleMenu}>
                         Perfil

@@ -2,30 +2,24 @@ import React, { useContext, useEffect, useState } from "react";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import { ProductoCarritoMax } from "./ProductoCarritoMax/ProductoCarritoMax";
 import { Card, Row, Col, Container, Button } from "react-bootstrap";
-import {
-  collection,
-  addDoc,
-} from "firebase/firestore";
 import { db, auth } from "../../firebase/firebaseconfig";
 import { useNavigate, Link } from "react-router-dom";
+import { collection, addDoc } from "firebase/firestore";
 import { useUserAuth } from "../../contexts/UserAuthContext";
-import { updateUserDiscount } from "../../controllers/Users"
 import { Discount } from "./Discount"
 import toast from "react-hot-toast";
-import {
-  sendEmailVerification,
-} from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
+import { Billing } from "../Payment/Billing";
 
 //Nombre coleccion en firebase que guarda las facturas de compra
 const coleccion = "Facturas";
 
 export const CartMax = () => {
   const navigate = useNavigate();
-  const { currentUser, setCurrentUser, setTimeActive } = useUserAuth()
-  console.log(currentUser)
+  const { currentUser, setTimeActive, setCurrentUser } = useUserAuth();
 
   // Aca se crean dos states el cual uno es para verificar si el carrito esta desplegado o no esta desplegado , mientras que el otro
-  // state es para saber la cantidad de productos que se encuentran dentro del carrito 
+  // state es para saber la cantidad de productos que se encuentran dentro del carrito
 
   const [carritoAbierto, setCarritoAbierto] = useState(true);
   const [cantidadProductos, setCantidadProductos] = useState(0);
@@ -34,10 +28,18 @@ export const CartMax = () => {
 
   const { productoCarrito, resetearCarrito } = useContext(ContextoCarrito);
 
-  let total = productoCarrito.reduce(
-    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
+  let subtotal = productoCarrito.reduce(
+    (anterior, actual) => anterior + actual.amount * actual.Precio,
     0
   );
+
+  const discount = productoCarrito.reduce(
+    (anterior, actual) =>
+      anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
+    0
+  );
+
+  let total = subtotal - discount;
 
   if (currentUser?.emailVerified && currentUser.discount) {
     total = total - 5
@@ -49,20 +51,14 @@ export const CartMax = () => {
     fecha: today,
     monto: total,
     productos: [],
-    idCliente: currentUser?.uid
+    idCliente: "",
   };
   const [formFactura, setFormFactura] = useState(initFormFactura);
 
-  const discount = productoCarrito.reduce(
-    (anterior, actual) =>
-      anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
-    0
-  );
 
-
-  // Aca lse guarda en una variable la descripcion de los productos que estan dentro del carrito , y esto sirve para luego 
-  // cuando el cliente quiera comprar , se mande de manera automatizada un mensaje al whatssap empresarial con todos los 
-  // productos que se encuentran en el carrito. 
+  // Aca lse guarda en una variable la descripcion de los productos que estan dentro del carrito , y esto sirve para luego
+  // cuando el cliente quiera comprar , se mande de manera automatizada un mensaje al whatssap empresarial con todos los
+  // productos que se encuentran en el carrito.
 
   var descripcionProductos = productoCarrito.map((item) => {
     return (
@@ -81,28 +77,16 @@ export const CartMax = () => {
     setCantidadProductos(
       productoCarrito.reduce((anterior, actual) => anterior + actual.amount, 0)
     );
-
     setFormFactura({
       ...formFactura,
       monto: total,
     });
   }, [productoCarrito]);
 
-  function roundToTwo(num) {
-    return +(Math.round(num + "e+2") + "e-2");
-  }
-
-  const handleUpdateUserDiscount = () => {
-    updateUserDiscount(currentUser.uid, false)
-    setCurrentUser({
-      ...currentUser, discount: false
-    })
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!currentUser.emailVerified) {
+    if ( currentUser && !currentUser.emailVerified) {
       toast.error("Necesita estar verificado para realizar la compra.")
       await sendEmailVerification(auth.currentUser)
         .then(() => {
@@ -114,34 +98,13 @@ export const CartMax = () => {
           navigate("/verificacion-de-correo");
         })
         .catch((err) => alert(err.message))
-    } else {
-      productoCarrito.map((product) => {
-        var Productos = {
-          urlImagen: product.ImagenesUrl[0],
-          nombre: product.Nombre,
-          cantidad: product.amount,
-          subTotal: product.Precio,
-        };
-        formFactura.productos.push(Productos)
-      }
-
-      )
-      try {
-        await addDoc(collection(db, coleccion), {
-          fecha: formFactura.fecha,
-          idCliente: formFactura.idCliente,
-          total: formFactura.monto,
-          productos: formFactura.productos
-        });
-      } catch (e) {
-        toast.error("Necesita estar registrado para realizar la compra.")
+    }else if(!currentUser){
+       toast.error("Necesita estar registrado para realizar la compra.")
         navigate("/acceder")
-      }
-      formFactura.productos = []
-      formFactura.monto = 0
-      handleUpdateUserDiscount()
-      resetearCarrito()
-      navigate("/historial-compras");
+    } 
+    else {
+     
+      navigate("/pago");
     }
   };
 
@@ -194,98 +157,17 @@ export const CartMax = () => {
                       padding: "2rem",
                     }}
                   >
-                    <div className="row d-flex justify-content-center">
-                      <table className="table table-borderless">
-                        <tbody className="totals" style={{ color: "white" }}>
-                          <tr>
-                            <td>
-                              <div className="text-start fw-bold">
-                                <span> Subtotal </span>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="text-end">
-                                {" "}
-                                <span>{roundToTwo(total * 0.84)}$</span>
-                              </div>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td>
-                              <div className="text-start fw-bold">
-                                <span> Iva </span>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="text-end">
-                                {" "}
-                                <span>{roundToTwo(total * 0.16)}$</span>
-                              </div>
-                            </td>
-                          </tr>
-                          {discount === 0 ? (
-                            ""
-                          ) : (
-                            <tr style={{ color: "rgb(131, 249, 255)" }}>
-                              <td>
-                                <div className="text-start fw-bold">
-                                  <span> Descuento </span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="text-end">
-                                  {" "}
-                                  <span>- {discount.toFixed(2)}$</span>
-                                </div>
-                              </td>
-                            </tr>
-                          )}
-
-                          {!currentUser?.discount ? (
-                            ""
-                          ) : (
-                            <tr style={{ color: "rgb(131, 249, 255)" }}>
-                              <td>
-                                <div className="text-start fw-bold">
-                                  <span> Descuento Erin </span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="text-end">
-                                  {" "}
-                                  <span>- {parseInt("5").toFixed(2)}$</span>
-                                </div>
-                              </td>
-                            </tr>
-                          )}
-
-                          <tr className="border-top border-bottom">
-                            <td>
-                              <div className="text-start fw-bold">
-                                <span> Total </span>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="text-end">
-                                {" "}
-                                <span>{(total).toFixed(2)}$ </span>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                    <Billing currentUser={currentUser} total={total} discount={discount}/>
                     <Button
                       onClick={handleSubmit}
                       style={{
                         fontWeight: "bold",
                         background: "rgb(239, 211, 0)",
                         border: "rgb(239, 211, 0)",
-                        color: 'black'
+                        color: "black",
                       }}
                     >
-                      Pagar
+                      Siguiente
                     </Button>
                   </Card>
                   {(currentUser && currentUser?.emailVerified) ? <Discount user={currentUser} /> : <></>}

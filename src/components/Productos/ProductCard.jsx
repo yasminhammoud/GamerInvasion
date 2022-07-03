@@ -9,6 +9,7 @@ import { ProductAddCarButton } from "./ProductAddCarButton";
  */
 export const ProductCard = ({ producto }) => {
 
+  console.log(producto);
   const priceDiscount = () => {
     return (producto.Precio - producto.Precio * producto.Descuento / 100)
   }
@@ -22,7 +23,7 @@ export const ProductCard = ({ producto }) => {
       <Card
         className="m-2 p-3 text-center justify-content-center glow"
       >
-        <Link to={`/pd/${producto.UrlProducto}`} state={{ id: producto.id }} >
+        <Link to={`/pd/${producto.UrlProducto}`} state={{ producto: producto }} >
           <Card.Img
             variant="top"
             src={producto.ImagenesUrl}
@@ -36,7 +37,7 @@ export const ProductCard = ({ producto }) => {
             className="mb-5"
             as={Link}
             to={`/pd/${producto.UrlProducto}`}
-            state={{ id: producto.id }}
+            state={{ producto: producto }}
             style={{
               textTransform: "capitalize",
               fontWeight: "bold",

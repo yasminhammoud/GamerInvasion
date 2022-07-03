@@ -24,6 +24,7 @@ import PrivateRoute from "./PrivateRoute";
 
 import Profile from "../components/Profile/Profile";
 import { OrdersHistory } from "../components/Orders/OrdersHistory";
+import { Payment } from "../components/Payment/Payment";
 
 import Game from "../components/Game/Game"
 
@@ -38,7 +39,7 @@ export const Rutas = () => {
           <Route
             path="/acceder"
             element={
-              !auth.currentUser?.emailVerified ? (
+              !auth.currentUser ? (
                 <LogIn />
               ) : (
                 <Navigate to="/tienda" replace />
@@ -49,7 +50,7 @@ export const Rutas = () => {
           <Route
             path="/registro"
             element={
-              !auth.currentUser?.emailVerified ? (
+              !auth.currentUser ? (
                 <Register />
               ) : (
                 <Navigate to="/tienda" replace />
@@ -71,6 +72,15 @@ export const Rutas = () => {
             }
           />
           
+
+          <Route
+            path="/pago"
+            element={
+              <PrivateRoute>
+                <Payment />
+              </PrivateRoute>
+            }
+          />
 
           <Route
             path="/historial-compras"

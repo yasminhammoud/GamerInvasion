@@ -152,7 +152,6 @@ function Register() {
 
           })
           .catch((error) => {
-            let message;
             switch (error.code) {
               case "auth/email-already-in-use":
                 toast.error(
@@ -165,7 +164,6 @@ function Register() {
                 console.log(error);
                 break;
             }
-            console.log(message);
           });
       }
     } catch (error) {

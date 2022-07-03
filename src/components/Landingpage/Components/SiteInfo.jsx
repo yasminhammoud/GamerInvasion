@@ -25,7 +25,7 @@ export const SiteInfo = () => {
           >
             <img src={vid} alt="site-pic" className="w-100" />
             <Button as={Link} to="/tienda" className="grad align-self-bottom"
-            style={{position: "absolute", bottom: "6%", left: '50%',transform: 'translate(-50%, -50%)', fontSize: '20px', width: "12rem", borderRadius: '5px'}}
+            style={{position: "absolute", bottom: "6%", left: '50%',transform: 'translate(-50%, -50%)', fontSize: '16px', width: "12rem", borderRadius: '5px'}}
             >¡Compra ahora!</Button>
           </Col>
         </Row>

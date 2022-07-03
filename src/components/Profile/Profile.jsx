@@ -17,6 +17,7 @@ import {
   Image,
 } from "react-bootstrap";
 import { useUserAuth } from "../../contexts/UserAuthContext";
+import { useNavigate, Link } from "react-router-dom";
 
 //importar useUserAuth de UserAuthContext
 // traer current user: const { currentUser } = useUserAuth();
@@ -24,6 +25,12 @@ import { useUserAuth } from "../../contexts/UserAuthContext";
 //
 
 function Profile() {
+
+  let navigate = useNavigate(); 
+
+  const changeUrl = () =>{
+    navigate("/historial-compras")
+  }
 
   const { currentUser, setCurrentUser } = useUserAuth()
 
@@ -104,17 +111,16 @@ function Profile() {
   };
 
   return (
-    <div className="container-log-in">
-      <Container className="container-md emp-profile">
+    <div className="container-user-profile">
+      <Container className="container-md emp-profile" id="mainContainerProfile">
         <Form method="post">
           <Row className="row">
-            <Col className="col-md-4">
+            <Col className="col-md-4" sm = "auto">
               <div className="profile-img">
                 <Image
                   src="https://s3.amazonaws.com/prod-media.gameinformer.com/styles/body_default/s3/legacy-images/imagefeed/RIP%3A%20Honoring%20The%20Life%20And%20Death%20Of%20Xbox%20One%E2%80%99s%20Default%20Gamerpics/4SamNxh.jpg"
                   alt="Profile picture"
                 />
-
               </div>
             </Col>
             <Col className="col-md-6">
@@ -143,44 +149,24 @@ function Profile() {
                 >
                   GAMER
                 </Card.Title>
+
                 <br></br>
+
               </div>
 
               <Row id="linebreakDiv"></Row>
+
+
+
+
             </Col>
-            <Col className="col-md-2">
-              <Button
-                className="submitRegister fw-bold"
-                variant="yellow"
-                type="submit"
-                onClick={handleSubmit}
-              >
-                Guardar
-              </Button>
-            </Col>
+            
           </Row>
           <Row className="row">
-            <Col className="col-md-4">
-              <div className="profile-work">
-                <p>ÚLTIMAS COMPRAS</p>
-                <a href="">PC GAMER</a>
-                <br />
-                <a href="">XBOX ONE</a>
-                <br />
-                <a href="">MONITOR 4K</a>
-                <br />
-                <a href="">XBOX SERIES X</a>
-                <br />
-              </div>
-            </Col>
-            <Col className="col-md-8">
+            
+            <Col className="col-md-6" align="center" id="container321">
               <TabContent className="tab-content profile-tab" id="tabContent">
-                <div
-                  className="tab-pane fade show active"
-                  id="home"
-                  role="tabpanel"
-                  aria-labelledby="home-tab"
-                >
+                <div id="container123">
                   <Row className="row">
                     <Col className="col-md-6" id="profileInfoContainer">
                       <label>NOMBRE:</label>
@@ -274,7 +260,30 @@ function Profile() {
 
                     </Col>
                   </Row>
+                  <Col className="col-md-6">
+                    <div id="buttonDiv">
+                      <Button
+                          className="submitRegister fw-bold"
+                          variant="yellow"
+                          type="submit"
+                          onClick={handleSubmit}
+                      >
+                        Guardar
+                      </Button>
+
+                    <Button
+                      className="submitRegister fw-bold"
+                      variant="yellow"
+                      
+                      onClick={changeUrl}
+                    >
+                      Últimas compras
+                    </Button>
+                  </div>  
+                </Col> 
+
                 </div>
+
               </TabContent>
             </Col>
           </Row>

@@ -81,35 +81,35 @@ export const CartMax = () => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+     e.preventDefault();
 
-      productoCarrito.map((product) => {
-        var Productos = {
-          urlImagen: product.ImagenesUrl[0],
-          nombre: product.Nombre,
-          cantidad: product.amount,
-          subTotal: product.Precio,
-        };
-        formFactura.productos.push(Productos)
-      }
+  //     productoCarrito.map((product) => {
+  //       var Productos = {
+  //         urlImagen: product.ImagenesUrl[0],
+  //         nombre: product.Nombre,
+  //         cantidad: product.amount,
+  //         subTotal: product.Precio,
+  //       };
+  //       formFactura.productos.push(Productos)
+  //     }
       
-      )
-    try {
-      if (currentUser !== null ){ 
-        await addDoc(collection(db, coleccion), {
-          fecha: formFactura.fecha,
-          idCliente: currentUser.uid,
-          total: formFactura.monto,
-          productos: formFactura.productos
-      });
-      }
-  } catch (e) {
-      console.error("Error al agregar la factura ", e);
-  }
-    formFactura.productos = []
-    formFactura.monto = 0
-    resetearCarrito()
-    navigate("/historial-compras");
+  //     )
+  //   try {
+  //     if (currentUser !== null ){ 
+  //       await addDoc(collection(db, coleccion), {
+  //         fecha: formFactura.fecha,
+  //         idCliente: currentUser.uid,
+  //         total: formFactura.monto,
+  //         productos: formFactura.productos
+  //     });
+  //     }
+  // } catch (e) {
+  //     console.error("Error al agregar la factura ", e);
+  // }
+  //   formFactura.productos = []
+  //   formFactura.monto = 0
+  //   resetearCarrito()
+     navigate("/pago");
   };
   
 
@@ -235,7 +235,7 @@ export const CartMax = () => {
                         color: 'black'
                       }}
                     >
-                      Pagar
+                      Siguiente
                     </Button>
                   </Card>
                 </Col>

@@ -24,6 +24,7 @@ import PrivateRoute from "./PrivateRoute";
 
 import Profile from "../components/Profile/Profile";
 import { OrdersHistory } from "../components/Orders/OrdersHistory";
+import { Payment } from "../components/Payment/Payment";
 
 // Rutas de toda la página web (es llamada desde el componente App.jsx)
 export const Rutas = () => {
@@ -65,6 +66,15 @@ export const Rutas = () => {
             element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/pago"
+            element={
+              <PrivateRoute>
+                <Payment />
               </PrivateRoute>
             }
           />

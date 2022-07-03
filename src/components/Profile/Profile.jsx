@@ -17,6 +17,7 @@ import {
   Image,
 } from "react-bootstrap";
 import { useUserAuth } from "../../contexts/UserAuthContext";
+import { useNavigate, Link } from "react-router-dom";
 
 //importar useUserAuth de UserAuthContext
 // traer current user: const { currentUser } = useUserAuth();
@@ -24,6 +25,16 @@ import { useUserAuth } from "../../contexts/UserAuthContext";
 //
 
 function Profile() {
+
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = `newPath`; 
+    navigate(path);
+  }
+
+  const changeUrl = () =>{
+    window.location.assign("/historial-compras")
+  }
 
   const { currentUser, setCurrentUser } = useUserAuth()
 
@@ -267,8 +278,8 @@ function Profile() {
                     <Button
                       className="submitRegister fw-bold"
                       variant="yellow"
-                      type="submit"
-                      onClick={handleSubmit}
+                      
+                      onClick={changeUrl}
                     >
                       Últimas compras
                     </Button>

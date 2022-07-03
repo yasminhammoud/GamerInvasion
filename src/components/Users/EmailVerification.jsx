@@ -1,55 +1,36 @@
 import { useState, useEffect } from "react";
 import { auth, db } from "../../firebase/firebaseconfig";
-import { sendEmailVerification } from "firebase/auth";
+import { sendEmailVerification, rel } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../contexts/UserAuthContext";
 import { Button, Card } from "react-bootstrap";
-import { setDoc, doc, Timestamp } from "firebase/firestore";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 function VerifyEmail() {
-  // Se usa para recibir los parámetros envíados desde la ruta
-  // de registro
-  const { state } = useLocation();
-  const { name, email } = state;
 
-  const { currentUser } = useUserAuth();
-  const colRef = doc(db, "Usuarios", currentUser.uid);
+  const { currentUser, setCurrentUser } = useUserAuth();
 
   const [time, setTime] = useState(60);
   const { timeActive, setTimeActive } = useUserAuth();
   const navigate = useNavigate();
 
   // Al asegurarse de que el correo del usuario ha sido verificado
-  // se almacenan sus datos en Firestore, en caso contrario, el usuario
+  // se redirigé al la tienda, en caso contrario, el usuario
   // el temporizador se puede resetear para volver enviar el correo
   // hasta que esté verificado.
-  useEffect(() => {
-    // Almacenar los datos del usuario en Firestore
-    const addDataToFirestore = async () => {
-      try {
-        await setDoc(colRef, {
-          Nombre: name,
-          Email: email,
-          Descuento: false,
-          ProximoIntento: Timestamp.fromDate(new Date),
-          Direccion: "",
-          Telefono: ""
-        });
-        toast.success("Se ha registrado exitósamente");
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    // Al verificarse el correo se dispara la función para almacenar los datos
+  useEffect(() => {
     const interval = setInterval(() => {
-      currentUser
+      auth.currentUser
         ?.reload()
         .then(() => {
-          if (currentUser?.emailVerified) {
+          if (auth.currentUser?.emailVerified) {
             clearInterval(interval);
-            addDataToFirestore();
+            setCurrentUser({
+              ...currentUser,
+              emailVerified: true
+            })
+            toast.success("Se ha registrado exitosamente")
             navigate("/tienda");
           }
         })
@@ -57,7 +38,7 @@ function VerifyEmail() {
           console.log(err.message);
         });
     }, 1000);
-  }, [navigate, currentUser]);
+  }, [navigate, auth.currentUser]);
 
   // Temporizador para el reenvio de correo de verificación
   useEffect(() => {

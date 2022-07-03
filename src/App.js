@@ -13,29 +13,10 @@ import { auth } from "./firebase/firebaseconfig";
 import { getUserByID } from "./controllers/Users"
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [timeActive, setTimeActive] = useState(false);
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      getUserByID(user.uid).then((response) => {
-        setCurrentUser({
-          ...user,
-          name: response?.Nombre,
-          address: response?.Direccion,
-          phone: response?.Telefono,
-          discount: response?.Descuento,
-          nextAttempt: response?.ProximoIntento.toDate()
-        })
-      })
-    });
-
-  }, []);
-
-
+  
   return (
 
-    <UserAuthContextProvider value={{ currentUser, setCurrentUser, timeActive, setTimeActive }}>
+    <UserAuthContextProvider>
       <ContextoCarritoProvider>
         <div className="container-app d-flex flex-column min-vh-100">
           <Toaster position="bottom-right" reverseOrder={false} />

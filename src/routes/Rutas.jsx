@@ -26,6 +26,8 @@ import Profile from "../components/Profile/Profile";
 import { OrdersHistory } from "../components/Orders/OrdersHistory";
 import { Payment } from "../components/Payment/Payment";
 
+import Game from "../components/Game/Game"
+
 // Rutas de toda la página web (es llamada desde el componente App.jsx)
 export const Rutas = () => {
   return (
@@ -37,7 +39,7 @@ export const Rutas = () => {
           <Route
             path="/acceder"
             element={
-              !auth.currentUser?.emailVerified ? (
+              !auth.currentUser ? (
                 <LogIn />
               ) : (
                 <Navigate to="/tienda" replace />
@@ -48,7 +50,7 @@ export const Rutas = () => {
           <Route
             path="/registro"
             element={
-              !auth.currentUser?.emailVerified ? (
+              !auth.currentUser ? (
                 <Register />
               ) : (
                 <Navigate to="/tienda" replace />
@@ -69,6 +71,7 @@ export const Rutas = () => {
               </PrivateRoute>
             }
           />
+          
 
           <Route
             path="/pago"
@@ -101,6 +104,15 @@ export const Rutas = () => {
           <Route path="/quienes-somos" element={<AboutUs />} />
 
           <Route path="/administrador/productos" element={<Productos />} />
+
+          <Route
+            path="/game"
+            element={
+              <PrivateRoute>
+                <Game />
+              </PrivateRoute>
+            }
+          />
 
           <Route
             path="/administrador/productos-crear"

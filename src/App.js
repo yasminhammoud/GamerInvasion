@@ -10,28 +10,21 @@ import { useEffect, useState } from "react";
 import { UserAuthContextProvider } from "./contexts/UserAuthContext";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebaseconfig";
+import { getUserByID } from "./controllers/Users"
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [timeActive, setTimeActive] = useState(false);
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
-  }, []);
-
+  
   return (
-    
-    <UserAuthContextProvider value={{ currentUser, timeActive, setTimeActive }}>
+
+    <UserAuthContextProvider>
       <ContextoCarritoProvider>
-          <div className="container-app d-flex flex-column min-vh-100">
-            <Toaster position="bottom-right" reverseOrder={false} />
-            <NavBar />
-            <Cart />
-            <Rutas />
-            <Footer />
-          </div>
+        <div className="container-app d-flex flex-column min-vh-100">
+          <Toaster position="bottom-right" reverseOrder={false} />
+          <NavBar />
+          <Cart />
+          <Rutas />
+          <Footer />
+        </div>
       </ContextoCarritoProvider>
     </UserAuthContextProvider>
 

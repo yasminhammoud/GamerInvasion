@@ -1,19 +1,17 @@
 import React from "react";
+import { Container, Col, Row, Card } from "react-bootstrap";
+
+import aboutUs from "../../images/about-us.jpg";
 import mision from "../../images/mision.png";
 import vision from "../../images/vision.png";
 import valores from "../../images/valores.png";
-import { Row, Card, Col, Container } from "react-bootstrap";
 
-/**
- * Component that display About Us Page.
- */
-export const AboutUs = () =>{
-  return(
+export const AboutUs = () => {
+  return (
     <>
-     <div className="container-about-us">
-        <div className="centered" style={{ letterSpacing: "3px" }}>
-        ¿Quiénes somos?
-        </div>
+      <div className="slider">
+        <img className="d-block w-100" src={aboutUs} alt="about-us" />
+        <div className="centered">¿Quiénes somos?</div>
       </div>
 
       <Container className="my-5">
@@ -29,7 +27,7 @@ export const AboutUs = () =>{
                 <Card.Img
                   variant="top"
                   src={mision}
-                  className="rounded-0 mx-2"
+                  className="glow rounded-0 mx-2"
                 />
               </Card.Body>
             </Card>
@@ -46,7 +44,7 @@ export const AboutUs = () =>{
                 <Card.Img
                   variant="top"
                   src={vision}
-                  className="rounded-0 mx-2"
+                  className="glow-orange rounded-0 mx-2"
                 />
               </Card.Body>
             </Card>
@@ -63,7 +61,7 @@ export const AboutUs = () =>{
                 <Card.Img
                   variant="top"
                   src={valores}
-                  className="rounded-0 mx-2"
+                  className="glow rounded-0 mx-2"
                 />
               </Card.Body>
             </Card>

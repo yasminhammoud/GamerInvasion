@@ -3,16 +3,23 @@ import { auth } from "../../../firebase/firebaseconfig";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
-
+import { useUserAuth } from "../../../contexts/UserAuthContext";
 // Botón de cerrar sesión que se encuentra en el navbar
 // cuando un usuario ya ha iniciado sesión exitosamente
 
 const BotonCerrarSesion = () => {
   const navigate = useNavigate();
+  const { currentUser, setCurrentUser } = useUserAuth();
 
   const cerrarSesion = async () => {
     try {
-      await signOut(auth);
+      await signOut(auth).then(() => {
+        setCurrentUser(null)
+      }
+      )
+        .catch(
+          (err) => console.log(err)
+        );
       // Navigate to landing page
       navigate("/");
     } catch (error) {

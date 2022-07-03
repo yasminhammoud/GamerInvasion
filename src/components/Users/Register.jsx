@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { auth } from "../../firebase/firebaseconfig";
+import { auth, db } from "../../firebase/firebaseconfig";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
@@ -11,6 +11,8 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { useUserAuth } from "../../contexts/UserAuthContext";
+import { setDoc, doc, Timestamp } from "firebase/firestore";
+import { getUserByID } from "../../controllers/Users"
 
 function Register() {
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ function Register() {
   const [form, setForm] = useState("");
 
   // Constante para activar el tiempo para el reenvio de correo de validación
-  const { setTimeActive } = useUserAuth();
+  const { setTimeActive, currentUser, setCurrentUser } = useUserAuth();
 
   // Función para la validación de input (correo y contraseña)
   const findFormErrors = () => {
@@ -90,6 +92,36 @@ function Register() {
     setField(e.target.name, e.target.value);
   };
 
+  // Almacenar los datos del usuario en Firestore y actualizar el contexto de usuario.
+  const addDataToFirestore = async (currentUser) => {
+    const colRef = doc(db, "Usuarios", currentUser.uid);
+    try {
+      await setDoc(colRef, {
+        Nombre: name,
+        Email: email,
+        Descuento: false,
+        ProximoIntento: Timestamp.fromDate(new Date),
+        Direccion: "",
+        Telefono: ""
+      }).then(
+        getUserByID(currentUser.uid).then((response) => {
+          setCurrentUser({
+            ...currentUser,
+            name: response?.Nombre,
+            address: response?.Direccion,
+            phone: response?.Telefono,
+            discount: response?.Descuento,
+            nextAttempt: response?.ProximoIntento.toDate()
+          })
+        })
+      ).catch((err) =>
+        console.log(err)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -102,22 +134,22 @@ function Register() {
         // Se crea la autenticación en Firebase del usuario
         await createUserWithEmailAndPassword(auth, email, password)
           .then(() => {
-            // Se envia correo de verificación del usuario recién registrado
-            sendEmailVerification(auth.currentUser)
-              .then(() => {
-                // Activar tiempo para el reenvió de correo de validación
-                setTimeActive(true);
+            //Se guarda en firestore
+            addDataToFirestore(auth.currentUser).then(
+              // Se envia correo de verificación del usuario recién registrado
+              sendEmailVerification(auth.currentUser)
+                .then(() => {
+                  // Activar tiempo para el reenvió de correo de validación
+                  setTimeActive(true);
 
-                // Se envía el nombre y correo a la ruta /verificación para poder
-                // almacenar los datos del usuario en Firestore
-                navigate("/verificacion-de-correo", {
-                  state: {
-                    name: name,
-                    email: email,
-                  },
-                });
-              })
-              .catch((err) => alert(err.message));
+                  // Se envía el nombre y correo a la ruta /verificación para poder
+                  // almacenar los datos del usuario en Firestore
+                  navigate("/verificacion-de-correo");
+                })
+                .catch((err) => alert(err.message))
+            )
+              .catch((err) => alert(err.message))
+
           })
           .catch((error) => {
             switch (error.code) {

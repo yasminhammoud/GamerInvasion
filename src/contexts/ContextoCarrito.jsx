@@ -20,7 +20,6 @@ export const ContextoCarritoProvider = ({ children }) => {
 
     useEffect(() => {
         localStorage.setItem("productosCarrito", JSON.stringify(productoCarrito));
-        // console.log(productoCarrito);
     }, [productoCarrito]);
 
   // Con esta funcion lo que se hace es poder agregar productos al carrito , a esta funcion se le pasa como parametro

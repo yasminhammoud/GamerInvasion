@@ -2,17 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
 import { ProductoCarritoMax } from "./ProductoCarritoMax/ProductoCarritoMax";
 import { Card, Row, Col, Container, Button } from "react-bootstrap";
+import { db, auth } from "../../firebase/firebaseconfig";
+import { useNavigate, Link } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase/firebaseconfig";
-import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../contexts/UserAuthContext";
+import { Discount } from "./Discount"
+import toast from "react-hot-toast";
+import { sendEmailVerification } from "firebase/auth";
+import { Billing } from "../Payment/Billing";
 
 //Nombre coleccion en firebase que guarda las facturas de compra
 const coleccion = "Facturas";
 
 export const CartMax = () => {
   const navigate = useNavigate();
-  const { currentUser } = useUserAuth();
+  const { currentUser, setTimeActive, setCurrentUser } = useUserAuth();
 
   // Aca se crean dos states el cual uno es para verificar si el carrito esta desplegado o no esta desplegado , mientras que el otro
   // state es para saber la cantidad de productos que se encuentran dentro del carrito
@@ -24,14 +28,23 @@ export const CartMax = () => {
 
   const { productoCarrito, resetearCarrito } = useContext(ContextoCarrito);
 
-  const total = productoCarrito.reduce(
-    (anterior, actual) =>
-      anterior +
-      actual.amount *
-        (actual.Precio - (actual.Precio * actual.Descuento) / 100),
+  let subtotal = productoCarrito.reduce(
+    (anterior, actual) => anterior + actual.amount * actual.Precio,
     0
   );
-  const today = new Date().toISOString().slice(0, 10);
+
+  const discount = productoCarrito.reduce(
+    (anterior, actual) =>
+      anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
+    0
+  );
+
+  let total = subtotal - discount;
+
+  if (currentUser?.emailVerified && currentUser.discount) {
+    total = total - 5
+  }
+  const today = new Date().toISOString().slice(0, 10)
 
   //Estado inicial formulario factura y useState
   const initFormFactura = {
@@ -42,11 +55,6 @@ export const CartMax = () => {
   };
   const [formFactura, setFormFactura] = useState(initFormFactura);
 
-  const discount = productoCarrito.reduce(
-    (anterior, actual) =>
-      anterior + actual.amount * actual.Precio * (actual.Descuento / 100),
-    0
-  );
 
   // Aca lse guarda en una variable la descripcion de los productos que estan dentro del carrito , y esto sirve para luego
   // cuando el cliente quiera comprar , se mande de manera automatizada un mensaje al whatssap empresarial con todos los
@@ -75,41 +83,31 @@ export const CartMax = () => {
     });
   }, [productoCarrito]);
 
-  function roundToTwo(num) {
-    return +(Math.round(num + "e+2") + "e-2");
-  }
-
   const handleSubmit = async (e) => {
-     e.preventDefault();
+    e.preventDefault();
 
-  //     productoCarrito.map((product) => {
-  //       var Productos = {
-  //         urlImagen: product.ImagenesUrl[0],
-  //         nombre: product.Nombre,
-  //         cantidad: product.amount,
-  //         subTotal: product.Precio,
-  //       };
-  //       formFactura.productos.push(Productos)
-  //     }
-      
-  //     )
-  //   try {
-  //     if (currentUser !== null ){ 
-  //       await addDoc(collection(db, coleccion), {
-  //         fecha: formFactura.fecha,
-  //         idCliente: currentUser.uid,
-  //         total: formFactura.monto,
-  //         productos: formFactura.productos
-  //     });
-  //     }
-  // } catch (e) {
-  //     console.error("Error al agregar la factura ", e);
-  // }
-  //   formFactura.productos = []
-  //   formFactura.monto = 0
-  //   resetearCarrito()
-     navigate("/pago");
+    if ( currentUser && !currentUser.emailVerified) {
+      toast.error("Necesita estar verificado para realizar la compra.")
+      await sendEmailVerification(auth.currentUser)
+        .then(() => {
+          // Activar tiempo para el reenvió de correo de validación
+          setTimeActive(true);
+
+          // Se envía el nombre y correo a la ruta /verificación para poder
+          // almacenar los datos del usuario en Firestore
+          navigate("/verificacion-de-correo");
+        })
+        .catch((err) => alert(err.message))
+    }else if(!currentUser){
+       toast.error("Necesita estar registrado para realizar la compra.")
+        navigate("/acceder")
+    } 
+    else {
+     
+      navigate("/pago");
+    }
   };
+
 
   return (
     <>
@@ -147,83 +145,19 @@ export const CartMax = () => {
                   md={{ order: "first" }}
                   lg={{ order: "first" }}
                   xl={{ order: "last" }}
-                  className="m-4"
+                  className="m-4 text-center"
                 >
                   <Card
                     style={{
                       color: "white",
                       border: "1px",
                       borderColor: "white",
-                      background:
-                        "linear-gradient(180deg, rgb(43, 0, 56) 20%, rgb(24, 0, 71) 100%)",
+                      background: "linear-gradient(180deg, rgb(43, 0, 56) 20%, rgb(24, 0, 71) 100%)",
                       borderRadius: "0.5rem",
                       padding: "2rem",
                     }}
                   >
-                    <div className="row d-flex justify-content-center">
-                      <table className="table table-borderless">
-                        <tbody className="totals" style={{ color: "white" }}>
-                          <tr>
-                            <td>
-                              <div className="text-start fw-bold">
-                                <span> Subtotal </span>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="text-end">
-                                {" "}
-                                <span>{roundToTwo(total * 0.84)}$</span>
-                              </div>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td>
-                              <div className="text-start fw-bold">
-                                <span> Iva </span>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="text-end">
-                                {" "}
-                                <span>{roundToTwo(total * 0.16)}$</span>
-                              </div>
-                            </td>
-                          </tr>
-                          {discount === 0 ? (
-                            ""
-                          ) : (
-                            <tr style={{ color: "rgb(131, 249, 255)" }}>
-                              <td>
-                                <div className="text-start fw-bold">
-                                  <span> Descuento </span>
-                                </div>
-                              </td>
-                              <td>
-                                <div className="text-end">
-                                  {" "}
-                                  <span>- {discount.toFixed(2)}$</span>
-                                </div>
-                              </td>
-                            </tr>
-                          )}
-
-                          <tr className="border-top border-bottom">
-                            <td>
-                              <div className="text-start fw-bold">
-                                <span> Total </span>
-                              </div>
-                            </td>
-                            <td>
-                              <div className="text-end">
-                                {" "}
-                                <span>{(total - discount).toFixed(2)}$ </span>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                    <Billing currentUser={currentUser} total={total} discount={discount}/>
                     <Button
                       onClick={handleSubmit}
                       style={{
@@ -236,6 +170,8 @@ export const CartMax = () => {
                       Siguiente
                     </Button>
                   </Card>
+                  {(currentUser && currentUser?.emailVerified) ? <Discount user={currentUser} /> : <></>}
+
                 </Col>
               </Row>
             </div>

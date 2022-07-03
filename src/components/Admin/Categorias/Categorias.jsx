@@ -77,9 +77,6 @@ const Categorias = () => {
     }; 
 
     const crearCategoria = async (e) => {
-        console.log(formCategoria.nombre);
-        console.log(formCategoria.urlCategoria);
-        console.log(formCategoria.descripcion);
         e.preventDefault();
         try{
           await addDoc(collection (db, "Categorias"), {
@@ -91,7 +88,6 @@ const Categorias = () => {
            console.error ("Error al agregar categoria ", e);
          }
         setFormCategoria(initCategoria);
-        console.log('REGISTRO EXITOSO');
     };
     
 

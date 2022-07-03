@@ -71,19 +71,18 @@ function LogIn() {
       } else {
         // Si no hay errores, se inicia sesión con correo y contraseña
         await signInWithEmailAndPassword(auth, email, password);
-        toast.success("Inicio de sesión exitoso");
         navigate("/tienda");
       }
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":
-          toast.error("Dato s inválidos");
+          toast.error("Datos inválidos");
           break;
         case "user-not-found":
           toast.error("Usuario no encontrado");
           break;
         default:
-          toast.error("Error de conexión");
+          toast.error("Verifique su conexión y/o datos ingresados");
           break;
       }
     }

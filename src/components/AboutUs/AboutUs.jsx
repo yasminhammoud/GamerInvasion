@@ -2,7 +2,7 @@ import React from "react";
 import mision from "../../images/mision.png";
 import vision from "../../images/vision.png";
 import valores from "../../images/valores.png";
-import { Card, Col, Container } from "react-bootstrap";
+import { Row, Card, Col, Container } from "react-bootstrap";
 
 /**
  * Component that display About Us Page.
@@ -17,12 +17,13 @@ export const AboutUs = () =>{
       </div>
 
       <Container className="my-5">
+        <Row className="align-items-center">
           <Col lg>
             <Card
               data-aos="fade-up"
               data-aos-duration="2000"
               bg="transparent"
-              className="text-center align-items-center justify-content-center border-0"
+              className="border-0"
             >
               <Card.Body>
                 <Card.Img
@@ -67,8 +68,8 @@ export const AboutUs = () =>{
               </Card.Body>
             </Card>
           </Col>
+        </Row>
       </Container>
     </>
-    
-  )
-}
+  );
+};

@@ -44,7 +44,7 @@ export const Cart = () => {
   }, [productoCarrito]);
 
   const total = productoCarrito.reduce(
-    (anterior, actual) => anterior + actual.amount * (actual.Precio - actual.Precio * actual.Descuento / 100),
+    (anterior, actual) => anterior + actual.amount * actual.Precio,
     0
   );
 

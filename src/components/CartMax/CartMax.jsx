@@ -157,7 +157,7 @@ export const CartMax = () => {
                       padding: "2rem",
                     }}
                   >
-                    <Billing currentUser={currentUser} total={total} discount={discount}/>
+                    <Billing currentUser={currentUser} total={total} subtotal= {subtotal} discount={discount}/>
                     <Button
                       onClick={handleSubmit}
                       style={{

@@ -30,7 +30,6 @@ function VerifyEmail() {
               ...currentUser,
               emailVerified: true
             })
-            toast.success("Se ha verificado exitosamente")
             navigate("/tienda");
           }
         })

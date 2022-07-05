@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { auth, db } from "../../firebase/firebaseconfig";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Spinner } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileWord, faUserShield } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +23,8 @@ function Register() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [terms, setTerms] = useState(false);
+
+  const [buttonMessage, setButtonMessage] = useState("Registrarse")
 
   // Constantes a usar para validación de input
   const [errors, setErrors] = useState("");
@@ -124,12 +126,14 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setButtonMessage("Loading")
 
     try {
       const newErrors = findFormErrors();
 
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
+        setButtonMessage('Registrarse')
       } else {
         // Se crea la autenticación en Firebase del usuario
         await createUserWithEmailAndPassword(auth, email, password)
@@ -152,6 +156,7 @@ function Register() {
 
           })
           .catch((error) => {
+            setButtonMessage('Registrarse')
             switch (error.code) {
               case "auth/email-already-in-use":
                 toast.error(
@@ -167,6 +172,7 @@ function Register() {
           });
       }
     } catch (error) {
+      setButtonMessage('Registrarse')
       console.log(error);
     }
   };
@@ -331,7 +337,7 @@ function Register() {
                     type="submit"
                     onClick={handleSubmit}
                   >
-                    Crear
+                    {buttonMessage === 'Registrarse' ? 'Registrarse' : <span><Spinner animation="border" variant="dark" size="sm" /></span>}
                   </Button>
                 </div>
               </Form>

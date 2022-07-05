@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { auth, db } from "../../firebase/firebaseconfig";
-import { sendEmailVerification, rel } from "firebase/auth";
-import { useLocation, useNavigate } from "react-router-dom";
+import { sendEmailVerification } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../contexts/UserAuthContext";
 import { Button, Card } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";
+import { getUserByID } from "../../controllers/Users"
 
 function VerifyEmail() {
 
@@ -19,6 +20,23 @@ function VerifyEmail() {
   // el temporizador se puede resetear para volver enviar el correo
   // hasta que esté verificado.
 
+  const setUserWithVerification = async (currentUser) => {
+
+    getUserByID(currentUser.uid).then((response) => {
+      setCurrentUser({
+        ...currentUser,
+        name: response?.Nombre,
+        address: response?.Direccion,
+        phone: response?.Telefono,
+        discount: response?.Descuento,
+        nextAttempt: response?.ProximoIntento.toDate(),
+        emailVerified: true
+      })
+    })
+
+  };
+
+
   useEffect(() => {
     const interval = setInterval(() => {
       auth.currentUser
@@ -26,11 +44,14 @@ function VerifyEmail() {
         .then(() => {
           if (auth.currentUser?.emailVerified) {
             clearInterval(interval);
-            setCurrentUser({
-              ...currentUser,
-              emailVerified: true
-            })
-            navigate("/tienda");
+
+            setUserWithVerification(auth.currentUser).then(() => {
+
+              toast.success("Se ha verificado exitosamente")
+              navigate("/tienda");
+            }
+
+            )
           }
         })
         .catch((err) => {

@@ -179,7 +179,7 @@ export const NavBar = () => {
                       to="/registro"
                       onClick={toggleMenu}
                     >
-                      Registarse
+                      Registrarse
                     </Link>
                   </>
                 )}

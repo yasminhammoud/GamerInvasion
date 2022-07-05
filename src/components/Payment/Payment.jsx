@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
-import { Card, Row, Col, Container, Button, Form } from "react-bootstrap";
+import { Card, Row, Col, Container, Button, Form, Spinner } from "react-bootstrap";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseconfig";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +29,8 @@ export const Payment = () => {
   const [formIncompleto, setformIncompleto] = useState(false);
   const [cantidadProductos, setCantidadProductos] = useState(0);
   const [formPago, setFormPago] = useState(initPago);
+
+  const [buttonMessage, setButtonMessage] = useState("Pagar")
 
   // Aca con el useContext nos conectamos al contexto del carrito y nos traemos el useState del productoCarrito
 
@@ -100,20 +102,18 @@ export const Payment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !formPago.cedula ||
-      !formPago.banco ||
-      !formPago.telefono ||
-      !formPago.clavePago
-    ) {
-      setformIncompleto(true);
-    } else {
+    setButtonMessage('Loading')
+    if (!formPago.cedula || !formPago.banco || !formPago.telefono || !formPago.clavePago) {
+      setformIncompleto(true)
+      setButtonMessage('Pagar')
+    }
+    else {
       productoCarrito.map((product) => {
         var Productos = {
           urlImagen: product.ImagenesUrl,
           nombre: product.Nombre,
           cantidad: product.amount,
-          subTotal: product.Precio - product.Precio * (product.Descuento / 100),
+          subTotal: product.Precio,
         };
         formFactura.productos.push(Productos);
       });
@@ -127,6 +127,7 @@ export const Payment = () => {
           });
         }
       } catch (e) {
+        setButtonMessage('Pagar')
         console.error("Error al agregar la factura ", e);
       }
       formFactura.productos = [];
@@ -135,8 +136,7 @@ export const Payment = () => {
       resetearCarrito();
       navigate("/historial-compras");
     }
-  };
-
+  }
   const handleCancel = async (e) => {
     e.preventDefault();
     navigate("/carrito");
@@ -150,13 +150,10 @@ export const Payment = () => {
             <Col xs={12} md={12} lg={9}>
               <Row>
                 <Col className="d-flex justify-content-center">
-                  <Card
-                    className="bg-gray"
-                    style={{
-                      padding: "1rem 2rem",
-                      color: "white",
-                    }}
-                  >
+                  <Card className="bg-gray" style={{
+                    padding: "1rem 2rem",
+                    color: "white"
+                  }}>
                     <Form>
                       <Form.Group className="mb-3">
                         <Form.Label>Cedula</Form.Label>
@@ -164,7 +161,7 @@ export const Payment = () => {
                           required
                           type="text"
                           name="cedula"
-                          placeholder="Ej: 26739714"
+                          placeholder="Ej: V26739714"
                           value={formPago.cedula}
                           onChange={cambiarDatos}
                         />
@@ -174,33 +171,21 @@ export const Payment = () => {
                         <Form.Select
                           required
                           value={formPago.banco}
-                          onChange={(e) => cambiarBanco(e.target.value)}
+                          onChange={e => cambiarBanco(e.target.value)}
                         >
-                          <option disabled value="">
-                            Seleccione un banco
-                          </option>
-                          <option value="Banco Mercantil">
-                            Banco Mercantil
-                          </option>
-                          <option value="Banco de Venezuela">
-                            Banco de Venezuela
-                          </option>
+                          <option disabled value="">Seleccione un banco</option>
+                          <option value="Banco Mercantil">Banco Mercantil</option>
+                          <option value="Banco de Venezuela">Banco de Venezuela</option>
                           <option value="Banesco">Banesco</option>
-                          <option value="BBVA Provincial">
-                            BBVA Provincial
-                          </option>
+                          <option value="BBVA Provincial">BBVA Provincial</option>
                           <option value="BOD">BOD</option>
                           <option value="BNC">BNC</option>
                           <option value="Bancaribe">Bancaribe</option>
                           <option value="Bancamiga">Bancamiga</option>
-                          <option value="Banco del Tesoro">
-                            Banco del Tesoro
-                          </option>
+                          <option value="Banco del Tesoro">Banco del Tesoro</option>
                           <option value="v">Banco Exterior</option>
                           <option value="BFC">BFC</option>
-                          <option value="Venezolano de Crédito">
-                            Venezolano de Crédito
-                          </option>
+                          <option value="Venezolano de Crédito">Venezolano de Crédito</option>
                           <option value="BANFANB">BANFANB</option>
                           <option value="BanPlus">BanPlus</option>
                           <option value="Banco Plaza">Banco Plaza</option>
@@ -233,10 +218,13 @@ export const Payment = () => {
                       </Form.Group>
                     </Form>
                   </Card>
+
                 </Col>
               </Row>
             </Col>
-            <Col className="m-4">
+            <Col
+              className="m-4"
+            >
               <Card
                 style={{
                   color: "white",
@@ -248,20 +236,13 @@ export const Payment = () => {
                   padding: "2rem",
                 }}
               >
-                <Billing
-                  currentUser={currentUser}
-                  total={total}
-                  subtotal={subtotal}
-                  discount={discount}
-                />
+                <Billing currentUser={currentUser} total={total} subtotal={subtotal} discount={discount} />
                 <Button
-                  variant="outline-cyan"
                   onClick={handleCancel}
                   style={{
                     fontWeight: "normal",
                     background: "white",
-                    border: "5px",
-                    borderColor: "cyan",
+                    border: "white",
                     color: "black",
                     margin: "0 3rem 1rem 3rem",
                   }}
@@ -277,22 +258,15 @@ export const Payment = () => {
                     color: "black",
                   }}
                 >
-                  Pagar
+                  {buttonMessage === 'Pagar' ? 'Pagar' : <span><Spinner animation="border" variant="dark" size="sm" /></span>}
                 </Button>
-                {formIncompleto ? (
-                  <div
-                    style={{
-                      fontWeight: "bold",
-                      color: "red",
-                      textAlign: "center",
-                      marginTop: "5px",
-                    }}
-                  >
-                    Llene todos los campos
-                  </div>
-                ) : (
-                  ""
-                )}
+                {formIncompleto ? (<div style={{
+                  fontWeight: "bold",
+                  color: "red",
+                  textAlign: "center"
+                }}>
+                  Llene todos los campos
+                </div>) : ("")}
               </Card>
             </Col>
           </Row>

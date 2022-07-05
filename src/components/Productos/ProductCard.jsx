@@ -9,7 +9,6 @@ import { ProductAddCarButton } from "./ProductAddCarButton";
  */
 export const ProductCard = ({ producto }) => {
 
-  console.log(producto);
   const priceDiscount = () => {
     return (producto.Precio - producto.Precio * producto.Descuento / 100)
   }

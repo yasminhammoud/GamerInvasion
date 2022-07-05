@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/firebaseconfig";
 import { useState } from "react";
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Spinner } from "react-bootstrap";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +14,8 @@ function LogIn() {
   // Constantes a usar para almacenar información de los usuarios
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [buttonMessage, setButtonMessage] = useState("Ingresar")
 
   // Constantes a usar para validación de input
   const [errors, setErrors] = useState("");
@@ -62,18 +64,21 @@ function LogIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setButtonMessage('Loading')
 
     try {
       const newErrors = findFormErrors();
 
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
+        setButtonMessage('Ingresar')
       } else {
         // Si no hay errores, se inicia sesión con correo y contraseña
         await signInWithEmailAndPassword(auth, email, password);
         navigate("/tienda");
       }
     } catch (error) {
+      setButtonMessage('Ingresar')
       switch (error.code) {
         case "auth/wrong-password":
           toast.error("Datos inválidos");
@@ -160,7 +165,7 @@ function LogIn() {
                     type="submit"
                     onClick={handleSubmit}
                   >
-                    Ingresar
+                    {buttonMessage === 'Ingresar' ? 'Ingresar' : <span><Spinner animation="border" variant="dark" size="sm" /></span>}
                   </Button>
                 </div>
               </Form>

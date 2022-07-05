@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ContextoCarrito } from "../../contexts/ContextoCarrito";
-import { Card, Row, Col, Container, Button, Form } from "react-bootstrap";
+import { Card, Row, Col, Container, Button, Form, Spinner } from "react-bootstrap";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseconfig";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +29,8 @@ export const Payment = () => {
 	const [formIncompleto, setformIncompleto] = useState(false);
 	const [cantidadProductos, setCantidadProductos] = useState(0);
 	const [formPago, setFormPago] = useState(initPago);
+
+	const [buttonMessage, setButtonMessage] = useState("Pagar")
 
 	// Aca con el useContext nos conectamos al contexto del carrito y nos traemos el useState del productoCarrito
 
@@ -99,8 +101,10 @@ export const Payment = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setButtonMessage('Loading')
 		if (!formPago.cedula || !formPago.banco || !formPago.telefono || !formPago.clavePago) {
 			setformIncompleto(true)
+			setButtonMessage('Pagar')
 		}
 		else {
 			productoCarrito.map((product) => {
@@ -122,6 +126,7 @@ export const Payment = () => {
 					});
 				}
 			} catch (e) {
+				setButtonMessage('Pagar')
 				console.error("Error al agregar la factura ", e);
 			}
 			formFactura.productos = [];
@@ -254,7 +259,7 @@ export const Payment = () => {
 										color: "black",
 									}}
 								>
-									Pagar
+									{buttonMessage === 'Pagar' ? 'Pagar' : <span><Spinner animation="border" variant="dark" size="sm" /></span>}
 								</Button>
 								{formIncompleto ? (<div style={{
 									fontWeight: "bold",

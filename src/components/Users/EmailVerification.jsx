@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { auth, db } from "../../firebase/firebaseconfig";
 import { sendEmailVerification } from "firebase/auth";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../../contexts/UserAuthContext";
 import { Button, Card } from "react-bootstrap";
 import toast, { Toaster } from "react-hot-toast";

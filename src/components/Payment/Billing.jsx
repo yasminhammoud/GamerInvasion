@@ -1,4 +1,4 @@
-export const Billing = ({ total, discount, currentUser }) => {
+export const Billing = ({ total, subtotal, discount, currentUser }) => {
     
     function roundToTwo(num) {
         return +(Math.round(num + "e+2") + "e-2");
@@ -17,7 +17,7 @@ export const Billing = ({ total, discount, currentUser }) => {
                         <td>
                             <div className="text-end">
                                 {" "}
-                                <span>{roundToTwo(total * 0.84)}$</span>
+                                <span>{roundToTwo(subtotal * 0.84)}$</span>
                             </div>
                         </td>
                     </tr>
@@ -31,7 +31,7 @@ export const Billing = ({ total, discount, currentUser }) => {
                         <td>
                             <div className="text-end">
                                 {" "}
-                                <span>{roundToTwo(total * 0.16)}$</span>
+                                <span>{roundToTwo(subtotal * 0.16)}$</span>
                             </div>
                         </td>
                     </tr>
